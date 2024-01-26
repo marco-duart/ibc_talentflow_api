@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  institution: MyString
+  degree: MyString
+  start_date: 2024-01-26 12:34:35
+  end_date: 2024-01-26 12:34:35
+
+two:
+  title: MyString
+  institution: MyString
+  degree: MyString
+  start_date: 2024-01-26 12:34:35
+  end_date: 2024-01-26 12:34:35
