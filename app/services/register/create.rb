@@ -1,4 +1,5 @@
-module CandidateProfile
+
+module Register
   class Create
     include BCrypt
 
@@ -21,19 +22,14 @@ module CandidateProfile
     private
 
     def create_user
-      hash_password = encrypt_password
       User.create(
         name: @name,
         cpf: @cpf,
         email: @email,
-        password: hash_password,
+        password: @password,
         role: @role
       )
     end
-
-    def encrypt_password
-      BCrypt::Password.create(@password)
-    end
-
   end
 end
+
