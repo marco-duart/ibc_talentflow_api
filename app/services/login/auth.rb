@@ -34,7 +34,7 @@ module Login
     def get_token
       return unless @user
 
-      payload = { user_id: @user.id, exp: Time.now.to_i + 3600 }
+      payload = { user_id: @user.id, role: @user.role, exp: Time.now.to_i + 3600 }
 
       token = JWT.encode(payload, SECRET_KEY, 'HS256')
 

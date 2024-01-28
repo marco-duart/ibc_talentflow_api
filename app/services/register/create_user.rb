@@ -1,6 +1,6 @@
 
 module Register
-  class Create
+  class CreateUser
     include BCrypt
 
     def self.run(params)
