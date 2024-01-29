@@ -8,10 +8,11 @@ class User < ApplicationRecord
 
   validates :cpf, presence: true, cpf: true, uniqueness: true
   validates :email, presence: true, email: true, uniqueness: true
+  validates :password_digest, presence: true
 
   private
 
   def encrypt_password
-    self.password = BCrypt::Password.create(password) if password.present?
+    self.password_digest = BCrypt::Password.create(password_digest) if password_digest.present?
   end
 end

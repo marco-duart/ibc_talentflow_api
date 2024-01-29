@@ -1,6 +1,5 @@
 module Register
-  class CreateUser
-    include BCrypt
+  class CreateCandidate
 
     def self.run(params)
       new(params).run
@@ -21,12 +20,8 @@ module Register
     private
 
     def create_user
-      User.create(
-        name: @name,
-        cpf: @cpf,
-        email: @email,
-        password_digest: @password,
-        role: @role
+      Candidate.create(
+        
       )
     end
   end

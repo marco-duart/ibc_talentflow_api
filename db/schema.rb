@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_01_27_012544) do
+ActiveRecord::Schema.define(version: 2024_01_26_153444) do
 
   create_table "academic_histories", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "title"
@@ -122,7 +122,10 @@ ActiveRecord::Schema.define(version: 2024_01_27_012544) do
     t.string "description"
     t.text "requirements"
     t.string "job_location"
+    t.string "regime"
+    t.string "modality"
     t.string "salary"
+    t.string "work_schedule"
     t.datetime "start_date"
     t.datetime "end_date"
     t.datetime "created_at", precision: 6, null: false
@@ -166,12 +169,11 @@ ActiveRecord::Schema.define(version: 2024_01_27_012544) do
     t.string "name"
     t.string "cpf"
     t.string "email"
-    t.string "password"
+    t.string "password_digest"
     t.string "role"
     t.string "photo"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "password_digest"
   end
 
 end

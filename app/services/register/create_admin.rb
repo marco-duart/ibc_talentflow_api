@@ -1,4 +1,3 @@
-
 module Register
   class CreateAdmin
     include BCrypt
@@ -26,11 +25,9 @@ module Register
         name: @name,
         cpf: @cpf,
         email: @email,
-        password: @password,
+        password_digest: @password,
         role: @role
       )
     end
   end
 end
-  
-  

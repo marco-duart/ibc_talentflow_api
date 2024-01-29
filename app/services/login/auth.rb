@@ -6,8 +6,6 @@ module Login
     include BCrypt
     include JWT
 
-    SECRET_KEY = 'ahdswoqeulkjad' #referenciar o env
-
     def self.run(params)
       new(params).run
     end
@@ -18,20 +16,26 @@ module Login
     end
 
     def run
-      auth_user
-      get_token
+      return nil unless valid_params?
+      return nil unless auth_user
+
+      generate_token
     end
 
     private
 
-    def auth_user
-      return unless @cpf
-      @user = User.find_by(cpf: @cpf)
+    SECRET_KEY = 'ahdswoqeulkjad'.freeze # Depois utilizar o secret key do arquivo .env
 
-      return unless @user && @user.authenticate(@password)
+    def valid_params?
+      @cpf.present? && @password.present?
     end
 
-    def get_token
+    def auth_user
+      @user = User.find_by(cpf: @cpf)
+      @user&.authenticate(@password)
+    end
+
+    def generate_token
       return unless @user
 
       payload = { user_id: @user.id, role: @user.role, exp: Time.now.to_i + 3600 }
