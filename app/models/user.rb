@@ -6,8 +6,8 @@ class User < ApplicationRecord
 
   before_save :encrypt_password
 
-  validates :cpf, uniqueness: true
-  validates :email, uniqueness: true
+  validates :cpf, presence: true, cpf: true, uniqueness: true
+  validates :email, presence: true, email: true, uniqueness: true
 
   private
 
