@@ -14,7 +14,8 @@ module Api
 
       def authorize!
         token = extract_token_from_request
-        render status: :unauthorized, json: { error: 'Unauthorized!' } unless ti?(token)
+        @payload = ti?(token)
+        render status: :unauthorized, json: { error: 'Unauthorized!' } unless @payload
       end
     end
   end

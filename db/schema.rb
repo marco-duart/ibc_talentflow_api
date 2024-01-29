@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_01_26_153444) do
+ActiveRecord::Schema.define(version: 2024_01_29_194412) do
 
   create_table "academic_histories", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "title"
@@ -52,6 +52,8 @@ ActiveRecord::Schema.define(version: 2024_01_26_153444) do
     t.text "skills"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_id", null: false
+    t.index ["user_id"], name: "index_candidates_on_user_id"
   end
 
   create_table "companies", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -163,6 +165,8 @@ ActiveRecord::Schema.define(version: 2024_01_26_153444) do
     t.string "position"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_id", null: false
+    t.index ["user_id"], name: "index_recruiters_on_user_id"
   end
 
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -176,4 +180,6 @@ ActiveRecord::Schema.define(version: 2024_01_26_153444) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "candidates", "users"
+  add_foreign_key "recruiters", "users"
 end

@@ -15,12 +15,18 @@ module Register
     end
 
     def run
-      create_user
+      return unless valid_params?
+
+      create_admin
     end
 
     private
 
-    def create_user
+    def valid_params?
+      @name.present? && @cpf.present? && @email.present? && @password.present?
+    end
+
+    def create_admin
       User.create(
         name: @name,
         cpf: @cpf,

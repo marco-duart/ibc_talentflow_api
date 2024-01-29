@@ -9,7 +9,7 @@ Rails.application.routes.draw do
     end
 
     namespace :candidates do
-      post '/register', to: 'candidates#create'
+      post '/new', to: 'candidates#create'
     end
 
     # namespace :admins do
