@@ -1,3 +1,3 @@
 class Company < ApplicationRecord
-  has_many :job_postings, dependent: :nullify
+  has_many :job_postings, dependent: :destroy
 end

@@ -1,3 +1,3 @@
 class AcademicHistory < ApplicationRecord
-  belongs_to :candidate, dependent: :destroy
+  belongs_to :candidate
 end

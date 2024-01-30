@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IBC TalentFlow API</title>
+</head>
+
+<body>
+  <h1>DOCUMENTAÇÃO</h1>
+  <details>
+    <summary>
+      Modelos Principais:
+    </summary>
+    <ol>
+      <div>
+        <details>
+          <summary>User</summary>
+          <div>Representa os usuários do sistema. Possui um atributo chamado role(indicando o tipo de usuário) e
+            pode ser relacionado com um recruiter ou um candidate
+          </div>
+          <div>
+            Relações:
+            <ul>
+              <li>Has One: Candidate.</li>
+              <li> Has One: Recruiter.</li>
+            </ul>
+          </div>
+        </details>
+      </div>
+
+      <div>
+        <details>
+          <summary>Candidate</summary>
+          <div>
+            Representa o perfil de candidato, com ele é possível criar candidaturas nos processos seletivos.
+          </div>
+          <div>Relações:
+            <ul>
+              <li>Has many: ApplicationStatus, candidaturas nos processos seletivos</li>
+              <li>Has many: Documents</li>
+              <li>Has many: AcademicHistory</li>
+              <li>Has many: EmploymentHistory</li>
+              <li>Has many: ProfessionalLink</li>
+              <li>Belongs To: User</li>
+            </ul>
+          </div>
+        </details>
+      </div>
+
+      <div>
+        <details>
+          <summary>Company</summary>
+          <div>
+            Representa os CNPJ's do IBC, os quais estão relacionados a vaga epecífica.
+          </div>
+          <div>
+            Relações:
+            <ul>
+              <li>Has Many: JobPostings, vagas pertencentes ao CNPJ.</li>
+            </ul>
+          </div>
+        </details>
+      </div>
+
+      <div>
+        <details>
+          <summary>Document</summary>
+          <div>
+            Representa documentos incluidos no perfil do candidato.
+          </div>
+          <div>
+            Relações:
+            <ul>
+              <li>Belongs To: Candidate</li>
+            </ul>
+          </div>
+        </details>
+      </div>
+
+      <div>
+        <details>
+          <summary>EmploymentHistory</summary>
+          <div>
+            Representa o histórico profissional do perfil do candidato.
+          </div>
+          <div>
+            Relações:
+            <ul>
+              <li>Belongs To: Candidate</li>
+            </ul>
+          </div>
+        </details>
+      </div>
+
+      <div>
+        <details>
+          <summary>ProfessionalLink</summary>
+          <div>
+            Representa os links profissionais do perfil do candidato.
+          </div>
+          <div>
+            Relações:
+            <ul>
+              <li>Belongs To: Candidate</li>
+            </ul>
+        </details>
+      </div>
+      </div>
+
+      <div>
+        <details>
+          <summary>Exam</summary>
+          <div>
+            Representa os testes que podem ser cadastrados no processo seletivo, composto por várias ApplicationForm.
+          </div>
+          <div>
+            Relações:
+            <ul>
+              <li>Has Many: ApplicationForm</li>
+            </ul>
+          </div>
+        </details>
+      </div>
+
+      <div>
+        <details>
+          <summary>ApplicationForm</summary>
+          <div>
+            Representa uma pergunta, sendo composta por Question e Answer. Possui atributos para manipular a forma da
+            pergunta.
+          </div>
+          <div>
+            Relações:
+            <ul>
+              <li>Has Many: Exam</li>
+              <li>Has One: Question</li>
+              <li>Has One: Answer</li>
+            </ul>
+          </div>
+        </details>
+      </div>
+
+      <div>
+        <details>
+          <summary>Question</summary>
+          <div>
+            Representa as perguntas que podem ser cadastradas.
+          </div>
+          <div>
+            Relações:
+            <ul>
+              <li>Has Many: ApplicationForm</li>
+            </ul>
+          </div>
+        </details>
+      </div>
+
+      <div>
+        <details>
+          <summary>Answer</summary>
+          <div>
+            Representa as respostas que podem ser cadastradas.
+          </div>
+          <div>
+            Relações:
+            <ul>
+              <li>Has Many: ApplicationForm</li>
+            </ul>
+        </details>
+      </div>
+      </div>
+
+      <div>
+        <details>
+          <summary>Feedback</summary>
+          <div>Representa os retornos dos processos seletivos para as candidaturas.</div>
+          <div>
+            Relações:
+            <ul>
+              <li>Belongs To: HiringProcess</li>
+              <li>Belongs To: ApplicationStatus</li>
+            </ul>
+          </div>
+        </details>
+      </div>
+
+      <div>
+        <details>
+          <summary>JobPosting</summary>
+          <div>
+            Representa uma vaga de emprego(disponível ou não) postada por um dos CPNJ's do IBC.
+          </div>
+          <div>
+            Relações:
+            <ul>
+              <li>Has Many: HiringProcess</li>
+              <li>Belongs To: Company</li>
+            </ul>
+          </div>
+        </details>
+      </div>
+
+      <div>
+        <details>
+          <summary>HiringProcess</summary>
+          <div>
+            Representa o processo de seleção para uma vaga específica.
+          </div>
+          <div>
+            Relações:
+            <ul>
+              <li>Has many: Feedback</li>
+              <li>Has Many: Exam</li>
+              <li>Has Many: Interview</li>
+              <li>Has Many: ApplicationStatus</li>
+              <li>Belongs To: JobPosting</li>
+              <li>Belongs To: Recruiter</li>
+            </ul>
+          </div>
+        </details>
+      </div>
+
+      <div>
+        <details>
+          <summary>Interview</summary>
+          <div>
+            Representa uma entrevista realizada durante o processo de seleção.
+          </div>
+          <div>
+            Relações:
+            <ul>
+              <li>Belongs To: HiringProcess</li>
+              <li>Belongs To: ApplicationStatus</li>
+              <li>Belongs To: Recruiter</li>
+            </ul>
+          </div>
+        </details>
+      </div>
+
+      <div>
+        <details>
+          <summary>Recruiter</summary>
+          <div>
+            Representa um recrutador que participa do processo de seleção, sendo o perfil de role Admin.
+            Pode ter várias Interviews e pode criar Company, Job Posting e HiringProcess.
+          </div>
+          <div>
+            Relações:
+            <ul>
+              <li>Has Many: Interview</li>
+              <li>Has Many: HiringProcess</li>
+              <li>Belongs To: User</li>
+            </ul>
+          </div>
+        </details>
+      </div>
+    </ol>
+  </details>
+
+  <details>
+    <summary>
+      Fluxo da Aplicação:
+    </summary>
+    <ol>
+      <div>
+        <li>Candidato cria um perfil:</li>
+        <div>Candidato cria e preenche perfil, envia currículo e documentos.
+          Dados são salvos no modelo User e Candidate.</div>
+      </div>
+
+      <div>
+        <li>IBC posta a vaga:</li>
+        <div>
+          O admin cria a Company, e depois cria a vaga no modelo JobPosting.
+        </div>
+      </div>
+
+      <div>
+        <li>Início do processo seletivo:</li>
+        <div>Um novo processo seletivo é criado associado à vaga no modelo HiringProcess.</div>
+      </div>
+
+      <div>
+        <li>Candidato visualiza e candidata-se à vaga do processo seletivo:</li>
+        <div>Candidato visualiza vagas disponíveis e se candidata.</div>
+      </div>
+
+      <div>
+        <li>Entrevistas e avaliações:</li>
+        <div>Entrevistas são conduzidas (modelo Interview).
+          Avaliações são criadas (modelo Exam junto com Question e Answer)
+          Feedbacks são registrados (modelo Feedback).
+          Status da candidatura é atualizado (modelo ApplicationStatus).</div>
+      </div>
+
+      <div>
+        <li>Recrutador gerencia o processo:</li>
+        <div>Recrutador pode criar o processo, intrevistas, testes, atualizar em massa status de candidaturas e realizar
+          o
+          feedback.</div>
+      </div>
+
+      <div>
+        <li>Recrutador avalia os candidatos:</li>
+        <div>Empresa avalia candidatos com base em entrevistas testes.</div>
+      </div>
+
+      <div>
+        <li>Status Atualizado do Processo:</li>
+        <div>O status geral do processo é atualizado conforme as etapas são concluídas (modelo HiringProcess).</div>
+      </div>
+
+      <div>
+        <li>Feedback Final e Decisão:</li>
+        <div>Feedback final é registrado e a empresa toma decisão de contratação.</div>
+      </div>
+
+      <div>
+        <li>Contratação ou Fim do Processo:</li>
+        <div>Feedback final é registrado e a empresa toma decisão de contratação.</div>
+      </div>
+    </ol>
+  </details>
+
+  <details>
+    <summary>
+      Views
+    </summary>
+    <ol>
+      <div>
+        <li>Painel: Dashboard Geral</li>
+        <span>Candidato: </span>Mostra a situação dos processos seletivos em andamento que está candidatado.
+        Possivelmente será
+        incluído novas vagas disponíveis.
+        <span>Recrutador: </span>Mostra a situação dos processos seletivos em andamento. Relatórios importantes.
+        <span>TI: </span>Mostra relatórios importantes. Possivelmente mensagens de erro de integração.
+      </div>
+      <div>
+        <li>Painel: Candidatos</li>
+        <span>Candidato: </span>Não disponível.
+        <span>Recrutador: </span>Mostra todos os candidatos cadastrados(independente do status), podendo filtrar (a
+        definir).
+        <span>TI: </span>Mostra todos os candidatos cadastrados(independente do status), podendo filtrar (a definir).
+        Botões CRUD
+        disponível.
+      </div>
+      <div>
+        <li>Painel: Vagas</li>
+        <span>Candidato: </span>Mostra os processos seletivos disponíveis para candidatura.
+        <span>Recrutador: </span>Mostra todos os processos seletivos(independente do status), podendo filtrar (status,
+        data, vaga,
+        etc...). Botões CRUD disponível.
+        <span>TI: </span>Mostra todos os processos seletivos(independente do status), podendo filtrar (status, data,
+        vaga, etc...).
+        Botões CRUD disponível.
+      </div>
+      <div>
+        <li>Página: Novo/Editar Vaga</li>
+        <span>Candidato: </span>Não disponível.
+        <span>Recrutador: </span>Mostra formulários para criação/edição da vaga.
+        <span>TI: </span>Mostra formulários para criação/edição da vaga.
+      </div>
+      <div>
+        <li>Página: Novo/Editar Processo Seletivo</li>
+        <span>Candidato: </span>Não disponível.
+        <span>Recrutador: </span>Mostra formulários para criação/edição do processo seletivo.
+        <span>TI: </span>Mostra formulários para criação/edição do processo seletivo.
+      </div>
+      <div>
+        <li>Painel: Empresa</li>
+        <span>Candidato: </span>Não disponível.
+        <span>Recrutador: </span>Mostra informações sobre os CPNJ's cadastrados e suas vagas. Botões CRUD disponível.
+        <span>TI: </span>Mostra informações sobre os CPNJ's cadastrados e suas vagas. Botões CRUD disponível.
+      </div>
+      <div>
+        <li>Painel: Perfil</li>
+        <span>Candidato: </span>Mostra informações sobre o perfil e usuário. Botões CRUD disponível.
+        <span>Recrutador: </span>Mostra informações sobre o usuário. Botões CRUD disponível.
+        <span>TI: </span>Mostra informações sobre o usuário. Botões CRUD disponível.
+      </div>
+      <div>
+        <li>Painel: Perguntas</li>
+        <span>Candidato: </span>Não disponível.
+        <span>Recrutador: </span>Mostra informações sobre as perguntas cadastradas, sendo tanto a Question quanto a
+        Answer. Botões
+        CRUD disponível.
+        <span>TI: </span>
+      </div>
+      <div>
+        <li>Painel: Sobre Nós</li>
+        <span>Candidato: </span>Mostra informações sobre o IBC.
+        <span>Recrutador: </span>Mostra informações sobre o IBC. Botões CRUD disponíveis para alguns itens.
+        <span>TI: </span>Mostra informações sobre o IBC. Botões CRUD disponíveis.
+      </div>
+      <div>
+        <li>Notificações/Avisos</li>
+        <span>Candidato: </span>Mostra avisos e notificações inportantes.
+        <span>Recrutador: </span>Mostra avisos e notificações inportantes. É possível definir o público das
+        notificações. Botões CRUD
+        disponíveis.
+        <span>TI: </span>Mostra avisos e notificações inportantes. É possível definir o público das notificações. Botões
+        CRUD
+        disponíveis.
+      </div>
+    </ol>
+  </details>
+
+  <details>
+    <summary>
+      Estrutura do Projeto
+    </summary>
+    <p>Está sendo utilizado a arquitetura MVC(API). O Fluxo da arquitetura da requisição ao banco de dados é
+      da seguinte maneira:
+    <div>Requisição >> Rota >> Controller >> Service >> Banco de dados</div>
+    <ul>
+      <li>Rota: Responsável por disponibilizar e organizar as rotas da aplicação.</li>
+      <li>Controller: Realizam a lógica e tratamento da Request e da Response. Comunica com o service.</li>
+      <li>Service: Possui as regras de negócio. Comunica com o Banco de Dados.</li>
+      <li>Banco de Dados: Mysql, Activerecord disponível.</li>
+    </ul>
+    </p>
+  </details>
+
+  <details>
+    <summary>
+      Rotas
+    </summary>
+    <details>
+      <summary>Users | Pública</summary>
+      <ul>
+        <div>
+          <li>POST: "/register"</li>
+          <div>
+            name: string
+            cpf: string (sem pontuação; válido; único)
+            email: string (válido; não existente; único)
+            password: string (no mínimo 8 caracteres)
+          </div>
+        </div>
+        <div>
+          <li>POST: "/email"</li>
+          <div>
+            Não possui parâmetros.
+          </div>
+        </div>
+        <div>
+          <li>POST: "/cpf"</li>
+          <div>
+            Não possui parâmetros.
+          </div>
+        </div>
+        <div>
+          <li>POST: "/login"</li>
+          <div>
+            cpf: string
+            password: string
+          </div>
+        </div>
+      </ul>
+    </details>
+    <details>
+      <summary>Candidates | Privada</summary>
+      <ul>
+        <div>
+          <li>POST: "/new"</li>
+          <div>
+            phone_number1: string
+            phone_number2: string (sem pontuação; válido; único)
+            employee: string (válido; não existente; único)
+            resume: string
+            portfolio: string
+            skills: string
+          </div>
+        </div>
+      </ul>
+    </details>
+    <details>
+      <summary>Ti | Controlada</summary>
+      <ul>
+        <div>
+          <li>POST: "/admins/new"</li>
+          <div>
+            name: string
+            cpf: string (sem pontuação; válido; único)
+            email: string (válido; não existente; único)
+            password: string (no mínimo 8 caracteres)
+          </div>
+        </div>
+      </ul>
+    </details>
+  </details>
+</body>
+
+</html>

@@ -1,3 +1,5 @@
 class ApplicationForm < ApplicationRecord
-  belongs_to :application_status
+  has_many :exam
+  has_one :question
+  has_one :answer
 end
