@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="doc.scss">
   <title>IBC TalentFlow API</title>
 </head>
 
@@ -13,7 +14,7 @@
     <summary>
       Modelos Principais:
     </summary>
-    <ol>
+    <div>
       <div>
         <details>
           <summary>User</summary>
@@ -105,8 +106,8 @@
             <ul>
               <li>Belongs To: Candidate</li>
             </ul>
+          </div>
         </details>
-      </div>
       </div>
 
       <div>
@@ -168,8 +169,8 @@
             <ul>
               <li>Has Many: ApplicationForm</li>
             </ul>
+          </div>
         </details>
-      </div>
       </div>
 
       <div>
@@ -256,7 +257,7 @@
           </div>
         </details>
       </div>
-    </ol>
+    </div>
   </details>
 
   <details>
@@ -266,8 +267,7 @@
     <ol>
       <div>
         <li>Candidato cria um perfil:</li>
-        <div>Candidato cria e preenche perfil, envia currículo e documentos.
-          Dados são salvos no modelo User e Candidate.</div>
+        <div>Candidato cria e preenche perfil, envia currículo e documentos. Dados são salvos no modelo User e Candidate.</div>
       </div>
 
       <div>
@@ -289,17 +289,12 @@
 
       <div>
         <li>Entrevistas e avaliações:</li>
-        <div>Entrevistas são conduzidas (modelo Interview).
-          Avaliações são criadas (modelo Exam junto com Question e Answer)
-          Feedbacks são registrados (modelo Feedback).
-          Status da candidatura é atualizado (modelo ApplicationStatus).</div>
+        <div>Entrevistas são conduzidas (modelo Interview). Avaliações são criadas (modelo Exam junto com Question e Answer). Feedbacks são registrados (modelo Feedback). Status da candidatura é atualizado (modelo ApplicationStatus).</div>
       </div>
 
       <div>
         <li>Recrutador gerencia o processo:</li>
-        <div>Recrutador pode criar o processo, intrevistas, testes, atualizar em massa status de candidaturas e realizar
-          o
-          feedback.</div>
+        <div>Recrutador pode criar o processo, intrevistas, testes, atualizar em massa status de candidaturas e realizar o feedback.</div>
       </div>
 
       <div>
@@ -331,78 +326,65 @@
     <ol>
       <div>
         <li>Painel: Dashboard Geral</li>
-        <span>Candidato: </span>Mostra a situação dos processos seletivos em andamento que está candidatado.
-        Possivelmente será
-        incluído novas vagas disponíveis.
-        <span>Recrutador: </span>Mostra a situação dos processos seletivos em andamento. Relatórios importantes.
-        <span>TI: </span>Mostra relatórios importantes. Possivelmente mensagens de erro de integração.
+        <div>
+          <span>Candidato: </span>Mostra a situação dos processos seletivos em andamento que está candidatado. Possivelmente será incluído novas vagas disponíveis.
+        </div>
+        <div><span>Recrutador: </span>Mostra a situação dos processos seletivos em andamento. Relatórios importantes.</div>
+        <div><span>TI: </span>Mostra relatórios importantes. Possivelmente mensagens de erro de integração.</div>
       </div>
       <div>
         <li>Painel: Candidatos</li>
-        <span>Candidato: </span>Não disponível.
-        <span>Recrutador: </span>Mostra todos os candidatos cadastrados(independente do status), podendo filtrar (a
-        definir).
-        <span>TI: </span>Mostra todos os candidatos cadastrados(independente do status), podendo filtrar (a definir).
-        Botões CRUD
-        disponível.
+        <div><span>Candidato: </span>Não disponível.</div>
+        <div><span>Recrutador: </span>Mostra todos os candidatos cadastrados(independente do status), podendo filtrar (a definir).</div>
+        <div><span>TI: </span>Mostra todos os candidatos cadastrados(independente do status), podendo filtrar (a definir). Botões CRUD disponível.</div>
       </div>
       <div>
         <li>Painel: Vagas</li>
-        <span>Candidato: </span>Mostra os processos seletivos disponíveis para candidatura.
-        <span>Recrutador: </span>Mostra todos os processos seletivos(independente do status), podendo filtrar (status,
-        data, vaga,
-        etc...). Botões CRUD disponível.
-        <span>TI: </span>Mostra todos os processos seletivos(independente do status), podendo filtrar (status, data,
-        vaga, etc...).
-        Botões CRUD disponível.
+        <div><span>Candidato: </span>Mostra os processos seletivos disponíveis para candidatura.</div>
+        <div><span>Recrutador: </span>Mostra todos os processos seletivos(independente do status), podendo filtrar (status, data, vaga, etc...). Botões CRUD disponível.</div>
+        <div><span>TI: </span>Mostra todos os processos seletivos(independente do status), podendo filtrar (status, data, vaga, etc...). Botões CRUD disponível.</div>
       </div>
       <div>
         <li>Página: Novo/Editar Vaga</li>
-        <span>Candidato: </span>Não disponível.
-        <span>Recrutador: </span>Mostra formulários para criação/edição da vaga.
-        <span>TI: </span>Mostra formulários para criação/edição da vaga.
+        <div><span>Candidato: </span>Não disponível.</div>
+        <div><span>Recrutador: </span>Mostra formulários para criação/edição da vaga.</div>
+        <div><span>TI: </span>Mostra formulários para criação/edição da vaga.</div>
       </div>
       <div>
         <li>Página: Novo/Editar Processo Seletivo</li>
-        <span>Candidato: </span>Não disponível.
-        <span>Recrutador: </span>Mostra formulários para criação/edição do processo seletivo.
-        <span>TI: </span>Mostra formulários para criação/edição do processo seletivo.
+        <div><span>Candidato: </span>Não disponível.</div>
+        <div><span>Recrutador: </span>Mostra formulários para criação/edição do processo seletivo.</div>
+        <div><span>TI: </span>Mostra formulários para criação/edição do processo seletivo.</div>
       </div>
       <div>
         <li>Painel: Empresa</li>
-        <span>Candidato: </span>Não disponível.
-        <span>Recrutador: </span>Mostra informações sobre os CPNJ's cadastrados e suas vagas. Botões CRUD disponível.
-        <span>TI: </span>Mostra informações sobre os CPNJ's cadastrados e suas vagas. Botões CRUD disponível.
+        <div><span>Candidato: </span>Não disponível.</div>
+        <div><span>Recrutador: </span>Mostra informações sobre os CPNJ's cadastrados e suas vagas. Botões CRUD disponível.</div>
+        <div><span>TI: </span>Mostra informações sobre os CPNJ's cadastrados e suas vagas. Botões CRUD disponível.</div>
       </div>
       <div>
         <li>Painel: Perfil</li>
-        <span>Candidato: </span>Mostra informações sobre o perfil e usuário. Botões CRUD disponível.
-        <span>Recrutador: </span>Mostra informações sobre o usuário. Botões CRUD disponível.
-        <span>TI: </span>Mostra informações sobre o usuário. Botões CRUD disponível.
+        <div><span>Candidato: </span>Mostra informações sobre o perfil e usuário. Botões CRUD disponível.</div>
+        <div><span>Recrutador: </span>Mostra informações sobre o usuário. Botões CRUD disponível.</div>
+        <div><span>TI: </span>Mostra informações sobre o usuário. Botões CRUD disponível.</div>
       </div>
       <div>
         <li>Painel: Perguntas</li>
-        <span>Candidato: </span>Não disponível.
-        <span>Recrutador: </span>Mostra informações sobre as perguntas cadastradas, sendo tanto a Question quanto a
-        Answer. Botões
-        CRUD disponível.
-        <span>TI: </span>
+        <div><span>Candidato: </span>Não disponível.</div>
+        <div><span>Recrutador: </span>Mostra informações sobre as perguntas cadastradas, sendo tanto a Question quanto a Answer. Botões CRUD disponível.</div>
+        <div><span>TI: </span></div>
       </div>
       <div>
         <li>Painel: Sobre Nós</li>
-        <span>Candidato: </span>Mostra informações sobre o IBC.
-        <span>Recrutador: </span>Mostra informações sobre o IBC. Botões CRUD disponíveis para alguns itens.
-        <span>TI: </span>Mostra informações sobre o IBC. Botões CRUD disponíveis.
+        <div><span>Candidato: </span>Mostra informações sobre o IBC.</div>
+        <div><span>Recrutador: </span>Mostra informações sobre o IBC. Botões CRUD disponíveis para alguns itens.</div>
+        <div><span>TI: </span>Mostra informações sobre o IBC. Botões CRUD disponíveis.</div>
       </div>
       <div>
         <li>Notificações/Avisos</li>
-        <span>Candidato: </span>Mostra avisos e notificações inportantes.
-        <span>Recrutador: </span>Mostra avisos e notificações inportantes. É possível definir o público das
-        notificações. Botões CRUD
-        disponíveis.
-        <span>TI: </span>Mostra avisos e notificações inportantes. É possível definir o público das notificações. Botões
-        CRUD
-        disponíveis.
+        <div><span>Candidato: </span>Mostra avisos e notificações inportantes.</div>
+        <span>Recrutador: </span>Mostra avisos e notificações inportantes. É possível definir o público das notificações. Botões CRUD disponíveis.
+        <span>TI: </span>Mostra avisos e notificações inportantes. É possível definir o público das notificações. Botões CRUD disponíveis.
       </div>
     </ol>
   </details>
@@ -411,85 +393,87 @@
     <summary>
       Estrutura do Projeto
     </summary>
-    <p>Está sendo utilizado a arquitetura MVC(API). O Fluxo da arquitetura da requisição ao banco de dados é
+    <div>Está sendo utilizado a arquitetura MVC(API). O Fluxo da arquitetura da requisição ao banco de dados é
       da seguinte maneira:
-    <div>Requisição >> Rota >> Controller >> Service >> Banco de dados</div>
-    <ul>
-      <li>Rota: Responsável por disponibilizar e organizar as rotas da aplicação.</li>
-      <li>Controller: Realizam a lógica e tratamento da Request e da Response. Comunica com o service.</li>
-      <li>Service: Possui as regras de negócio. Comunica com o Banco de Dados.</li>
-      <li>Banco de Dados: Mysql, Activerecord disponível.</li>
-    </ul>
-    </p>
+      <div>Requisição >> Rota >> Controller >> Service >> Banco de dados</div>
+      <ul>
+        <li>Rota: Responsável por disponibilizar e organizar as rotas da aplicação.</li>
+        <li>Controller: Realizam a lógica e tratamento da Request e da Response. Comunica com o service.</li>
+        <li>Service: Possui as regras de negócio. Comunica com o Banco de Dados.</li>
+        <li>Banco de Dados: Mysql, Activerecord disponível.</li>
+      </ul>
+    </div>
   </details>
 
   <details>
     <summary>
       Rotas
     </summary>
-    <details>
-      <summary>Users | Pública</summary>
-      <ul>
-        <div>
-          <li>POST: "/register"</li>
+    <div>
+      <details>
+        <summary>Users | Pública</summary>
+        <ul>
           <div>
-            name: string
-            cpf: string (sem pontuação; válido; único)
-            email: string (válido; não existente; único)
-            password: string (no mínimo 8 caracteres)
+            <li>POST: "/register"</li>
+            <div>
+              name: string
+              cpf: string (sem pontuação; válido; único)
+              email: string (válido; não existente; único)
+              password: string (no mínimo 8 caracteres)
+            </div>
           </div>
-        </div>
-        <div>
-          <li>POST: "/email"</li>
           <div>
-            Não possui parâmetros.
+            <li>POST: "/email"</li>
+            <div>
+              Não possui parâmetros.
+            </div>
           </div>
-        </div>
-        <div>
-          <li>POST: "/cpf"</li>
           <div>
-            Não possui parâmetros.
+            <li>POST: "/cpf"</li>
+            <div>
+              Não possui parâmetros.
+            </div>
           </div>
-        </div>
-        <div>
-          <li>POST: "/login"</li>
           <div>
-            cpf: string
-            password: string
+            <li>POST: "/login"</li>
+            <div>
+              cpf: string
+              password: string
+            </div>
           </div>
-        </div>
-      </ul>
-    </details>
-    <details>
-      <summary>Candidates | Privada</summary>
-      <ul>
-        <div>
-          <li>POST: "/new"</li>
+        </ul>
+      </details>
+      <details>
+        <summary>Candidates | Privada</summary>
+        <ul>
           <div>
-            phone_number1: string
-            phone_number2: string (sem pontuação; válido; único)
-            employee: string (válido; não existente; único)
-            resume: string
-            portfolio: string
-            skills: string
+            <li>POST: "/new"</li>
+            <div>
+              phone_number1: string
+              phone_number2: string (sem pontuação; válido; único)
+              employee: string (válido; não existente; único)
+              resume: string
+              portfolio: string
+              skills: string
+            </div>
           </div>
-        </div>
-      </ul>
-    </details>
-    <details>
-      <summary>Ti | Controlada</summary>
-      <ul>
-        <div>
-          <li>POST: "/admins/new"</li>
+        </ul>
+      </details>
+      <details>
+        <summary>Ti | Controlada</summary>
+        <ul>
           <div>
-            name: string
-            cpf: string (sem pontuação; válido; único)
-            email: string (válido; não existente; único)
-            password: string (no mínimo 8 caracteres)
+            <li>POST: "/admins/new"</li>
+            <div>
+              name: string
+              cpf: string (sem pontuação; válido; único)
+              email: string (válido; não existente; único)
+              password: string (no mínimo 8 caracteres)
+            </div>
           </div>
-        </div>
-      </ul>
-    </details>
+        </ul>
+      </details>
+    </div>
   </details>
 </body>
 
