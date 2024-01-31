@@ -1,7 +1,7 @@
 class Recruiter < ApplicationRecord
   belongs_to :user
-  has_many :interviews, dependent: :nullify
-  has_many :hiring_processes, dependent: :nullify
+  has_many :interviews
+  has_many :hiring_processes
 
   validate :user_presence
 

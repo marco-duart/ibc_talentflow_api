@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_01_29_194412) do
+ActiveRecord::Schema.define(version: 2024_01_31_193111) do
 
   create_table "academic_histories", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "title"
@@ -108,6 +108,10 @@ ActiveRecord::Schema.define(version: 2024_01_29_194412) do
     t.string "status"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "job_posting_id", null: false
+    t.bigint "recruiter_id"
+    t.index ["job_posting_id"], name: "index_hiring_processes_on_job_posting_id"
+    t.index ["recruiter_id"], name: "index_hiring_processes_on_recruiter_id"
   end
 
   create_table "interviews", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -132,6 +136,8 @@ ActiveRecord::Schema.define(version: 2024_01_29_194412) do
     t.datetime "end_date"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "company_id", null: false
+    t.index ["company_id"], name: "index_job_postings_on_company_id"
   end
 
   create_table "notifications", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -178,8 +184,13 @@ ActiveRecord::Schema.define(version: 2024_01_29_194412) do
     t.string "photo"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.datetime "discarded_at"
+    t.index ["discarded_at"], name: "index_users_on_discarded_at"
   end
 
   add_foreign_key "candidates", "users"
+  add_foreign_key "hiring_processes", "job_postings"
+  add_foreign_key "hiring_processes", "recruiters"
+  add_foreign_key "job_postings", "companies"
   add_foreign_key "recruiters", "users"
 end

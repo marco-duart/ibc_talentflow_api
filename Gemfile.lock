@@ -71,6 +71,8 @@ GEM
       activemodel (>= 3.0)
     crass (1.0.6)
     date (3.3.4)
+    discard (1.3.0)
+      activerecord (>= 4.2, < 8)
     email_validator (2.2.4)
       activemodel
     erubi (1.12.0)
@@ -207,6 +209,7 @@ DEPENDENCIES
   bootsnap (>= 1.4.4)
   byebug
   cpf_validator
+  discard (~> 1.2)
   email_validator
   jwt
   listen (~> 3.3)

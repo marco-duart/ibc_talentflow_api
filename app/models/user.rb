@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  include Discard::Model
+  
   has_secure_password
 
   has_one :candidate

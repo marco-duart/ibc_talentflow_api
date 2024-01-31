@@ -23,7 +23,7 @@ module UserRecruiter
     end
 
     def user_exists?
-      User.find(@id)
+      User.exists?(@id)
     end
 
     def create_recruiter
@@ -33,7 +33,7 @@ module UserRecruiter
         email: user.email,
         position: @position
       }
-      recruiter = user.build_recruiter(recruiter_params)
+      recruiter = user.create_recruiter(recruiter_params)
       return 'Ok' if recruiter.save
 
       'Deu ruim'

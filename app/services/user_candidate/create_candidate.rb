@@ -28,7 +28,7 @@ module UserCandidate
     end
 
     def user_exists?
-      User.find(@id)
+      User.exists?(@id)
     end
 
     def create_candidate
@@ -43,7 +43,7 @@ module UserCandidate
         portfolio: @portfolio,
         skills: @skills
       }
-      candidate = user.build_candidate(candidate_params)
+      candidate = user.create_candidate(candidate_params)
       return 'Ok' if candidate.save
 
       'Deu ruim'

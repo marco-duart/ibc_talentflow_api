@@ -13,9 +13,10 @@ module AccessControl
 
   private
 
-  def check_role(*required_role, token)
+  def check_role(required_role, token)
     payload = TokenDecoder.decode_token(token)
-    false unless payload && (payload['role'] == required_role || payload['role'] == 'ti')
+    return false unless payload && (payload['role'] == required_role || payload['role'] == 'ti')
+
     payload
   end
 end

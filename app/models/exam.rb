@@ -1,3 +1,3 @@
 class Exam < ApplicationRecord
-  has_many :application_form
+  has_many :application_forms
 end

@@ -27,13 +27,14 @@ module Register
     end
 
     def create_user
-      User.create(
+      user_params = {
         name: @name,
         cpf: @cpf,
         email: @email,
         password_digest: @password,
         role: @role
-      )
+      }
+      User.create(user_params)
     end
   end
 end

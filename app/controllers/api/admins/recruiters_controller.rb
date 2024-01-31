@@ -1,5 +1,5 @@
 module Api
-  module Recruiters
+  module Admins
     class RecruitersController < ApplicationController
       include AccessControl
 

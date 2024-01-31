@@ -1,5 +1,5 @@
 class ApplicationForm < ApplicationRecord
-  has_many :exam
+  has_many :exams
   has_one :question
   has_one :answer
 end
