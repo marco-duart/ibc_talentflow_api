@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_01_31_193111) do
+ActiveRecord::Schema.define(version: 2024_02_01_120952) do
 
   create_table "academic_histories", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "title"
@@ -39,6 +39,8 @@ ActiveRecord::Schema.define(version: 2024_01_31_193111) do
     t.string "status"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "hiring_process_id", null: false
+    t.index ["hiring_process_id"], name: "index_application_statuses_on_hiring_process_id"
   end
 
   create_table "candidates", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -90,6 +92,8 @@ ActiveRecord::Schema.define(version: 2024_01_31_193111) do
     t.string "title"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "hiring_process_id", null: false
+    t.index ["hiring_process_id"], name: "index_exams_on_hiring_process_id"
   end
 
   create_table "feedbacks", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -99,6 +103,8 @@ ActiveRecord::Schema.define(version: 2024_01_31_193111) do
     t.string "improvements"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "hiring_process_id", null: false
+    t.index ["hiring_process_id"], name: "index_feedbacks_on_hiring_process_id"
   end
 
   create_table "hiring_processes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -121,6 +127,8 @@ ActiveRecord::Schema.define(version: 2024_01_31_193111) do
     t.string "interview_feedback"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "hiring_process_id", null: false
+    t.index ["hiring_process_id"], name: "index_interviews_on_hiring_process_id"
   end
 
   create_table "job_postings", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -188,9 +196,13 @@ ActiveRecord::Schema.define(version: 2024_01_31_193111) do
     t.index ["discarded_at"], name: "index_users_on_discarded_at"
   end
 
+  add_foreign_key "application_statuses", "hiring_processes"
   add_foreign_key "candidates", "users"
+  add_foreign_key "exams", "hiring_processes"
+  add_foreign_key "feedbacks", "hiring_processes"
   add_foreign_key "hiring_processes", "job_postings"
   add_foreign_key "hiring_processes", "recruiters"
+  add_foreign_key "interviews", "hiring_processes"
   add_foreign_key "job_postings", "companies"
   add_foreign_key "recruiters", "users"
 end

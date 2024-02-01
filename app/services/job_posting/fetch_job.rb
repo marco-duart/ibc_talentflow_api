@@ -1,4 +1,4 @@
-class JobPosting::DeleteJob
+class JobPosting::FetchJob
   def self.run(params)
     new(params).run
   end
@@ -8,21 +8,17 @@ class JobPosting::DeleteJob
   end
 
   def run
-    return unless valid_params?
-
-    delete_job
+    @job_id ? fetch_by_id : fetch_all
   end
 
   private
 
-  def valid_params?
-    @job_id.present?
+  def fetch_all
+    JobPosting.all
   end
 
-  def delete_job
+  def fetch_by_id
     job = JobPosting.find(@job_id)
-    return unless job
-
-    job.destroy
+    job || 'Não encontrado!'
   end
 end

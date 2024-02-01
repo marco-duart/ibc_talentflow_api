@@ -5,6 +5,16 @@ module Api
 
       before_action :authorize!
 
+      def fetch_all
+        body = JobPosting::FetchJob.run(params)
+        render status: :ok, body: body.to_json
+      end
+
+      def fetch_by_id
+        body = JobPosting::FetchJob.run(params)
+        render status: :ok, body: body.to_json
+      end
+
       def create
         body = JobPosting::CreateJob.run(params)
         render status: :ok, body: body.to_json
@@ -16,7 +26,7 @@ module Api
       end
 
       def delete
-        body = JobPosting::CreateJob.run(params)
+        body = JobPosting::DeleteJob.run(params)
         render status: :ok, body: body.to_json
       end
 

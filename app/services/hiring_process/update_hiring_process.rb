@@ -5,7 +5,12 @@ class HiringProcess::UpdateHiringProcess
 
   def initialize(params)
     @hiring_process_id = params['id']
-    @hiring_process_attributes = {}
+    @hiring_process_attributes = {
+      start_date: params['start_date'],
+      end_date: params['end_date'],
+      stage: params['stage'],
+      status: params['status']
+    }
   end
 
   def run

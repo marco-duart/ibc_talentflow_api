@@ -5,6 +5,16 @@ module Api
 
       before_action :authorize!
 
+      def fetch_all
+        body = HiringProcess::FetchHiringProcess.run(params)
+        render status: :ok, body: body.to_json
+      end
+
+      def fetch_by_id
+        body = HiringProcess::FetchHiringProcess.run(params)
+        render status: :ok, body: body.to_json
+      end
+
       def create
         body = HiringProcess::CreateHiringProcess.run(params, @payload)
         render status: :ok, body: body.to_json
@@ -16,7 +26,7 @@ module Api
       end
 
       def delete
-        body = HiringProcess::CreateHiringProcess.run(params)
+        body = HiringProcess::DeleteHiringProcess.run(params)
         render status: :ok, body: body.to_json
       end
 
