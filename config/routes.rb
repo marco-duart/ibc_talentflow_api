@@ -10,6 +10,38 @@ Rails.application.routes.draw do
 
     namespace :candidates do
       post '/', to: 'candidates#create'
+
+      get '/documents', to: 'documents#fetch_all'
+      get '/document/:id', to: 'documents#fetch_by_id'
+      post '/document', to: 'documents#create'
+      patch '/document/:id', to: 'documents#update'
+      delete '/document/:id', to: 'documents#delete'
+
+      get '/academics', to: 'academic_histories#fetch_all'
+      get '/academic/:id', to: 'academic_histories#fetch_by_id'
+      post '/academic', to: 'academic_histories#create'
+      patch '/academic/:id', to: 'academic_histories#update'
+      delete '/academic/:id', to: 'academic_histories#delete'
+
+      get '/employments', to: 'employment_histories#fetch_all'
+      get '/employment/:id', to: 'employment_histories#fetch_by_id'
+      post '/employment', to: 'employment_histories#create'
+      patch '/employment/:id', to: 'employment_histories#update'
+      delete '/employment/:id', to: 'employment_histories#delete'
+
+      get '/links', to: 'professional_links#fetch_all'
+      get '/link/:id', to: 'professional_links#fetch_by_id'
+      post '/link', to: 'professional_links#create'
+      patch '/link/:id', to: 'professional_links#update'
+      delete '/link/:id', to: 'professional_links#delete'
+
+      # get '/application', to: 'application_status#fetch_all'
+      # get '/application/:id', to: 'application_status#fetch_by_id'
+      post '/application', to: 'application_status#create'
+      # patch '/application/:id', to: 'application_status#update'
+      # delete '/application/:id', to: 'application_status#delete'
+
+      
     end
 
     namespace :admins do

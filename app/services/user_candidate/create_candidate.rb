@@ -31,6 +31,13 @@ module UserCandidate
       User.exists?(@id)
     end
 
+    def register_cpf(user)
+      user.candidate.documents.create({
+                                        document_name: 'CPF',
+                                        document_number: user.cpf
+                                      })
+    end
+
     def create_candidate
       user = User.find(@id)
       candidate_params = {
@@ -38,15 +45,19 @@ module UserCandidate
         email: user.email,
         phone_number1: @phone_number1,
         phone_number2: @phone_number2,
-        employee: @employee == 'true',
+        employee: @employee,
         resume: @resume,
         portfolio: @portfolio,
         skills: @skills
       }
-      candidate = user.create_candidate(candidate_params)
-      return 'Ok' if candidate.save
+      candidate = user.build_candidate(candidate_params)
 
-      'Deu ruim'
+      if candidate.save
+        register_cpf(user)
+        return candidate
+      end
+
+      puts "Erro! : #{candidate.errors.full_messages}"
     end
   end
 end

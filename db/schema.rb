@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_02_01_120952) do
+ActiveRecord::Schema.define(version: 2024_02_01_131248) do
 
   create_table "academic_histories", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "title"
@@ -20,6 +20,8 @@ ActiveRecord::Schema.define(version: 2024_02_01_120952) do
     t.datetime "end_date"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "candidate_id", null: false
+    t.index ["candidate_id"], name: "index_academic_histories_on_candidate_id"
   end
 
   create_table "answers", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -40,6 +42,8 @@ ActiveRecord::Schema.define(version: 2024_02_01_120952) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "hiring_process_id", null: false
+    t.bigint "candidate_id", null: false
+    t.index ["candidate_id"], name: "index_application_statuses_on_candidate_id"
     t.index ["hiring_process_id"], name: "index_application_statuses_on_hiring_process_id"
   end
 
@@ -76,6 +80,8 @@ ActiveRecord::Schema.define(version: 2024_02_01_120952) do
     t.string "image"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "candidate_id", null: false
+    t.index ["candidate_id"], name: "index_documents_on_candidate_id"
   end
 
   create_table "employment_histories", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -86,6 +92,8 @@ ActiveRecord::Schema.define(version: 2024_02_01_120952) do
     t.text "achievements"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "candidate_id", null: false
+    t.index ["candidate_id"], name: "index_employment_histories_on_candidate_id"
   end
 
   create_table "exams", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -162,6 +170,8 @@ ActiveRecord::Schema.define(version: 2024_02_01_120952) do
     t.string "link"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "candidate_id", null: false
+    t.index ["candidate_id"], name: "index_professional_links_on_candidate_id"
   end
 
   create_table "questions", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -196,13 +206,18 @@ ActiveRecord::Schema.define(version: 2024_02_01_120952) do
     t.index ["discarded_at"], name: "index_users_on_discarded_at"
   end
 
+  add_foreign_key "academic_histories", "candidates"
+  add_foreign_key "application_statuses", "candidates"
   add_foreign_key "application_statuses", "hiring_processes"
   add_foreign_key "candidates", "users"
+  add_foreign_key "documents", "candidates"
+  add_foreign_key "employment_histories", "candidates"
   add_foreign_key "exams", "hiring_processes"
   add_foreign_key "feedbacks", "hiring_processes"
   add_foreign_key "hiring_processes", "job_postings"
   add_foreign_key "hiring_processes", "recruiters"
   add_foreign_key "interviews", "hiring_processes"
   add_foreign_key "job_postings", "companies"
+  add_foreign_key "professional_links", "candidates"
   add_foreign_key "recruiters", "users"
 end
