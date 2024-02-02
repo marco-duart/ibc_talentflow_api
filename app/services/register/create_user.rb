@@ -1,40 +1,38 @@
-module Register
-  class CreateUser
-    include BCrypt
+class Register::CreateUser
+  include BCrypt
 
-    def self.run(params)
-      new(params).run
-    end
+  def self.run(params)
+    new(params).run
+  end
 
-    def initialize(params)
-      @name = params['name']
-      @cpf = params['cpf']
-      @email = params['email']
-      @password = params['password']
-      @role = 'user'
-    end
+  def initialize(params)
+    @name = params['name']
+    @cpf = params['cpf']
+    @email = params['email']
+    @password = params['password']
+    @role = 'user'
+  end
 
-    def run
-      return unless valid_params?
+  def run
+    return unless valid_params?
 
-      create_user
-    end
+    create_user
+  end
 
-    private
+  private
 
-    def valid_params?
-      @name.present? && @cpf.present? && @email.present? && @password.present?
-    end
+  def valid_params?
+    @name.present? && @cpf.present? && @email.present? && @password.present?
+  end
 
-    def create_user
-      user_params = {
-        name: @name,
-        cpf: @cpf,
-        email: @email,
-        password_digest: @password,
-        role: @role
-      }
-      User.create(user_params)
-    end
+  def create_user
+    user_params = {
+      name: @name,
+      cpf: @cpf,
+      email: @email,
+      password_digest: @password,
+      role: @role
+    }
+    User.create(user_params)
   end
 end

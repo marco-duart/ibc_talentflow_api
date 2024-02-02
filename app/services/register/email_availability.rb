@@ -1,26 +1,28 @@
-module Register
-  class EmailAvailability
-    def self.run(params)
-      new(params).run
-    end
+class Register::EmailAvailability
+  def self.run(params)
+    new(params).run
+  end
 
-    def initialize(params)
-      @email = params['email']
-    end
+  def initialize(params)
+    @email = params['email']
+  end
 
-    def run
-      check_email
-    end
+  def run
+    check_email
+  end
 
-    private
+  private
 
-    def check_email
-      user = User.find_by(email: @email)
-      user ? {
+  def check_email
+    user = User.find_by(email: @email)
+    if user
+      {
         error: true,
         message: 'Unavaliable email!',
         code: 400
-      } : {
+      }
+    else
+      {
         error: false,
         message: 'Avaliable e-mail!',
         code: 200

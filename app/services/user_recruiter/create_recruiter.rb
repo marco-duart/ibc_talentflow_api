@@ -1,42 +1,40 @@
-module UserRecruiter
-  class CreateRecruiter
-    def self.run(params, payload)
-      new(params, payload).run
-    end
+class UserRecruiter::CreateRecruiter
+  def self.run(params, payload)
+    new(params, payload).run
+  end
 
-    def initialize(params, payload)
-      @id = payload['user_id']
-      @position = params['position']
-    end
+  def initialize(params, payload)
+    @id = payload['user_id']
+    @position = params['position']
+  end
 
-    def run
-      return unless valid_params?
-      return unless user_exists?
+  def run
+    return unless valid_params?
+    return unless user_exists?
 
-      create_recruiter
-    end
+    create_recruiter
+  end
 
-    private
+  private
 
-    def valid_params?
-      @id.present? && @position.present?
-    end
+  def valid_params?
+    @id.present? && @position.present?
+  end
 
-    def user_exists?
-      User.exists?(@id)
-    end
+  def user_exists?
+    User.exists?(@id)
+  end
 
-    def create_recruiter
-      user = User.find(@id)
-      recruiter_params = {
-        name: user.name,
-        email: user.email,
-        position: @position
-      }
-      recruiter = user.create_recruiter(recruiter_params)
-      return 'Ok' if recruiter.save
+  def create_recruiter
+    user = User.find(@id)
+    recruiter_params = {
+      name: user.name,
+      email: user.email,
+      position: @position
+    }
+    recruiter = user.create_recruiter(recruiter_params)
+    return 'Ok' if recruiter.save
 
-      'Deu ruim'
-    end
+    'Deu ruim'
   end
 end

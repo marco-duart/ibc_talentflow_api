@@ -1,26 +1,28 @@
-module Register
-  class CpfAvailability
-    def self.run(params)
-      new(params).run
-    end
+class Register::CpfAvailability
+  def self.run(params)
+    new(params).run
+  end
 
-    def initialize(params)
-      @cpf = params['cpf']
-    end
+  def initialize(params)
+    @cpf = params['cpf']
+  end
 
-    def run
-      check_cpf
-    end
+  def run
+    check_cpf
+  end
 
-    private
+  private
 
-    def check_cpf
-      user = User.find_by(cpf: @cpf)
-      user ? {
+  def check_cpf
+    user = User.find_by(cpf: @cpf)
+    if user
+      {
         error: true,
         message: 'Unavaliable CPF!',
         code: 400
-      } : {
+      }
+    else
+      {
         error: false,
         message: 'Avaliable CPF!',
         code: 200

@@ -13,6 +13,7 @@ class ApplicationStatus::CreateApplicationStatus
     return unless valid_params?
     return unless candidate_exists?
     return unless hiring_process_exists?
+    return if application_exists?
 
     create_application
   end
@@ -31,6 +32,11 @@ class ApplicationStatus::CreateApplicationStatus
 
   def hiring_process_exists?
     HiringProcess.exists?(@hiring_process_id)
+  end
+
+  def application_exists?
+    application = User.find(@user_id).candidate.applications.where(hiring_process_id: @hiring_process_id)
+    application.present?
   end
 
   def create_application
