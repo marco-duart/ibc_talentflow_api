@@ -7,8 +7,22 @@ class CreateCandidates < ActiveRecord::Migration[6.1]
       t.string :phone_number2
       t.boolean :employee
       t.string :resume
-      t.string :portfolio
-      t.text :skills
+      t.string :birthplace
+      t.string :gender
+      t.date :birthdate
+      t.string :marital_status
+      t.string :address_neighborhood
+      t.string :address_city
+      t.string :mother_name
+      t.string :spouse_name
+      t.integer :number_of_children
+      t.string :residence_status
+      t.string :possessions
+      t.boolean :other_incomes
+      t.boolean :relatives_in_company
+      t.boolean :smoker
+      t.boolean :alcohol_consumer
+      t.boolean :medication_user
 
       t.timestamps
     end

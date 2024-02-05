@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_02_01_131248) do
+ActiveRecord::Schema.define(version: 2024_02_05_203211) do
 
   create_table "academic_histories", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "title"
@@ -32,9 +32,15 @@ ActiveRecord::Schema.define(version: 2024_02_01_131248) do
   end
 
   create_table "application_forms", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.integer "general_average"
+    t.text "first"
+    t.text "second"
+    t.text "third"
+    t.text "fourth"
+    t.text "fifth"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "application_status_id", null: false
+    t.index ["application_status_id"], name: "index_application_forms_on_application_status_id"
   end
 
   create_table "application_statuses", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -47,6 +53,15 @@ ActiveRecord::Schema.define(version: 2024_02_01_131248) do
     t.index ["hiring_process_id"], name: "index_application_statuses_on_hiring_process_id"
   end
 
+  create_table "candidate_skills", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "candidate_id", null: false
+    t.bigint "skill_id", null: false
+    t.index ["candidate_id"], name: "index_candidate_skills_on_candidate_id"
+    t.index ["skill_id"], name: "index_candidate_skills_on_skill_id"
+  end
+
   create_table "candidates", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "email"
@@ -54,8 +69,22 @@ ActiveRecord::Schema.define(version: 2024_02_01_131248) do
     t.string "phone_number2"
     t.boolean "employee"
     t.string "resume"
-    t.string "portfolio"
-    t.text "skills"
+    t.string "birthplace"
+    t.string "gender"
+    t.date "birthdate"
+    t.string "marital_status"
+    t.string "address_neighborhood"
+    t.string "address_city"
+    t.string "mother_name"
+    t.string "spouse_name"
+    t.integer "number_of_children"
+    t.string "residence_status"
+    t.string "possessions"
+    t.boolean "other_incomes"
+    t.boolean "relatives_in_company"
+    t.boolean "smoker"
+    t.boolean "alcohol_consumer"
+    t.boolean "medication_user"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "user_id", null: false
@@ -100,8 +129,6 @@ ActiveRecord::Schema.define(version: 2024_02_01_131248) do
     t.string "title"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "hiring_process_id", null: false
-    t.index ["hiring_process_id"], name: "index_exams_on_hiring_process_id"
   end
 
   create_table "feedbacks", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -123,7 +150,7 @@ ActiveRecord::Schema.define(version: 2024_02_01_131248) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "job_posting_id", null: false
-    t.bigint "recruiter_id"
+    t.bigint "recruiter_id", null: false
     t.index ["job_posting_id"], name: "index_hiring_processes_on_job_posting_id"
     t.index ["recruiter_id"], name: "index_hiring_processes_on_recruiter_id"
   end
@@ -193,6 +220,21 @@ ActiveRecord::Schema.define(version: 2024_02_01_131248) do
     t.index ["user_id"], name: "index_recruiters_on_user_id"
   end
 
+  create_table "skills", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "title"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "social_medias", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "title"
+    t.string "link"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "candidate_id", null: false
+    t.index ["candidate_id"], name: "index_social_medias_on_candidate_id"
+  end
+
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "cpf"
@@ -207,12 +249,14 @@ ActiveRecord::Schema.define(version: 2024_02_01_131248) do
   end
 
   add_foreign_key "academic_histories", "candidates"
+  add_foreign_key "application_forms", "application_statuses"
   add_foreign_key "application_statuses", "candidates"
   add_foreign_key "application_statuses", "hiring_processes"
+  add_foreign_key "candidate_skills", "candidates"
+  add_foreign_key "candidate_skills", "skills"
   add_foreign_key "candidates", "users"
   add_foreign_key "documents", "candidates"
   add_foreign_key "employment_histories", "candidates"
-  add_foreign_key "exams", "hiring_processes"
   add_foreign_key "feedbacks", "hiring_processes"
   add_foreign_key "hiring_processes", "job_postings"
   add_foreign_key "hiring_processes", "recruiters"
@@ -220,4 +264,5 @@ ActiveRecord::Schema.define(version: 2024_02_01_131248) do
   add_foreign_key "job_postings", "companies"
   add_foreign_key "professional_links", "candidates"
   add_foreign_key "recruiters", "users"
+  add_foreign_key "social_medias", "candidates"
 end
