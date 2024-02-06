@@ -16,7 +16,7 @@ class Candidate < ApplicationRecord
   # number_of_children:integer
   # residence_status:string
   # possessions:string
-  # other_incomes:boolean
+  # other_incomes:boolean    ///// Alterar para string
   # relatives_in_company:boolean
   # smoker:boolean
   # alcohol_consumer:boolean

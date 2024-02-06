@@ -37,10 +37,14 @@ Rails.application.routes.draw do
 
       # get '/application', to: 'application_status#fetch_all'
       # get '/application/:id', to: 'application_status#fetch_by_id'
-      post '/application', to: 'application_status#create'
+      post '/application', to: 'application_status#create' # criar application form
       # patch '/application/:id', to: 'application_status#update'
       # delete '/application/:id', to: 'application_status#delete'
 
+      get '/application-form/:id', to: 'application_form#fetch_by_id'
+      post '/application-form', to: 'application_form#create'
+      post '/application-form/response', to: 'application_form#create_response'
+      post '/application-form/answer', to: 'application_form#create_answer'
       
     end
 
@@ -59,11 +63,18 @@ Rails.application.routes.draw do
       patch '/job/:id', to: 'jobs#update'
       delete '/job/:id', to: 'jobs#delete'
 
-      get '/hirings', to: 'hiring#fetch_all'
-      get '/hiring/:id', to: 'hiring#fetch_by_id'
-      post '/hiring', to: 'hiring#create'
-      patch '/hiring/:id', to: 'hiring#update'
-      delete '/hiring/:id', to: 'hiring#delete'
+      get '/hirings', to: 'hirings#fetch_all'
+      get '/hiring/:id', to: 'hirings#fetch_by_id'
+      post '/hiring', to: 'hirings#create'
+      patch '/hiring/:id', to: 'hirings#update'
+      delete '/hiring/:id', to: 'hirings#delete'
+
+      get '/forms', to: 'forms#fetch_all'
+      get '/form/:id', to: 'forms#fetch_by_id'
+      post '/form', to: 'forms#create'
+      patch '/form/:id', to: 'forms#update'
+      delete '/form/:id', to: 'forms#delete'
+      post '/form/:id/field', to: 'forms#create_field'
     end
 
     namespace :ti do

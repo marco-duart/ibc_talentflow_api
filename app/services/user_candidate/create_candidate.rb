@@ -37,11 +37,27 @@ class UserCandidate::CreateCandidate
   private
 
   def valid_params?
-    @id.present? && 
-      @phone_number1.present? && 
-      @phone_number2.present? && 
-      @employee.present? && 
-      @resume.present?
+    @id.present? &&
+      @phone_number1.present? &&
+      @phone_number2.present? &&
+      @employee.present? &&
+      @resume.present? &&
+      @birthplace.present? &&
+      @gender.present? &&
+      @birthdate.present? &&
+      @marital_status.present? &&
+      @address_neighborhood.present? &&
+      @address_city.present? &&
+      @mother_name.present? &&
+      @spouse_name.present? &&
+      @number_of_children.present? &&
+      @residence_status.present? &&
+      @possessions.present? &&
+      @other_incomes.present? &&
+      @relatives_in_company.present? &&
+      @smoker.present? &&
+      @alcohol_consumer.present? &&
+      @medication_user.present?
   end
 
   def user_exists?

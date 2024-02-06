@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_02_05_203211) do
+ActiveRecord::Schema.define(version: 2024_02_06_125509) do
 
   create_table "academic_histories", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "title"
@@ -113,6 +113,14 @@ ActiveRecord::Schema.define(version: 2024_02_05_203211) do
     t.index ["candidate_id"], name: "index_documents_on_candidate_id"
   end
 
+  create_table "dynamic_forms", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.string "department"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "employment_histories", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "company_name"
     t.string "position"
@@ -140,6 +148,28 @@ ActiveRecord::Schema.define(version: 2024_02_05_203211) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "hiring_process_id", null: false
     t.index ["hiring_process_id"], name: "index_feedbacks_on_hiring_process_id"
+  end
+
+  create_table "form_fields", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.text "question"
+    t.string "response_type"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "dynamic_form_id", null: false
+    t.index ["dynamic_form_id"], name: "index_form_fields_on_dynamic_form_id"
+  end
+
+  create_table "form_responses", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.integer "number_value"
+    t.text "text_value"
+    t.boolean "boolean_value"
+    t.date "date_value"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "application_form_id", null: false
+    t.bigint "form_field_id", null: false
+    t.index ["application_form_id"], name: "index_form_responses_on_application_form_id"
+    t.index ["form_field_id"], name: "index_form_responses_on_form_field_id"
   end
 
   create_table "hiring_processes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -258,6 +288,9 @@ ActiveRecord::Schema.define(version: 2024_02_05_203211) do
   add_foreign_key "documents", "candidates"
   add_foreign_key "employment_histories", "candidates"
   add_foreign_key "feedbacks", "hiring_processes"
+  add_foreign_key "form_fields", "dynamic_forms"
+  add_foreign_key "form_responses", "application_forms"
+  add_foreign_key "form_responses", "form_fields"
   add_foreign_key "hiring_processes", "job_postings"
   add_foreign_key "hiring_processes", "recruiters"
   add_foreign_key "interviews", "hiring_processes"
