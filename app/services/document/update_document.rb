@@ -30,7 +30,7 @@ class Document::UpdateDocument
 
   def candidate_exists?
     user = User.find(@user_id)
-    user.candidate.present?
+    user&.candidate.present?
   end
 
   def update_document

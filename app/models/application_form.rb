@@ -1,5 +1,6 @@
 class ApplicationForm < ApplicationRecord
   belongs_to :application_status
+  has_many :form_responses
 
   QUESTIONS = [
     'Descreva suas principais características. O que mais admira em você? O que você considera como sua característica mais marcante.',

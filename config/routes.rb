@@ -41,10 +41,9 @@ Rails.application.routes.draw do
       # patch '/application/:id', to: 'application_status#update'
       # delete '/application/:id', to: 'application_status#delete'
 
-      get '/application-form/:id', to: 'application_form#fetch_by_id'
-      post '/application-form', to: 'application_form#create'
-      post '/application-form/response', to: 'application_form#create_response'
-      post '/application-form/answer', to: 'application_form#create_answer'
+      get '/application-form/:id', to: 'application_forms#fetch_by_id'
+      post '/application-form/response', to: 'application_forms#create_response'
+      # post '/application-form/answer', to: 'application_forms#create_answer'
       
     end
 

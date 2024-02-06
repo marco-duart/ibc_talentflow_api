@@ -37,7 +37,7 @@ class ApplicationStatus::CreateApplicationStatus
 
   def candidate_exists?
     user = User.find(@user_id)
-    user.candidate.present?
+    user&.candidate.present?
   end
 
   def hiring_process_exists?

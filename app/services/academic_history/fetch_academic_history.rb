@@ -23,7 +23,7 @@ class AcademicHistory::FetchAcademicHistory
 
   def candidate_exists?
     user = User.find(@user_id)
-    user.candidate.present?
+    user&.candidate.present?
   end
 
   def fetch_all
