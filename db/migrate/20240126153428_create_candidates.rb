@@ -23,6 +23,11 @@ class CreateCandidates < ActiveRecord::Migration[6.1]
       t.boolean :smoker
       t.boolean :alcohol_consumer
       t.boolean :medication_user
+      t.text :first_question
+      t.text :second_question
+      t.text :third_question
+      t.text :fourth_question
+      t.text :fifth_question
 
       t.timestamps
     end

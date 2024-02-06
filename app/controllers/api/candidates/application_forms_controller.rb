@@ -5,8 +5,13 @@ module Api
 
       before_action :authorize!
 
+      def fetch_by_id
+        body = ApplicationForm::FetchApplicationForm.run(params, @payload)
+        render status: :ok, body: body.to_json
+      end
+
       def create_response
-        body = FormResponse::CreateFormResponse.run(params, @payload)
+        body = ApplicationForm::CreateApplicationForm.run(params, @payload)
         render status: :ok, body: body.to_json
       end
 

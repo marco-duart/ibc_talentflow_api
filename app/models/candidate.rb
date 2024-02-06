@@ -21,6 +21,12 @@ class Candidate < ApplicationRecord
   # smoker:boolean
   # alcohol_consumer:boolean
   # medication_user:boolean
+
+  # first_question:string
+  # second_question:string
+  # third_question:string
+  # fourth_question:string
+  # fifth_question:string
   belongs_to :user
   has_many :applications, class_name: 'ApplicationStatus', dependent: :destroy
   has_many :documents, dependent: :destroy
@@ -33,6 +39,18 @@ class Candidate < ApplicationRecord
   has_many :skills, through: :candidate_skills
 
   validate :user_presence
+
+  QUESTIONS = [
+    'Descreva suas principais características. O que mais admira em você? O que você considera como sua característica mais marcante.',
+    'Existe algo que você gostaria de mudar, alguns pontos de melhoria?',
+    'Como você se imagina daqui há 5 anos(vida pessoal, profissional e acadêmica)?',
+    'Quem são as pessoas mais importantes para você?',
+    'Qual o seu maior sonho?'
+  ].freeze
+
+  def question(question_number)
+    QUESTIONS[question_number - 1] if question_number.between?(1, 5)
+  end
 
   private
 

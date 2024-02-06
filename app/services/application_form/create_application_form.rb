@@ -1,4 +1,4 @@
-class FormResponse::CreateFormResponse
+class ApplicationForm::CreateApplicationForm
   def self.run(params, payload)
     new(params, payload).run
   end

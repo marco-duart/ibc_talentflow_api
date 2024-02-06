@@ -7,11 +7,6 @@ class ApplicationStatus::CreateApplicationStatus
     @user_id = payload['user_id'].to_i
     @hiring_process_id = params['hiring_process_id']
     @status = params['status']
-    @first = params['first']
-    @second = params['second']
-    @third = params['third']
-    @fourth = params['fourth']
-    @fifth = params['fifth']
   end
 
   def run
@@ -27,12 +22,8 @@ class ApplicationStatus::CreateApplicationStatus
 
   def valid_params?
     @user_id.present? &&
-      @status.present? &&
-      @first.present? &&
-      @second.present? &&
-      @third.present? &&
-      @fourth.present? &&
-      @fifth.present?
+      @hiring_process_id.present? &&
+      @status.present?
   end
 
   def candidate_exists?
@@ -49,17 +40,6 @@ class ApplicationStatus::CreateApplicationStatus
     application.present?
   end
 
-  def register_application_form(application)
-    application_form_params = {
-      first: @first,
-      second: @second,
-      third: @third,
-      fourth: @fourth,
-      fifth: @fifth
-    }
-    application.create_application_form(application_form_params)
-  end
-
   def create_application
     candidate = User.find(@user_id).candidate
     hiring_process = HiringProcess.find(@hiring_process_id)
@@ -68,11 +48,7 @@ class ApplicationStatus::CreateApplicationStatus
       hiring_process:
     }
     application = candidate.applications.build(application_params)
-
-    if application.save
-      register_application_form(application)
-      return application
-    end
+    return application if application.save
 
     puts "Erro! : #{applications.errors.full_messages}"
   end
