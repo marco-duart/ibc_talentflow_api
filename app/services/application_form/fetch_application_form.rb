@@ -22,34 +22,34 @@ class ApplicationForm::FetchApplicationForm
   end
 
   def candidate_exists?
-    User.find_by_id(@user_id)&.candidate.present?
+    User.find(@user_id)&.candidate.present?
   end
 
   def application_form_exists?
-    User.find_by_id(@user_id)&.candidate&.applications&.joins(:application_form)&.exists?(application_forms: { id: @application_form_id })
+    User.find(@user_id)&.candidate&.applications&.joins(:application_form)&.exists?(application_forms: { id: @application_form_id })
   end
 
-  def make_inicial_questions(application_form)
+  def make_inicial_questions(candidate)
     {
       question1: {
-        text: application_form.question(1),
-        response: application_form.first
+        text: candidate.question(1),
+        response: candidate.first_question
       },
       question2: {
-        text: application_form.question(2),
-        response: application_form.second
+        text: candidate.question(2),
+        response: candidate.second_question
       },
       question3: {
-        text: application_form.question(3),
-        response: application_form.third
+        text: candidate.question(3),
+        response: candidate.third_question
       },
       question4: {
-        text: application_form.question(4),
-        response: application_form.fourth
+        text: candidate.question(4),
+        response: candidate.fourth_question
       },
       question5: {
-        text: application_form.question(5),
-        response: application_form.fifth
+        text: candidate.question(5),
+        response: candidate.fifth_question
       }
     }
   end
@@ -59,13 +59,12 @@ class ApplicationForm::FetchApplicationForm
       response = case form_response.form_field.response_type
                  when 'number' then form_response.number_value
                  when 'text' then form_response.text_value
+                 when 'string' then form_response.string_value
                  when 'boolean' then form_response.boolean_value
                  when 'date' then form_response.date_value
                  end
 
       {
-        form: form_response.form_field.dynamic_form.title,
-        form_id: form_response.form_field.dynamic_form.id,
         text: form_response.form_field.question,
         type: form_response.form_field.response_type,
         response:
@@ -74,13 +73,18 @@ class ApplicationForm::FetchApplicationForm
   end
 
   def fetch_by_id
-    application_form = ApplicationForm.find_by_id(@application_form_id)
+    candidate = User.find(@user_id)&.candidate
+    application_form = ApplicationForm.find(@application_form_id)
+
     return unless application_form
 
-    initial_questions = make_inicial_questions(application_form)
+    initial_questions = make_inicial_questions(candidate)
     questions = make_questions(application_form.form_responses)
 
     {
+      form_title: application_form.dynamic_form.title,
+      description: application_form.dynamic_form.description,
+      department: application_form.dynamic_form.department,
       initial_questions:,
       questions:
     }

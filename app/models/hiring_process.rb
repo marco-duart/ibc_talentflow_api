@@ -5,4 +5,5 @@ class HiringProcess < ApplicationRecord
   has_many :interviews, dependent: :destroy
 	has_many :feedback, dependent: :destroy
   has_many :exams, dependent: :destroy
+  has_many :application_forms, through: :candidate_status
 end

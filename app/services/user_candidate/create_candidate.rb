@@ -25,6 +25,11 @@ class UserCandidate::CreateCandidate
     @smoker = params['smoker']
     @alcohol_consumer = params['alcohol_consumer']
     @medication_user = params['medication_user']
+    @first_question = params['first_question']
+    @second_question = params['second_question']
+    @third_question = params['third_question']
+    @fourth_question = params['fourth_question']
+    @fifth_question = params['fifth_question']
   end
 
   def run
@@ -95,7 +100,12 @@ class UserCandidate::CreateCandidate
       relatives_in_company: @relatives_in_company,
       smoker: @smoker,
       alcohol_consumer: @alcohol_consumer,
-      medication_user: @medication_user
+      medication_user: @medication_user,
+      first_question: @first_question,
+      second_question: @second_question,
+      third_question: @third_question,
+      fourth_question: @fourth_question,
+      fifth_question: @fifth_question
     }
     candidate = user.build_candidate(candidate_params)
 

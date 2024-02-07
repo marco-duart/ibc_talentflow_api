@@ -3,6 +3,7 @@ class CreateFormResponses < ActiveRecord::Migration[6.1]
     create_table :form_responses do |t|
       t.integer :number_value
       t.text :text_value
+      t.string :string_value
       t.boolean :boolean_value
       t.date :date_value
 

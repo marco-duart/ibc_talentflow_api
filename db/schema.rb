@@ -10,16 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_02_06_125509) do
-
+ActiveRecord::Schema[7.1].define(version: 2024_02_07_184214) do
   create_table "academic_histories", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "title"
     t.string "institution"
     t.string "degree"
-    t.datetime "start_date"
-    t.datetime "end_date"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "start_date", precision: nil
+    t.datetime "end_date", precision: nil
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.bigint "candidate_id", null: false
     t.index ["candidate_id"], name: "index_academic_histories_on_candidate_id"
   end
@@ -27,26 +26,23 @@ ActiveRecord::Schema.define(version: 2024_02_06_125509) do
   create_table "answers", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "text"
     t.string "department"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "application_forms", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.text "first"
-    t.text "second"
-    t.text "third"
-    t.text "fourth"
-    t.text "fifth"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.bigint "application_status_id", null: false
+    t.bigint "dynamic_form_id", null: false
     t.index ["application_status_id"], name: "index_application_forms_on_application_status_id"
+    t.index ["dynamic_form_id"], name: "index_application_forms_on_dynamic_form_id"
   end
 
   create_table "application_statuses", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "status"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.bigint "hiring_process_id", null: false
     t.bigint "candidate_id", null: false
     t.index ["candidate_id"], name: "index_application_statuses_on_candidate_id"
@@ -54,8 +50,8 @@ ActiveRecord::Schema.define(version: 2024_02_06_125509) do
   end
 
   create_table "candidate_skills", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.bigint "candidate_id", null: false
     t.bigint "skill_id", null: false
     t.index ["candidate_id"], name: "index_candidate_skills_on_candidate_id"
@@ -85,8 +81,13 @@ ActiveRecord::Schema.define(version: 2024_02_06_125509) do
     t.boolean "smoker"
     t.boolean "alcohol_consumer"
     t.boolean "medication_user"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.text "first_question"
+    t.text "second_question"
+    t.text "third_question"
+    t.text "fourth_question"
+    t.text "fifth_question"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
     t.index ["user_id"], name: "index_candidates_on_user_id"
   end
@@ -97,18 +98,18 @@ ActiveRecord::Schema.define(version: 2024_02_06_125509) do
     t.string "sector"
     t.integer "company_size"
     t.string "company_location"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "documents", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "document_name"
     t.string "document_number"
-    t.datetime "issue_date"
+    t.datetime "issue_date", precision: nil
     t.string "location"
     t.string "image"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.bigint "candidate_id", null: false
     t.index ["candidate_id"], name: "index_documents_on_candidate_id"
   end
@@ -117,26 +118,26 @@ ActiveRecord::Schema.define(version: 2024_02_06_125509) do
     t.string "title"
     t.text "description"
     t.string "department"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "employment_histories", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "company_name"
     t.string "position"
-    t.datetime "start_date"
-    t.datetime "end_date"
+    t.datetime "start_date", precision: nil
+    t.datetime "end_date", precision: nil
     t.text "achievements"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.bigint "candidate_id", null: false
     t.index ["candidate_id"], name: "index_employment_histories_on_candidate_id"
   end
 
   create_table "exams", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "title"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "feedbacks", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -144,8 +145,8 @@ ActiveRecord::Schema.define(version: 2024_02_06_125509) do
     t.integer "overall_assessment"
     t.string "specific_comment"
     t.string "improvements"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.bigint "hiring_process_id", null: false
     t.index ["hiring_process_id"], name: "index_feedbacks_on_hiring_process_id"
   end
@@ -153,8 +154,8 @@ ActiveRecord::Schema.define(version: 2024_02_06_125509) do
   create_table "form_fields", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.text "question"
     t.string "response_type"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.bigint "dynamic_form_id", null: false
     t.index ["dynamic_form_id"], name: "index_form_fields_on_dynamic_form_id"
   end
@@ -162,10 +163,11 @@ ActiveRecord::Schema.define(version: 2024_02_06_125509) do
   create_table "form_responses", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "number_value"
     t.text "text_value"
+    t.string "string_value"
     t.boolean "boolean_value"
     t.date "date_value"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.bigint "application_form_id", null: false
     t.bigint "form_field_id", null: false
     t.index ["application_form_id"], name: "index_form_responses_on_application_form_id"
@@ -173,12 +175,12 @@ ActiveRecord::Schema.define(version: 2024_02_06_125509) do
   end
 
   create_table "hiring_processes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.datetime "start_date"
-    t.datetime "end_date"
+    t.datetime "start_date", precision: nil
+    t.datetime "end_date", precision: nil
     t.string "stage"
     t.string "status"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.bigint "job_posting_id", null: false
     t.bigint "recruiter_id", null: false
     t.index ["job_posting_id"], name: "index_hiring_processes_on_job_posting_id"
@@ -186,12 +188,12 @@ ActiveRecord::Schema.define(version: 2024_02_06_125509) do
   end
 
   create_table "interviews", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.datetime "date_time"
+    t.datetime "date_time", precision: nil
     t.string "interview_type"
     t.text "resume"
     t.string "interview_feedback"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.bigint "hiring_process_id", null: false
     t.index ["hiring_process_id"], name: "index_interviews_on_hiring_process_id"
   end
@@ -205,10 +207,10 @@ ActiveRecord::Schema.define(version: 2024_02_06_125509) do
     t.string "modality"
     t.string "salary"
     t.string "work_schedule"
-    t.datetime "start_date"
-    t.datetime "end_date"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "start_date", precision: nil
+    t.datetime "end_date", precision: nil
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.bigint "company_id", null: false
     t.index ["company_id"], name: "index_job_postings_on_company_id"
   end
@@ -218,15 +220,15 @@ ActiveRecord::Schema.define(version: 2024_02_06_125509) do
     t.string "notification_type"
     t.string "recipient"
     t.string "message"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "professional_links", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "title"
     t.string "link"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.bigint "candidate_id", null: false
     t.index ["candidate_id"], name: "index_professional_links_on_candidate_id"
   end
@@ -236,31 +238,31 @@ ActiveRecord::Schema.define(version: 2024_02_06_125509) do
     t.string "text"
     t.string "type"
     t.string "department"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "recruiters", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "email"
     t.string "position"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
     t.index ["user_id"], name: "index_recruiters_on_user_id"
   end
 
   create_table "skills", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "title"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "social_medias", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "title"
     t.string "link"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.bigint "candidate_id", null: false
     t.index ["candidate_id"], name: "index_social_medias_on_candidate_id"
   end
@@ -272,14 +274,15 @@ ActiveRecord::Schema.define(version: 2024_02_06_125509) do
     t.string "password_digest"
     t.string "role"
     t.string "photo"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.datetime "discarded_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "discarded_at", precision: nil
     t.index ["discarded_at"], name: "index_users_on_discarded_at"
   end
 
   add_foreign_key "academic_histories", "candidates"
   add_foreign_key "application_forms", "application_statuses"
+  add_foreign_key "application_forms", "dynamic_forms"
   add_foreign_key "application_statuses", "candidates"
   add_foreign_key "application_statuses", "hiring_processes"
   add_foreign_key "candidate_skills", "candidates"

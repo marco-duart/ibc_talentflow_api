@@ -5,65 +5,67 @@ class ApplicationForm::CreateApplicationForm
 
   def initialize(params, payload)
     @user_id = payload['user_id'].to_i
-    @application_form_id = params['application_form_id']
-    @form_field_id = params['form_field_id']
-    @response = params['response']
+    @application_status_id = params['application_status_id']
+    @dynamic_form_id = params['dynamic_form_id']
+    @form_responses_attributes = params['form_responses_attributes']
   end
 
   def run
     return unless valid_params?
     return unless candidate_exists?
-    return unless form_field_exists?
-    return unless application_form_exists?
-    return if form_response_exists?
+    return unless application_status_exists?
+    return unless dynamic_form_exists?
 
-    create_form_response
+    create_application_form
   end
 
   private
 
   def valid_params?
     @user_id.present? &&
-      @application_form_id.present? &&
-      @form_field_id.present? &&
-      @response.present?
+      @application_status_id.present? &&
+      @dynamic_form_id.present? &&
+      @form_responses_attributes.present?
   end
 
   def candidate_exists?
-    user = User.find(@user_id)
-    user&.candidate.present?
+    candidate = User.find(@user_id)&.candidate
+    candidate.present?
   end
 
-  def form_field_exists?
-    FormField.exists?(@form_field_id)
+  def application_status_exists?
+    ApplicationStatus.exists?(@application_status_id)
   end
 
-  def application_form_exists?
-    user = User.find(@user_id)
-    user&.candidate&.applications&.joins(:application_form)&.exists?(application_forms: { id: @application_form_id })
+  def dynamic_form_exists?
+    DynamicForm.exists?(@dynamic_form_id)
   end
 
-  def form_response_exists?
-    FormResponse.exists?(application_form_id: @application_form_id, form_field_id: @form_field_id)
-  end
+  def create_application_form
+    application_status = ApplicationStatus.find(@application_status_id)
+    dynamic_form = DynamicForm.find(@dynamic_form_id)
+    application_form = ApplicationForm.create!(dynamic_form:, application_status:)
 
-  def make_form_response_params
-    form_field = FormField.find(@form_field_id)
-    case form_field.response_type
-    when 'number' then { number_value: @response, form_field: }
-    when 'text' then { text_value: @response, form_field: }
-    when 'boolean' then { boolean_value: @response, form_field: }
-    when 'date' then { date_value: @response, form_field: }
-    else {}
+    @form_responses_attributes.each do |form_field_id, response_attributes|
+      form_field = dynamic_form.form_fields.find_by(id: form_field_id)
+      next unless form_field.present?
+
+      create_form_response(application_form, form_field, response_attributes)
     end
   end
 
-  def create_form_response
-    application_form = ApplicationForm.find(@application_form_id)
-    form_response_params = make_form_response_params
-    form_response = application_form.form_responses.build(form_response_params)
-    return form_response if form_response.save
-
-    puts "Error: #{form_response.errors.full_messages}"
+  def create_form_response(application_form, form_field, response_attributes)
+    case form_field.response_type
+    when 'number'
+      application_form.form_responses.create(form_field:, number_value: response_attributes['response'])
+    when 'text'
+      application_form.form_responses.create(form_field:, text_value: response_attributes['response'])
+    when 'string'
+      application_form.form_responses.create(form_field:, string_value: response_attributes['response'])
+    when 'boolean'
+      application_form.form_responses.create(form_field:, boolean_value: response_attributes['response'])
+    when 'date'
+      application_form.form_responses.create(form_field:, date_value: response_attributes['response'])
+    end
   end
 end
