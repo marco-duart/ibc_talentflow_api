@@ -1,6 +1,6 @@
+# rubocop:disable Metrics/BlockLength
 Rails.application.routes.draw do
   namespace :api do
-
     namespace :users do
       post '/', to: 'register#create'
       post '/email', to: 'register#email_availability'
@@ -43,8 +43,9 @@ Rails.application.routes.draw do
 
       get '/application-form/:id', to: 'application_forms#fetch_by_id'
       post '/application-form/response', to: 'application_forms#create_response'
-      # post '/application-form/answer', to: 'application_forms#create_answer'
-      
+
+      # get '/application-exam/:id', to: 'application_exams#fetch_by_id'
+      # post '/application-exam/:id', to: 'application_exam#create_response'
     end
 
     namespace :admins do
@@ -74,6 +75,11 @@ Rails.application.routes.draw do
       patch '/form/:id', to: 'forms#update'
       delete '/form/:id', to: 'forms#delete'
       post '/form/:id/field', to: 'forms#create_field'
+
+      get '/exam', to: 'exams#fetch_all'
+      get '/exam/:id', to: 'exams#fetch_by_id'
+      post '/exam', to: 'exams#create'
+      post '/exam/:id/question', to: 'forms#create_question'
     end
 
     namespace :ti do

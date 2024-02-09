@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_02_07_184214) do
+ActiveRecord::Schema[7.1].define(version: 2024_02_09_181905) do
   create_table "academic_histories", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "title"
     t.string "institution"
@@ -23,11 +23,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_07_184214) do
     t.index ["candidate_id"], name: "index_academic_histories_on_candidate_id"
   end
 
-  create_table "answers", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "text"
-    t.string "department"
+  create_table "application_exams", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "application_status_id", null: false
+    t.index ["application_status_id"], name: "index_application_exams_on_application_status_id"
   end
 
   create_table "application_forms", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -114,6 +114,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_07_184214) do
     t.index ["candidate_id"], name: "index_documents_on_candidate_id"
   end
 
+  create_table "dynamic_exams", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "title"
+    t.string "description"
+    t.string "department"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "dynamic_forms", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "title"
     t.text "description"
@@ -134,10 +142,22 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_07_184214) do
     t.index ["candidate_id"], name: "index_employment_histories_on_candidate_id"
   end
 
-  create_table "exams", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "title"
+  create_table "exam_questions", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "text"
+    t.string "type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "dynamic_exam_id", null: false
+    t.index ["dynamic_exam_id"], name: "index_exam_questions_on_dynamic_exam_id"
+  end
+
+  create_table "exam_responses", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "application_exam_id", null: false
+    t.bigint "question_alternative_id", null: false
+    t.index ["application_exam_id"], name: "index_exam_responses_on_application_exam_id"
+    t.index ["question_alternative_id"], name: "index_exam_responses_on_question_alternative_id"
   end
 
   create_table "feedbacks", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -233,13 +253,13 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_07_184214) do
     t.index ["candidate_id"], name: "index_professional_links_on_candidate_id"
   end
 
-  create_table "questions", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "title"
-    t.string "text"
-    t.string "type"
-    t.string "department"
+  create_table "question_alternatives", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.boolean "correct"
+    t.string "tex"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "exam_question_id", null: false
+    t.index ["exam_question_id"], name: "index_question_alternatives_on_exam_question_id"
   end
 
   create_table "recruiters", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -281,6 +301,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_07_184214) do
   end
 
   add_foreign_key "academic_histories", "candidates"
+  add_foreign_key "application_exams", "application_statuses"
   add_foreign_key "application_forms", "application_statuses"
   add_foreign_key "application_forms", "dynamic_forms"
   add_foreign_key "application_statuses", "candidates"
@@ -290,6 +311,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_07_184214) do
   add_foreign_key "candidates", "users"
   add_foreign_key "documents", "candidates"
   add_foreign_key "employment_histories", "candidates"
+  add_foreign_key "exam_questions", "dynamic_exams"
+  add_foreign_key "exam_responses", "application_exams"
+  add_foreign_key "exam_responses", "question_alternatives"
   add_foreign_key "feedbacks", "hiring_processes"
   add_foreign_key "form_fields", "dynamic_forms"
   add_foreign_key "form_responses", "application_forms"
@@ -299,6 +323,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_07_184214) do
   add_foreign_key "interviews", "hiring_processes"
   add_foreign_key "job_postings", "companies"
   add_foreign_key "professional_links", "candidates"
+  add_foreign_key "question_alternatives", "exam_questions"
   add_foreign_key "recruiters", "users"
   add_foreign_key "social_medias", "candidates"
 end
