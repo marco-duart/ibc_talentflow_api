@@ -1,12 +1,13 @@
 # rubocop:disable Metrics/BlockLength
 Rails.application.routes.draw do
+  devise_for :users
   namespace :api do
-    namespace :users do
-      post '/', to: 'register#create'
-      post '/email', to: 'register#email_availability'
-      post '/cpf', to: 'register#cpf_availability'
-      post '/login', to: 'login#auth'
-    end
+    # namespace :users do
+    #   post '/', to: 'register#create'
+    #   post '/email', to: 'register#email_availability'
+    #   post '/cpf', to: 'register#cpf_availability'
+    #   post '/login', to: 'login#auth'
+    # end
 
     namespace :candidates do
       post '/', to: 'candidates#create'
