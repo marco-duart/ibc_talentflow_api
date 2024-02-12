@@ -44,8 +44,8 @@ Rails.application.routes.draw do
       get '/application-form/:id', to: 'application_forms#fetch_by_id'
       post '/application-form/response', to: 'application_forms#create_response'
 
-      # get '/application-exam/:id', to: 'application_exams#fetch_by_id'
-      # post '/application-exam/:id', to: 'application_exam#create_response'
+      get '/application-exam/:id', to: 'application_exams#fetch_by_id'
+      post '/application-exam/response', to: 'application_exams#create_response'
     end
 
     namespace :admins do
