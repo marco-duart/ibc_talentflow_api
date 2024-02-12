@@ -2,7 +2,7 @@ class CreateExamQuestions < ActiveRecord::Migration[7.1]
   def change
     create_table :exam_questions do |t|
       t.string :text
-      t.string :type
+      t.string :question_type
 
       t.timestamps
     end

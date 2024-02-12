@@ -22,7 +22,7 @@ class DynamicExam::FetchExam
     questions.map do |question|
       {
         text: question.text,
-        type: question.type,
+        question_type: question.question_type,
         created_at: question.created_at,
         updated_at: question.updated_at,
         alternatives: question.alternatives

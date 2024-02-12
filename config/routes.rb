@@ -1,13 +1,12 @@
 # rubocop:disable Metrics/BlockLength
 Rails.application.routes.draw do
-  devise_for :users
   namespace :api do
-    # namespace :users do
-    #   post '/', to: 'register#create'
-    #   post '/email', to: 'register#email_availability'
-    #   post '/cpf', to: 'register#cpf_availability'
-    #   post '/login', to: 'login#auth'
-    # end
+    namespace :users do
+      post '/', to: 'register#create'
+      post '/email', to: 'register#email_availability'
+      post '/cpf', to: 'register#cpf_availability'
+      post '/login', to: 'login#auth'
+    end
 
     namespace :candidates do
       post '/', to: 'candidates#create'
@@ -77,10 +76,10 @@ Rails.application.routes.draw do
       delete '/form/:id', to: 'forms#delete'
       post '/form/:id/field', to: 'forms#create_field'
 
-      get '/exam', to: 'exams#fetch_all'
+      get '/exams', to: 'exams#fetch_all'
       get '/exam/:id', to: 'exams#fetch_by_id'
       post '/exam', to: 'exams#create'
-      post '/exam/:id/question', to: 'forms#create_question'
+      post '/exam/:id/question', to: 'exams#create_question'
     end
 
     namespace :ti do

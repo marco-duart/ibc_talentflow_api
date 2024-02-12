@@ -6,7 +6,7 @@ class ExamQuestion::CreateQuestion
   def initialize(params)
     @exam_id = params['id'].to_i
     @text = params['text']
-    @type = params['type']
+    @question_type = params['question_type']
     @alternatives_attributes = params['alternatives_attributes']
   end
 
@@ -22,7 +22,7 @@ class ExamQuestion::CreateQuestion
   def valid_params?
     @exam_id.present? &&
       @text.present? &&
-      @type.present? &&
+      @question_type.present? &&
       @alternatives_attributes.present?
   end
 
@@ -34,14 +34,15 @@ class ExamQuestion::CreateQuestion
     dynamic_exam = DynamicExam.find(@exam_id)
     question_params = {
       text: @text,
-      type: @type
+      question_type: @question_type
     }
     dynamic_exam.questions.create!(question_params)
   end
 
   def create_alternatives(question)
     @alternatives_attributes.each do |alternative_params|
-      question.alternatives.create!(alternative_params)
+      permitted_params = alternative_params.permit(:correct, :text)
+      question.alternatives.create!(permitted_params)
     end
   end
 
