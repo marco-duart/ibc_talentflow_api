@@ -21,7 +21,6 @@ class Candidate < ApplicationRecord
   # smoker:boolean
   # alcohol_consumer:boolean
   # medication_user:boolean
-
   # first_question:string
   # second_question:string
   # third_question:string

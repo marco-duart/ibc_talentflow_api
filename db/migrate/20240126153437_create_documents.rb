@@ -5,7 +5,6 @@ class CreateDocuments < ActiveRecord::Migration[6.1]
       t.string :document_number
       t.datetime :issue_date
       t.string :location
-      t.string :image
 
       t.timestamps
     end

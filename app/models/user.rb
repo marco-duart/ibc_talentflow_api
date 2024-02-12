@@ -1,5 +1,11 @@
 class User < ApplicationRecord
+  # name: string
+  # cpf: string
+  # email: string
+  # password_digest: string
+  # role: string
   include Discard::Model
+  # Adicionar atributos para confirmação de conta, bloqueio/desbloqueio de senha
 
   has_one :candidate
   has_one :recruiter
