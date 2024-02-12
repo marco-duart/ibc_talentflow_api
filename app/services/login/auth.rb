@@ -23,7 +23,7 @@ class Login::Auth
 
   private
 
-  SECRET_KEY = 'ahdswoqeulkjad'.freeze # Depois utilizar o secret key do arquivo .env
+  SECRET_KEY = ENV['SECRET_KEY']
 
   def valid_params?
     @cpf.present? && @password.present?

@@ -31,3 +31,9 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+
+# Ignore environment file.
+/config/app_environment_variables.rb
+
+# Ignore environment file of Google.
+/config/gcp.json
