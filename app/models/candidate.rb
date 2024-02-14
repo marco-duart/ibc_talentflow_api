@@ -37,6 +37,12 @@ class Candidate < ApplicationRecord
   has_many :candidate_skills
   has_many :skills, through: :candidate_skills
 
+  has_many :candidate_knowledges
+  has_many :knowledges, through: :candidate_knowledges
+
+  has_many :candidate_profiles
+  has_many :profiles, through: :candidate_profiles
+
   validate :user_presence
 
   QUESTIONS = [

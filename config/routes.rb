@@ -35,6 +35,14 @@ Rails.application.routes.draw do
       patch '/link/:id', to: 'professional_links#update'
       delete '/link/:id', to: 'professional_links#delete'
 
+      get '/skill', to: 'skills#fetch_all'
+      post '/skill', to: 'skills#create'
+      delete '/skill/:id', to: 'skills#delete'
+
+      get '/knowledge', to: 'knowledges#fetch_all'
+      post '/knowledge', to: 'knowledges#create'
+      delete '/knowledge/:id', to: 'knowledges#delete'
+
       # get '/application', to: 'application_status#fetch_all'
       # get '/application/:id', to: 'application_status#fetch_by_id'
       post '/application', to: 'application_status#create' # criar application form
@@ -80,6 +88,12 @@ Rails.application.routes.draw do
       get '/exam/:id', to: 'exams#fetch_by_id'
       post '/exam', to: 'exams#create'
       post '/exam/:id/question', to: 'exams#create_question'
+
+      # get '/profile', to: 'profiles#fetch_all'
+      # get '/profile/:id', to: 'profiles#fetch_by_id'
+      # post '/profile', to: 'profiles#create'
+      # patch '/profile/:id', to: 'profiles#update'
+      # delete '/profile/:id', to: 'profiles#delete'
     end
 
     namespace :ti do

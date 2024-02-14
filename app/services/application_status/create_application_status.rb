@@ -36,7 +36,7 @@ class ApplicationStatus::CreateApplicationStatus
   end
 
   def application_exists?
-    application = User.find(@user_id).candidate.applications.where(hiring_process_id: @hiring_process_id)
+    application = User.find(@user_id).candidate.applications.find_by(hiring_process_id: @hiring_process_id)
     application.present?
   end
 

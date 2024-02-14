@@ -22,7 +22,7 @@ class Document::DeleteDocument
   end
 
   def document_exists?
-    document = User.find(@user_id).candidate.documents.where(id: @document_id)
+    document = User.find(@user_id).candidate.documents.find_by(id: @document_id)
     document.exists?
   end
 

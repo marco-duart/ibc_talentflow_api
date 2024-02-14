@@ -22,7 +22,7 @@ class ProfessionalLink::DeleteProfessionalLink
   end
 
   def professional_link_exists?
-    professional_link = User.find(@user_id).candidate.professional_links.where(id: @professional_link_id)
+    professional_link = User.find(@user_id).candidate.professional_links.find_by(id: @professional_link_id)
     professional_link.exists?
   end
 

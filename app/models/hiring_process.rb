@@ -4,9 +4,8 @@ class HiringProcess < ApplicationRecord
   # status:string
 	belongs_to :recruiter
   belongs_to :job_posting
-  has_many :candidate_status, class_name: 'ApplicationStatus', dependent: :destroy
-  has_many :interviews, dependent: :destroy
-	has_many :feedbacks, dependent: :destroy
-  has_many :exams, dependent: :destroy
-  has_many :application_forms, through: :candidate_status
+  has_many :candidate_status, class_name: 'ApplicationStatus', dependent: :destroy #Mudar
+  has_many :interviews, dependent: :destroy #Mudar
+	has_many :feedbacks, dependent: :destroy #Mudar
+  has_many :application_forms, through: :candidate_status #Mudar
 end

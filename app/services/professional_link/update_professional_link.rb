@@ -8,7 +8,7 @@ class ProfessionalLink::UpdateProfessionalLink
     @professional_link_id = params['id']
     @professional_link_attributes = {
       title: params['title'],
-      link: params['link'],
+      link: params['link']
     }
   end
 

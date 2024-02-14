@@ -22,7 +22,7 @@ class AcademicHistory::DeleteAcademicHistory
   end
 
   def academic_history_exists?
-    academic_history = User.find(@user_id).candidate.academic_histories.where(id: @academic_history_id)
+    academic_history = User.find(@user_id).candidate.academic_histories.find_by(id: @academic_history_id)
     academic_history.exists?
   end
 

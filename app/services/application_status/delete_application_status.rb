@@ -22,7 +22,7 @@ class ApplicationStatus::DeleteApplicationStatus
   end
 
   def application_exists?
-    application = User.find(@user_id).candidate.applications.where(id: @application_id)
+    application = User.find(@user_id).candidate.applications.find_by(id: @application_id)
     application.exists?
   end
 

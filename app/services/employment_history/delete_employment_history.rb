@@ -22,7 +22,7 @@ class EmploymentHistory::DeleteEmploymentHistory
   end
 
   def employment_history_exists?
-    employment_history = User.find(@user_id).candidate.employment_histories.where(id: @employment_history_id)
+    employment_history = User.find(@user_id).candidate.employment_histories.find_by(id: @employment_history_id)
     employment_history.exists?
   end
 
