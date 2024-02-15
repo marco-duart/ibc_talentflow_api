@@ -89,11 +89,11 @@ Rails.application.routes.draw do
       post '/exam', to: 'exams#create'
       post '/exam/:id/question', to: 'exams#create_question'
 
-      # get '/profile', to: 'profiles#fetch_all'
-      # get '/profile/:id', to: 'profiles#fetch_by_id'
-      # post '/profile', to: 'profiles#create'
-      # patch '/profile/:id', to: 'profiles#update'
-      # delete '/profile/:id', to: 'profiles#delete'
+      get '/profile', to: 'profiles#fetch_all'
+      post '/profile', to: 'profiles#create'
+      delete '/profile/:id', to: 'profiles#delete_profile'
+      post '/candidate-profile/:id', to: 'profiles#create_candidate_profile'
+      delete '/candidate-profile/:id', to: 'profiles#delete_candidate_profile'
     end
 
     namespace :ti do

@@ -1,30 +1,20 @@
 module Api
   module Admins
-    class ProfilesController < ApplicationController
+    class SkillsController < ApplicationController
       include AccessControl
 
       def fetch_all
-        body = Profile::FetchProfile.run
+        body = Skill::FetchSkill.run
         render status: :ok, body: body.to_json
       end
 
       def create
-        body = Profile::CreateProfile.run(params)
+        body = Skill::CreateSkill.run(params)
         render status: :ok, body: body.to_json
       end
 
       def delete_profile
-        body = Profile::DeleteProfile.run(params)
-        render status: :ok, body: body.to_json
-      end
-
-      def create_candidate_profile
-        body = CandidateProfile::CreateCandidateProfile.run(params)
-        render status: :ok, body: body.to_json
-      end
-
-      def delete_candidate_profile
-        body = CandidateProfile::DeleteCandidateProfile.run(params)
+        body = Skill::DeleteSkill.run(params)
         render status: :ok, body: body.to_json
       end
 

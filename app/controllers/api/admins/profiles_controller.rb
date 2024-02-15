@@ -18,6 +18,16 @@ module Api
         render status: :ok, body: body.to_json
       end
 
+      def create_candidate_profile
+        body = CandidateProfile::CreateCandidateProfile.run(params)
+        render status: :ok, body: body.to_json
+      end
+
+      def delete_candidate_profile
+        body = CandidateProfile::DeleteCandidateProfile.run(params)
+        render status: :ok, body: body.to_json
+      end
+
       private
 
       def authorize!
