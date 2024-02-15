@@ -1,6 +1,6 @@
 class Skill::CreateSkill
   def self.run(params)
-    new(params, payload).run
+    new(params).run
   end
 
   def initialize(params)

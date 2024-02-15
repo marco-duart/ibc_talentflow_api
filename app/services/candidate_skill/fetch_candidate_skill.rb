@@ -3,9 +3,8 @@ class CandidateSkill::FetchCandidateSkill
     new(params, payload).run
   end
 
-  def initialize(params, payload)
+  def initialize(payload)
     @user_id = payload['user_id']
-    @skill_id = params['skill_id']
   end
 
   def run

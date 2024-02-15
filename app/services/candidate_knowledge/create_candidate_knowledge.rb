@@ -19,7 +19,7 @@ class CandidateKnowledge::CreateCandidateKnowledge
 
   def valid_params?
     @user_id.present? &&
-      @candidate_knowledges_attributes.values.any?
+      @candidate_knowledges_attributes.present?
   end
 
   def candidate_exists?
@@ -27,11 +27,11 @@ class CandidateKnowledge::CreateCandidateKnowledge
     user&.candidate.present?
   end
 
-  def create_candidate_knowledge
+  def create_candidate_knowledges
     candidate = User.find(@user_id).candidate
     @candidate_knowledges_attributes.each do |knowledge_attributes|
       knowledge_id = knowledge_attributes['knowledge_id']
-      next if candidade.candidate_knowledges.exists?(knowledge_id:)
+      next if candidate.candidate_knowledges.exists?(knowledge_id:)
 
       knowledge = Knowledge.find(knowledge_id)
 

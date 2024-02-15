@@ -1,11 +1,11 @@
 class CandidateProfile::DeleteCandidateProfile
-  def self.run(params, payload)
-    new(params, payload).run
+  def self.run(params)
+    new(params).run
   end
 
-  def initialize(params, payload)
-    @user_id = payload['user_id']
-    @candidate_profile_id = params['id']
+  def initialize(params)
+    @user_id = params['user_id']
+    @candidate_profile_id = params['candidate_profile_id']
   end
 
   def run
@@ -22,12 +22,11 @@ class CandidateProfile::DeleteCandidateProfile
   end
 
   def candidate_profile_exists?
-    candidate_profile = User.find(@user_id).candidate.candidate_profiles.find_by(id: @candidate_profile_id)
-    candidate_profile.exists?
+    User.find(@user_id).candidate.candidate_profiles.exists?(id: @candidate_profile_id)
   end
 
   def delete_candidate_profile
-    candidate_profile = Profile.find(@candidate_profile_id)
+    candidate_profile = CandidateProfile.find(@candidate_profile_id)
     return unless candidate_profile
 
     candidate_profile.destroy

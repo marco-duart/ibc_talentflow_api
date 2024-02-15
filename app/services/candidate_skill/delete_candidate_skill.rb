@@ -22,8 +22,7 @@ class CandidateSkill::DeleteCandidateSkill
   end
 
   def candidate_skill_exists?
-    candidate_skill = User.find(@user_id).candidate.candidate_skills.find_by(id: @candidate_skill_id)
-    candidate_skill.exists?
+    User.find(@user_id).candidate.candidate_skills.exists?(id: @candidate_skill_id)
   end
 
   def delete_candidate_skill

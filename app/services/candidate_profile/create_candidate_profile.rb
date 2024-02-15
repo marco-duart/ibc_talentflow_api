@@ -1,10 +1,10 @@
 class CandidateProfile::CreateCandidateProfile
-  def self.run(params, payload)
-    new(params, payload).run
+  def self.run(params)
+    new(params).run
   end
 
-  def initialize(params, payload)
-    @user_id = payload['user_id'].to_i
+  def initialize(params)
+    @user_id = params['user_id'].to_i
     @profile_id = params['profile_id']
   end
 
@@ -29,13 +29,11 @@ class CandidateProfile::CreateCandidateProfile
 
   def create_candidate_profile
     candidate = User.find(@user_id).candidate
-    profile_id = profile_attributes['profile_id']
-    return 'error' if candidade.candidate_profiles.exists?(profile_id:)
+    return 'error' if candidate.candidate_profiles.exists?(profile_id: @profile_id)
 
-    profile = Profile.find(profile_id)
+    profile = Profile.find(@profile_id)
     return 'error' unless profile
 
     CandidateProfile.create!(candidate:, profile:)
-    candidate.profiles
   end
 end

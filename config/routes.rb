@@ -35,11 +35,9 @@ Rails.application.routes.draw do
       patch '/link/:id', to: 'professional_links#update'
       delete '/link/:id', to: 'professional_links#delete'
 
-      get '/skill', to: 'skills#fetch_all'
       post '/skill', to: 'skills#create'
       delete '/skill/:id', to: 'skills#delete'
 
-      get '/knowledge', to: 'knowledges#fetch_all'
       post '/knowledge', to: 'knowledges#create'
       delete '/knowledge/:id', to: 'knowledges#delete'
 
@@ -89,11 +87,19 @@ Rails.application.routes.draw do
       post '/exam', to: 'exams#create'
       post '/exam/:id/question', to: 'exams#create_question'
 
+      get '/skill', to: 'skills#fetch_all'
+      post '/skill', to: 'skills#create'
+      delete '/skill/:id', to: 'skills#delete'
+
+      get '/knowledge', to: 'knowledges#fetch_all'
+      post '/knowledge', to: 'knowledges#create'
+      delete '/knowledge/:id', to: 'knowledges#delete'
+
       get '/profile', to: 'profiles#fetch_all'
       post '/profile', to: 'profiles#create'
-      delete '/profile/:id', to: 'profiles#delete_profile'
-      post '/candidate-profile/:id', to: 'profiles#create_candidate_profile'
-      delete '/candidate-profile/:id', to: 'profiles#delete_candidate_profile'
+      delete '/profile/:id', to: 'profiles#delete'
+      post '/candidate-profile', to: 'profiles#create_candidate_profile'
+      delete '/candidate-profile', to: 'profiles#delete_candidate_profile'
     end
 
     namespace :ti do

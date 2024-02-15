@@ -13,7 +13,7 @@ module Api
         render status: :ok, body: body.to_json
       end
 
-      def delete_profile
+      def delete
         body = Knowledge::DeleteKnowledge.run(params)
         render status: :ok, body: body.to_json
       end

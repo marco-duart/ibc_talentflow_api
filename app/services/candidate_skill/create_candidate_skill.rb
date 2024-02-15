@@ -19,7 +19,7 @@ class CandidateSkill::CreateCandidateSkill
 
   def valid_params?
     @user_id.present? &&
-      @candidate_skills_attributes.values.any?
+      @candidate_skills_attributes.present?
   end
 
   def candidate_exists?
@@ -27,11 +27,11 @@ class CandidateSkill::CreateCandidateSkill
     user&.candidate.present?
   end
 
-  def create_candidate_skill
+  def create_candidate_skills
     candidate = User.find(@user_id).candidate
     @candidate_skills_attributes.each do |skill_attributes|
       skill_id = skill_attributes['skill_id']
-      next if candidade.candicate_skills.exists?(skill_id:)
+      next if candidate.candidate_skills.exists?(skill_id:)
 
       skill = Skill.find(skill_id)
 

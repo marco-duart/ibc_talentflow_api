@@ -3,9 +3,8 @@ class CandidateKnowledge::FetchCandidateKnowledge
     new(params, payload).run
   end
 
-  def initialize(params, payload)
+  def initialize(payload)
     @user_id = payload['user_id']
-    @knowledge_id = params['knowledge_id']
   end
 
   def run

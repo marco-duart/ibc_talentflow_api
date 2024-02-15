@@ -1,6 +1,6 @@
 class Knowledge::CreateKnowledge
   def self.run(params)
-    new(params, payload).run
+    new(params).run
   end
 
   def initialize(params)

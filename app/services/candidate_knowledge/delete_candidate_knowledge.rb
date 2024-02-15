@@ -22,8 +22,7 @@ class CandidateKnowledge::DeleteCandidateKnowledge
   end
 
   def candidate_knowledge_exists?
-    candidate_knowledge = User.find(@user_id).candidate.candidate_knowledges.find_by(id: @candidate_knowledge_id)
-    candidate_knowledge.exists?
+    User.find(@user_id).candidate.candidate_knowledges.exists?(id: @candidate_knowledge_id)
   end
 
   def delete_candidate_knowledge
