@@ -31,12 +31,11 @@ class CandidateKnowledge::CreateCandidateKnowledge
     candidate = User.find(@user_id).candidate
     @candidate_knowledges_attributes.each do |knowledge_attributes|
       knowledge_id = knowledge_attributes['knowledge_id']
+      next if candidade.candidate_knowledges.exists?(knowledge_id:)
+
       knowledge = Knowledge.find(knowledge_id)
 
       next unless knowledge
-
-      question_alternative = exam_question.alternatives.find_by(id: alternative_id)
-      next unless question_alternative
 
       CandidateKnowledge.create!(candidate:, knowledge:)
     end

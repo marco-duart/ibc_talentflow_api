@@ -31,12 +31,11 @@ class CandidateSkill::CreateCandidateSkill
     candidate = User.find(@user_id).candidate
     @candidate_skills_attributes.each do |skill_attributes|
       skill_id = skill_attributes['skill_id']
+      next if candidade.candicate_skills.exists?(skill_id:)
+
       skill = Skill.find(skill_id)
 
       next unless skill
-
-      question_alternative = exam_question.alternatives.find_by(id: alternative_id)
-      next unless question_alternative
 
       CandidateSkill.create!(candidate:, skill:)
     end
