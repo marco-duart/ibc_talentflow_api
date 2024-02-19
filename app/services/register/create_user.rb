@@ -10,6 +10,7 @@ class Register::CreateUser
     @cpf = params['cpf']
     @email = params['email']
     @password = params['password']
+    @photo = params['photo']
     @role = 'user'
   end
 
@@ -22,7 +23,8 @@ class Register::CreateUser
   private
 
   def valid_params?
-    @name.present? && @cpf.present? && @email.present? && @password.present?
+    @name.present? && @cpf.present? && @email.present? &&
+      @password.present? && @photo.present?
   end
 
   def create_user
@@ -30,9 +32,12 @@ class Register::CreateUser
       name: @name,
       cpf: @cpf,
       email: @email,
-      password_digest: @password,
+      password: @password,
       role: @role
     }
-    User.create(user_params)
+    user = User.new(user_params)
+    user.photo.attach(@photo) if @photo
+    user.save
+    user
   end
 end

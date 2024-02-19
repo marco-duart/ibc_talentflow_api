@@ -2,7 +2,8 @@ module Api
   module Users
     class RegisterController < ApplicationController
       def create
-        body = Register::CreateUser.run(params)
+        user_params = params.permit(:name, :cpf, :email, :password, :photo)
+        body = Register::CreateUser.run(user_params)
         render status: :ok, body: body.to_json
       end
 

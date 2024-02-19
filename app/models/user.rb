@@ -7,6 +7,7 @@ class User < ApplicationRecord
   include Discard::Model
   # Adicionar atributos para confirmação de conta, bloqueio/desbloqueio de senha
 
+  has_one_attached :photo
   has_one :candidate
   has_one :recruiter
 
