@@ -16,7 +16,8 @@ module Api
       end
 
       def create
-        body = JobPosting::CreateJob.run(params)
+        job_params = create_job_permitted_params
+        body = JobPosting::CreateJob.run(job_params)
         render status: :ok, body: body.to_json
       end
 
@@ -31,6 +32,11 @@ module Api
       end
 
       private
+
+      def create_job_permitted_params
+        params.permit(:title, :description, :requirements, :job_location, :regime, :modality, :salary, :work_schedule,
+                      :start_date, :end_date, :image)
+      end
 
       def authorize!
         token = extract_token_from_request

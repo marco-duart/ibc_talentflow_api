@@ -2,7 +2,8 @@ module Api
   module Users
     class RegisterController < ApplicationController
       def create
-        body = Register::CreateUser.run(params)
+        user_params = create_user_permitted_params
+        body = Register::CreateUser.run(user_params)
         render status: :ok, body: body.to_json
       end
 
@@ -14,6 +15,12 @@ module Api
       def cpf_availability
         body = Register::CpfAvailability.run(params)
         render status: :ok, body: body.to_json
+      end
+
+      private
+
+      def create_user_permitted_params
+        params.permit(:name, :cpf, :email, :password, :photo)
       end
     end
   end

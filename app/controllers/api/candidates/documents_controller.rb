@@ -16,7 +16,8 @@ module Api
       end
 
       def create
-        body = Document::CreateDocument.run(params, @payload)
+        documents_params = create_document_permitted_params
+        body = Document::CreateDocument.run(documents_params, @payload)
         render status: :ok, body: body.to_json
       end
 
@@ -31,6 +32,10 @@ module Api
       end
 
       private
+
+      def create_document_permitted_params
+        params.permit(:document_name, :document_number, :issue_date, :location, :image)
+      end
 
       def authorize!
         token = extract_token_from_request

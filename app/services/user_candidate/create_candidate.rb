@@ -1,3 +1,4 @@
+# rubocop:disable Metrics
 class UserCandidate::CreateCandidate
   def self.run(params, payload)
     new(params, payload).run
@@ -30,6 +31,7 @@ class UserCandidate::CreateCandidate
     @third_question = params['third_question']
     @fourth_question = params['fourth_question']
     @fifth_question = params['fifth_question']
+    @curriculum = params['curriculum']
   end
 
   def run
@@ -76,9 +78,8 @@ class UserCandidate::CreateCandidate
                                     })
   end
 
-  def create_candidate
-    user = User.find(@id)
-    candidate_params = {
+  def build_params(user)
+    {
       name: user.name,
       email: user.email,
       phone_number1: @phone_number1,
@@ -107,9 +108,19 @@ class UserCandidate::CreateCandidate
       fourth_question: @fourth_question,
       fifth_question: @fifth_question
     }
+  end
+
+  def attach_curriculum(candidate)
+    candidate.curriculum.attach(@curriculum)
+  end
+
+  def create_candidate
+    user = User.find(@id)
+    candidate_params = build_params(user)
     candidate = user.build_candidate(candidate_params)
 
     if candidate.save
+      attach_curriculum(candidate) if @curriculum
       register_cpf(user)
       return candidate
     end

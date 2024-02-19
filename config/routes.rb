@@ -100,6 +100,8 @@ Rails.application.routes.draw do
       delete '/profile/:id', to: 'profiles#delete'
       post '/candidate-profile', to: 'profiles#create_candidate_profile'
       delete '/candidate-profile', to: 'profiles#delete_candidate_profile'
+
+      get '/candidate', to: 'candidates#fetch_by_id'
     end
 
     namespace :ti do

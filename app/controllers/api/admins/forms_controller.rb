@@ -16,7 +16,8 @@ module Api
       end
 
       def create
-        body = DynamicForm::CreateForm.run(params)
+        form_params = create_form_permitted_params
+        body = DynamicForm::CreateForm.run(form_params)
         render status: :ok, body: body.to_json
       end
 
@@ -36,6 +37,10 @@ module Api
       end
 
       private
+
+      def create_form_permitted_params
+        params.permit(:title, :description, :department, :theme)
+      end
 
       def authorize!
         token = extract_token_from_request

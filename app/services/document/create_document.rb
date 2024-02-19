@@ -32,18 +32,28 @@ class Document::CreateDocument
     user&.candidate.present?
   end
 
-  def create_document
-    candidate = User.find(@user_id).candidate
-    document_params = {
+  def attach_image(document)
+    document.image.attach(@image)
+  end
+
+  def build_params
+    {
       document_name: @document_name,
       document_number: @document_number,
       issue_date: @issue_date,
-      location: @location,
-      image: @image
+      location: @location
     }
+  end
+
+  def create_document
+    candidate = User.find(@user_id).candidate
+    document_params = make_params
     document = candidate.documents.build(document_params.compact)
 
-    return document if document.save
+    if document.save
+      attach_image(document) if @image
+      return document
+    end
 
     puts "Erro! : #{document.errors.full_messages}"
   end

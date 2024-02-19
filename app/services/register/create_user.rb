@@ -10,6 +10,7 @@ class Register::CreateUser
     @cpf = params['cpf']
     @email = params['email']
     @password = params['password']
+    @photo = params['photo']
     @role = 'user'
   end
 
@@ -22,17 +23,32 @@ class Register::CreateUser
   private
 
   def valid_params?
-    @name.present? && @cpf.present? && @email.present? && @password.present?
+    @name.present? && @cpf.present? && @email.present? &&
+      @password.present?
   end
 
-  def create_user
-    user_params = {
+  def build_params
+    {
       name: @name,
       cpf: @cpf,
       email: @email,
-      password_digest: @password,
+      password: @password,
       role: @role
     }
-    User.create(user_params)
+  end
+
+  def attach_photo(user)
+    user.photo.attach(@photo)
+  end
+
+  def create_user
+    user_params = build_params
+    user = User.new(user_params)
+    if user.save
+      attach_photo(user) if @photo
+      return user
+    end
+
+    puts "Erro!: #{user.errors.full_messages}"
   end
 end
