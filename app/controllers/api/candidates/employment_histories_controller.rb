@@ -1,6 +1,6 @@
 module Api
   module Candidates
-    class EmploymentHistoriesController < ApplicationController
+    class EmploymentHistoriesController < ApplicationController::API
       include AccessControl
 
       before_action :authorize!

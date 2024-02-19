@@ -1,6 +1,6 @@
 module Api
   module Admins
-    class ExamsController < ApplicationController
+    class ExamsController < ApplicationController::API
       include AccessControl
 
       before_action :authorize
@@ -16,7 +16,8 @@ module Api
       end
 
       def create
-        body = DynamicExam::CreateExam.run(params)
+        exam_params = create_exam_permitted_params
+        body = DynamicExam::CreateExam.run(exam_params)
         render status: :ok, body: body.to_json
       end
 
@@ -36,6 +37,10 @@ module Api
       end
 
       private
+
+      def create_exam_permitted_params
+        params.permit(:title, :description, :department, :theme)
+      end
 
       def authorize
         token = extract_token_from_request

@@ -4,6 +4,7 @@ class Company < ApplicationRecord
   # sector:string
   # company_size:number
   # company_location:string
+  has_one_attached :logo
   has_many :job_postings, dependent: :destroy
 
   validates :cnpj, presence: true, uniqueness: true

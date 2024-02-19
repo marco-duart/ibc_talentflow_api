@@ -1,6 +1,6 @@
 module Api
   module Candidates
-    class ApplicationStatusController < ApplicationController
+    class ApplicationStatusController < ApplicationController::API
       include AccessControl
 
       before_action :authorize!

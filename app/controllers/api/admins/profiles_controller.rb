@@ -1,6 +1,6 @@
 module Api
   module Admins
-    class ProfilesController < ApplicationController
+    class ProfilesController < ApplicationController::API
       include AccessControl
 
       def fetch_all

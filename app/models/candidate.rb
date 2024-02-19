@@ -26,6 +26,7 @@ class Candidate < ApplicationRecord
   # third_question:string
   # fourth_question:string
   # fifth_question:string
+  has_one_attached :curriculum
   belongs_to :user
   has_many :applications, class_name: 'ApplicationStatus', dependent: :destroy
   has_many :documents, dependent: :destroy

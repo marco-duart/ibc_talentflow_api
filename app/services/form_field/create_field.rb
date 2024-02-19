@@ -34,6 +34,6 @@ class FormField::CreateField
       question: @question,
       response_type: @response_type
     }
-    form.form_fields.create(field_params)
+    form.fields.create(field_params)
   end
 end

@@ -1,6 +1,6 @@
 module Api
   module Admins
-    class CompaniesController < ApplicationController
+    class CompaniesController < ApplicationController::API
       include AccessControl
 
       before_action :authorize!
@@ -16,7 +16,8 @@ module Api
       end
 
       def create
-        body = Company::CreateCompany.run(params)
+        company_params = create_company_permitted_params
+        body = Company::CreateCompany.run(company_params)
         render status: :ok, body: body.to_json
       end
 
@@ -31,6 +32,10 @@ module Api
       end
 
       private
+
+      def create_company_permitted_params
+        params.permit(:company_name, :cnpj, :sector, :company_size, :company_location, :logo)
+      end
 
       def authorize!
         token = extract_token_from_request

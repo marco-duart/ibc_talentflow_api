@@ -9,6 +9,7 @@ class Company::CreateCompany
     @sector = params['sector']
     @company_size = params['company_size']
     @company_location = params['company_location']
+    @logo = params['logo']
   end
 
   def run
@@ -23,14 +24,28 @@ class Company::CreateCompany
     @company_name.present? && @cnpj.present? && @sector.present? && @company_size.present? && @company_location.present?
   end
 
-  def create_company
-    company_params = {
+  def build_params
+    {
       company_name: @company_name,
       cnpj: @cnpj,
       sector: @sector,
       company_size: @company_size,
       company_location: @company_location
     }
-    Company.create(company_params)
+  end
+
+  def attach_logo(company)
+    company.logo.attach(@logo)
+  end
+
+  def create_company
+    company_params = build_params
+    company = Company.new(company_params)
+    if company.save
+      attach_logo(company)
+      return company
+    end
+
+    puts "Erro! : #{company.errors.full_messages}"
   end
 end

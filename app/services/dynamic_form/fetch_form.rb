@@ -18,7 +18,7 @@ class DynamicForm::FetchForm
   end
 
   def make_response(form)
-    questions = form.form_fields
+    questions = form.fields
     {
       id: form.id,
       title: form.title,

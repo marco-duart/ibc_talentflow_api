@@ -1,3 +1,4 @@
+# rubocop:disable Metrics
 class JobPosting::CreateJob
   def self.run(params)
     new(params).run
@@ -15,6 +16,7 @@ class JobPosting::CreateJob
     @work_schedule = params['work_schedule']
     @start_date = params['start_date']
     @end_date = params['end_date']
+    @image = params['image']
   end
 
   def run
@@ -43,9 +45,8 @@ class JobPosting::CreateJob
     Company.exists?(@company_id)
   end
 
-  def create_job
-    company = Company.find(@company_id)
-    jobs_params = {
+  def build_params
+    {
       title: @title,
       description: @description,
       requirements: @requirements,
@@ -55,8 +56,23 @@ class JobPosting::CreateJob
       salary: @salary,
       work_schedule: @work_schedule,
       start_date: @start_date,
-      end_date: @end_date,
+      end_date: @end_date
     }
-    company.job_postings.create(jobs_params)
+  end
+
+  def attach_image(job_posting)
+    job_posting.image.attach(@image)
+  end
+
+  def create_job
+    company = Company.find(@company_id)
+    jobs_params = build_params
+    job_posting = company.job_postings.build(jobs_params)
+    if job_posting.save
+      attach_image(job_posting) if @image
+      return job_posting
+    end
+
+    puts "Erro! : #{job_posting.errors.full_messages}"
   end
 end

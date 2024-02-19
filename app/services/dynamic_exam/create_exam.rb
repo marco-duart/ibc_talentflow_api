@@ -7,6 +7,7 @@ class DynamicExam::CreateExam
     @title = params['title']
     @description = params['description']
     @department = params['department']
+    @theme = params['theme']
   end
 
   def run
@@ -21,12 +22,26 @@ class DynamicExam::CreateExam
     @title.present? && @description.present? && @department.present?
   end
 
-  def create_exam
-    exam_params = {
+  def build_params
+    {
       title: @title,
       description: @description,
       department: @department
     }
-    DynamicExam.create(exam_params)
+  end
+
+  def attach_theme(dynamic_exam)
+    dynamic_exam.theme.attach(@theme)
+  end
+
+  def create_exam
+    exam_params = build_params
+    dynamic_exam = DynamicExam.new(exam_params)
+    if dynamic_exam.save
+      attach_theme(dynamic_exam)
+      return dynamic_exam
+    end
+
+    puts "Erro! : #{dynamic_exam.errors.full_messages}"
   end
 end

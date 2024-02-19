@@ -1,3 +1,4 @@
+# rubocop:disable Metrics
 class ApplicationForm::CreateApplicationForm
   def self.run(params, payload)
     new(params, payload).run
@@ -47,7 +48,7 @@ class ApplicationForm::CreateApplicationForm
     application_form = ApplicationForm.create!(dynamic_form:, application_status:)
 
     @form_responses_attributes.each do |form_field_id, response_attributes|
-      form_field = dynamic_form.form_fields.find_by(id: form_field_id)
+      form_field = dynamic_form.fields.find_by(id: form_field_id)
       next unless form_field.present?
 
       create_form_response(application_form, form_field, response_attributes)

@@ -1,6 +1,6 @@
 module Api
   module Admins
-    class KnowledgesController < ApplicationController
+    class KnowledgesController < ApplicationController::API
       include AccessControl
 
       def fetch_all
