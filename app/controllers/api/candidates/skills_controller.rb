@@ -1,6 +1,6 @@
 module Api
   module Candidates
-    class SkillsController < ApplicationController::API
+    class SkillsController < ApplicationController
       include AccessControl
 
       before_action :authorize!

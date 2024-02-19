@@ -1,6 +1,6 @@
 module Api
   module Admins
-    class FormsController < ApplicationController::API
+    class FormsController < ApplicationController
       include AccessControl
 
       before_action :authorize!

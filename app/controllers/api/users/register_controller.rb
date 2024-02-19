@@ -1,6 +1,6 @@
 module Api
   module Users
-    class RegisterController < ApplicationController::API
+    class RegisterController < ApplicationController
       def create
         user_params = create_user_permitted_params
         body = Register::CreateUser.run(user_params)

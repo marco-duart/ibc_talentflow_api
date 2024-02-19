@@ -1,6 +1,6 @@
 module Api
   module Admins
-    class HiringsController < ApplicationController::API
+    class HiringsController < ApplicationController
       include AccessControl
 
       before_action :authorize!

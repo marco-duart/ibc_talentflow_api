@@ -1,6 +1,6 @@
 module Api
   module Ti
-    class AdminsController < ApplicationController::API
+    class AdminsController < ApplicationController
       include AccessControl
 
       before_action :authorize!

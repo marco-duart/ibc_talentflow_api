@@ -1,6 +1,6 @@
 module Api
   module Candidates
-    class ProfessionalLinksController < ApplicationController::API
+    class ProfessionalLinksController < ApplicationController
       include AccessControl
 
       before_action :authorize!

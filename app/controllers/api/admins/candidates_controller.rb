@@ -1,12 +1,12 @@
 module Api
   module Admins
-    class RecruitersController < ApplicationController
+    class CandidatesController < ApplicationController
       include AccessControl
 
       before_action :authorize!
 
-      def create
-        body = UserRecruiter::CreateRecruiter.run(params, @payload)
+      def fetch_by_id
+        body = UserCandidate::FetchCandidate.run(params)
         render status: :ok, body: body.to_json
       end
 

@@ -1,4 +1,8 @@
+# rubocop:disable Metrics
 class DynamicExam::FetchExam
+  # Requisite for url_for and rails_blob_path/rails_blob_url
+  include Rails.application.routes.url_helpers
+
   def self.run(params)
     new(params).run
   end
@@ -30,12 +34,14 @@ class DynamicExam::FetchExam
     end
   end
 
-  def make_response(exam, questions)
+  def build_response(exam, questions)
+    theme_url = url_for(exam.theme) if exam.theme.attached?
     {
       id: exam.id,
       title: exam.title,
       description: exam.description,
       department: exam.department,
+      theme_url:,
       created_at: exam.created_at,
       updated_at: exam.updated_at,
       questions:
@@ -46,6 +52,6 @@ class DynamicExam::FetchExam
     exam = DynamicExam.find(@exam_id)
     'Não encontrado!' unless exam
     questions = make_questions_with_alternatives(exam)
-    make_response(exam, questions)
+    build_response(exam, questions)
   end
 end

@@ -1,6 +1,6 @@
 module Api
   module Admins
-    class ExamsController < ApplicationController::API
+    class ExamsController < ApplicationController
       include AccessControl
 
       before_action :authorize

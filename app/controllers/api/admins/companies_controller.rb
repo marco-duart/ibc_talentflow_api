@@ -1,6 +1,6 @@
 module Api
   module Admins
-    class CompaniesController < ApplicationController::API
+    class CompaniesController < ApplicationController
       include AccessControl
 
       before_action :authorize!

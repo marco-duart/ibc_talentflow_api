@@ -1,6 +1,6 @@
 module Api
   module Candidates
-    class ApplicationFormsController < ApplicationController::API
+    class ApplicationFormsController < ApplicationController
       include AccessControl
 
       before_action :authorize!

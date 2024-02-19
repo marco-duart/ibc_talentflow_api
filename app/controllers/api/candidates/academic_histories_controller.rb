@@ -1,6 +1,6 @@
 module Api
   module Candidates
-    class AcademicHistoriesController < ApplicationController::API
+    class AcademicHistoriesController < ApplicationController
       include AccessControl
 
       before_action :authorize!

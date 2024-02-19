@@ -1,6 +1,6 @@
 module Api
   module Admins
-    class SkillsController < ApplicationController::API
+    class SkillsController < ApplicationController
       include AccessControl
 
       def fetch_all

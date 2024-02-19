@@ -1,6 +1,6 @@
 module Api
   module Users
-    class LoginController < ApplicationController::API
+    class LoginController < ApplicationController
       def auth
         body = Login::Auth.run(params)
         render status: :ok, body: body.to_json
