@@ -28,12 +28,16 @@ class FormField::CreateField
     DynamicForm.exists?(@form_id)
   end
 
-  def create_field
-    form = DynamicForm.find(@form_id)
-    field_params = {
+  def build_params
+    {
       question: @question,
       response_type: @response_type
     }
+  end
+
+  def create_field
+    form = DynamicForm.find(@form_id)
+    field_params = build_params
     form.fields.create(field_params)
   end
 end

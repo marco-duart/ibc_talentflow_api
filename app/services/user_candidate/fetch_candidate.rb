@@ -55,6 +55,8 @@ class UserCandidate::FetchCandidate
       smoker: candidate.smoker,
       alcohol_consumer: candidate.alcohol_consumer,
       medication_user: candidate.medication_user,
+      created_at: candidate.created_at,
+      updated_at: candidate.updated_at,
       curriculum_url:
     }
   end

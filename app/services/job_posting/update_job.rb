@@ -3,7 +3,7 @@ class JobPosting::UpdateJob
     new(params).run
   end
 
-  def initialize(params)
+  def initialize(params) # rubocop:disable Metrics/MethodLength
     @job_id = params['id']
     @job_attributes = {
       title: params['title'],

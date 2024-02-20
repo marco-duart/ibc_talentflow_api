@@ -1,4 +1,3 @@
-# rubocop:disable Metrics
 class JobPosting::FetchJob
   # Requisite for url_for and rails_blob_path/rails_blob_url
   include Rails.application.routes.url_helpers
@@ -21,11 +20,7 @@ class JobPosting::FetchJob
     JobPosting.all
   end
 
-  def fetch_by_id
-    job = JobPosting.find(@job_id)
-    return 'Error!' unless job
-
-    image_url = url_for(job.image) if job.image.attached?
+  def build_response(job, image_url) # rubocop:disable Metrics/MethodLength
     {
       id: job.id,
       title: job.title,
@@ -42,5 +37,13 @@ class JobPosting::FetchJob
       created_at: job.created_at,
       updated_at: job.updated_at
     }
+  end
+
+  def fetch_by_id
+    job = JobPosting.find(@job_id)
+    return 'Error!' unless job
+
+    image_url = url_for(job.image) if job.image.attached?
+    build_response(job, image_url)
   end
 end

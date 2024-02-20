@@ -8,7 +8,6 @@ class HiringProcess::CreateHiringProcess
     @job_id = params['job_id'].to_i
     @start_date = params['start_date']
     @end_date = params['end_date']
-    @stage = params['stage']
     @status = params['status']
   end
 
@@ -26,7 +25,6 @@ class HiringProcess::CreateHiringProcess
     @job_id.present? &&
       @start_date.present? &&
       @end_date.present? &&
-      @stage.present? &&
       @status.present?
   end
 
@@ -38,16 +36,19 @@ class HiringProcess::CreateHiringProcess
     User.exists?(@user_id)
   end
 
-  def create_hiring
-    job = JobPosting.find(@job_id)
-    recruiter = User.find(@user_id).recruiter
-    hiring_params = {
+  def build_params(recruiter)
+    {
       start_date: @start_date,
       end_date: @end_date,
-      stage: @stage,
       status: @status,
       recruiter:
     }
+  end
+
+  def create_hiring
+    job = JobPosting.find(@job_id)
+    recruiter = User.find(@user_id).recruiter
+    hiring_params = build_params(recruiter)
     hiring_process = job.hiring_processes.build(hiring_params)
     return hiring_process if hiring_process.save
 

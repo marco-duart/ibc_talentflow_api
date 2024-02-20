@@ -118,9 +118,8 @@ class UserCandidate::CreateCandidate
     user = User.find(@id)
     candidate_params = build_params(user)
     candidate = user.build_candidate(candidate_params)
-
+    attach_curriculum(candidate) if @curriculum
     if candidate.save
-      attach_curriculum(candidate) if @curriculum
       register_cpf(user)
       return candidate
     end

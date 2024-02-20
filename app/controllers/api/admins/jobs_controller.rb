@@ -34,7 +34,7 @@ module Api
       private
 
       def create_job_permitted_params
-        params.permit(:title, :description, :requirements, :job_location, :regime, :modality, :salary, :work_schedule,
+        params.permit(:company_id, :title, :description, :requirements, :job_location, :regime, :modality, :salary, :work_schedule,
                       :start_date, :end_date, :image)
       end
 

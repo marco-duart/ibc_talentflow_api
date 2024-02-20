@@ -1,4 +1,3 @@
-# rubocop:disable Metrics
 class Document::FetchDocument
   # Requisite for url_for and rails_blob_path/rails_blob_url
   include Rails.application.routes.url_helpers
@@ -34,11 +33,7 @@ class Document::FetchDocument
     User.find(@user_id).candidate.documents
   end
 
-  def fetch_by_id
-    document = User.find(@user_id).candidate.documents.find(@document_id)
-    return 'Error!' unless document
-
-    image_url = url_for(document.image) if document.image.attached?
+  def build_response(document, image_url)
     {
       id: document.id,
       document_name: document.document_name,
@@ -49,5 +44,13 @@ class Document::FetchDocument
       created_at: document.created_at,
       updated_at: document.updated_at
     }
+  end
+
+  def fetch_by_id
+    document = User.find(@user_id).candidate.documents.find(@document_id)
+    return 'Error!' unless document
+
+    image_url = url_for(document.image) if document.image.attached?
+    build_response(document, image_url)
   end
 end

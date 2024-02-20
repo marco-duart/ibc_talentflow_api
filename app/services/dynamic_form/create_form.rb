@@ -37,10 +37,8 @@ class DynamicForm::CreateForm
   def create_form
     form_params = build_params
     dynamic_form = DynamicForm.create(form_params)
-    if dynamic_form.save
-      attach_theme(dynamic_form)
-      return dynamic_form
-    end
+    attach_theme(dynamic_form) if @theme
+    return dynamic_form if dynamic_form.save
 
     puts "Erro! : #{dynamic_form.errors.full_messages}"
   end

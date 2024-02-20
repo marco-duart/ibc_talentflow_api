@@ -34,15 +34,19 @@ class AcademicHistory::CreateAcademicHistory
     user&.candidate.present?
   end
 
-  def create_academic_history
-    candidate = User.find(@user_id).candidate
-    academic_history_params = {
+  def build_params
+    {
       title: @title,
       institution: @institution,
       degree: @degree,
       start_date: @start_date,
       end_date: @end_date
     }
+  end
+
+  def create_academic_history
+    candidate = User.find(@user_id).candidate
+    academic_history_params = build_params
     academic_history = candidate.academic_histories.build(academic_history_params.compact)
 
     return academic_history if academic_history.save
