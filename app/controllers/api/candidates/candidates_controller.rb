@@ -17,8 +17,8 @@ module Api
         params.permit(:name, :email, :phone_number1, :phone_number2, :employee, :resume, :birthplace, :gender,
                       :birthdate, :marital_status, :address_neighborhood, :address_city, :mother_name, :spouse_name,
                       :number_of_children, :residence_status, :possessions, :other_incomes, :relatives_in_company,
-                      :smoker, :alcohol_consumer, :medication_user, :first_question, :second_question, :third_question,
-                      :fourth_question, :fifth_question, :curriculum)
+                      :pcd, :smoker, :alcohol_consumer, :medication_user, :first_question, :second_question,
+                      :third_question, :fourth_question, :fifth_question, :curriculum)
       end
 
       def authorize!

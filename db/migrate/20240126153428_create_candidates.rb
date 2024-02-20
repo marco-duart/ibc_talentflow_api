@@ -20,6 +20,7 @@ class CreateCandidates < ActiveRecord::Migration[6.1]
       t.string :possessions
       t.boolean :other_incomes
       t.boolean :relatives_in_company
+      t.string :pcd
       t.boolean :smoker
       t.boolean :alcohol_consumer
       t.boolean :medication_user

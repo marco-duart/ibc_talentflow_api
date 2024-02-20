@@ -52,6 +52,7 @@ class UserCandidate::FetchCandidate
       possessions: candidate.possessions,
       other_incomes: candidate.other_incomes,
       relatives_in_company: candidate.relatives_in_company,
+      pcd: candidate.pcd,
       smoker: candidate.smoker,
       alcohol_consumer: candidate.alcohol_consumer,
       medication_user: candidate.medication_user,

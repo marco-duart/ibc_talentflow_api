@@ -3,14 +3,16 @@ class EmploymentHistory::UpdateEmploymentHistory
     new(params, payload).run
   end
 
-  def initialize(params, payload)
+  def initialize(params, payload) # rubocop:disable Metrics/MethodLength
     @user_id = payload['user_id']
     @employment_history_id = params['id']
     @employment_history_attributes = {
       company_name: params['company_name'],
       position: params['position'],
+      salary: params['salary'],
       start_date: params['start_date'],
       end_date: params['end_date'],
+      leaving_reason: params['leaving_reason'],
       achievements: params['achievements']
     }
   end

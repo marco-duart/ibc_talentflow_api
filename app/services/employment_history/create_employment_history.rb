@@ -7,8 +7,10 @@ class EmploymentHistory::CreateEmploymentHistory
     @user_id = payload['user_id'].to_i
     @company_name = params['company_name']
     @position = params['position']
+    @salary = params['salary']
     @start_date = params['start_date']
     @end_date = params['end_date']
+    @leaving_reason = params['leaving_reason']
     @achievements = params['achievements']
   end
 
@@ -37,8 +39,10 @@ class EmploymentHistory::CreateEmploymentHistory
     {
       company_name: @company_name,
       position: @position,
+      salary: @salary,
       start_date: @start_date,
       end_date: @end_date,
+      leaving_reason: @leaving_reason,
       achievements: @achievements
     }
   end

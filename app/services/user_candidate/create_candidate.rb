@@ -23,6 +23,7 @@ class UserCandidate::CreateCandidate
     @possessions = params['possessions']
     @other_incomes = params['other_incomes']
     @relatives_in_company = params['relatives_in_company']
+    @pcd = params['pcd']
     @smoker = params['smoker']
     @alcohol_consumer = params['alcohol_consumer']
     @medication_user = params['medication_user']
@@ -62,6 +63,7 @@ class UserCandidate::CreateCandidate
       @possessions.present? &&
       @other_incomes.present? &&
       @relatives_in_company.present? &&
+      @pcd.present? &&
       @smoker.present? &&
       @alcohol_consumer.present? &&
       @medication_user.present?
@@ -99,6 +101,7 @@ class UserCandidate::CreateCandidate
       possessions: @possessions,
       other_incomes: @other_incomes,
       relatives_in_company: @relatives_in_company,
+      pcd: @pcd,
       smoker: @smoker,
       alcohol_consumer: @alcohol_consumer,
       medication_user: @medication_user,
