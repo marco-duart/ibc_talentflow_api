@@ -68,10 +68,8 @@ class JobPosting::CreateJob
     company = Company.find(@company_id)
     jobs_params = build_params
     job_posting = company.job_postings.build(jobs_params)
-    if job_posting.save
-      attach_image(job_posting) if @image
-      return job_posting
-    end
+    attach_image(job_posting) if @image
+    return job_posting if job_posting.save
 
     puts "Erro! : #{job_posting.errors.full_messages}"
   end

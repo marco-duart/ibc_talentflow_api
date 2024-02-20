@@ -33,15 +33,19 @@ class EmploymentHistory::CreateEmploymentHistory
     user&.candidate.present?
   end
 
-  def create_employment_history
-    candidate = User.find(@user_id).candidate
-    employment_history_params = {
+  def build_params
+    {
       company_name: @company_name,
       position: @position,
       start_date: @start_date,
       end_date: @end_date,
       achievements: @achievements
     }
+  end
+
+  def create_employment_history
+    candidate = User.find(@user_id).candidate
+    employment_history_params = build_params
     employment_history = candidate.employment_histories.build(employment_history_params.compact)
 
     return employment_history if employment_history.save

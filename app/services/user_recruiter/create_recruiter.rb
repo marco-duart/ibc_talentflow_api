@@ -25,16 +25,20 @@ class UserRecruiter::CreateRecruiter
     User.exists?(@id)
   end
 
-  def create_recruiter
-    user = User.find(@id)
-    recruiter_params = {
+  def build_params(user)
+    {
       name: user.name,
       email: user.email,
       position: @position
     }
-    recruiter = user.create_recruiter(recruiter_params)
-    return 'Ok' if recruiter.save
+  end
 
-    'Deu ruim'
+  def create_recruiter
+    user = User.find(@id)
+    recruiter_params = build_params(user)
+    recruiter = user.create_recruiter(recruiter_params)
+    return recruiter if recruiter.save
+
+    puts "Error! : #{recruiter.errors.full_messages}"
   end
 end

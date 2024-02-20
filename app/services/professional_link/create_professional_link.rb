@@ -29,12 +29,16 @@ class ProfessionalLink::CreateProfessionalLink
     user&.candidate.present?
   end
 
-  def create_professional_link
-    candidate = User.find(@user_id).candidate
-    professional_link_params = {
+  def build_params
+    {
       title: @title,
       link: @link,
     }
+  end
+
+  def create_professional_link
+    candidate = User.find(@user_id).candidate
+    professional_link_params = build_params
     professional_link = candidate.professional_links.build(professional_link_params)
 
     return professional_link if professional_link.save

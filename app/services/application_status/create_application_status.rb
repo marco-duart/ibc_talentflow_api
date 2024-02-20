@@ -40,13 +40,17 @@ class ApplicationStatus::CreateApplicationStatus
     application.present?
   end
 
-  def create_application
-    candidate = User.find(@user_id).candidate
-    hiring_process = HiringProcess.find(@hiring_process_id)
-    application_params = {
+  def build_params(hiring_process)
+    {
       status: @status,
       hiring_process:
     }
+  end
+
+  def create_application
+    candidate = User.find(@user_id).candidate
+    hiring_process = HiringProcess.find(@hiring_process_id)
+    application_params = build_params(hiring_process)
     application = candidate.applications.build(application_params)
     return application if application.save
 

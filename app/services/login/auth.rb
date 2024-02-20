@@ -33,19 +33,24 @@ class Login::Auth
     @user&.authenticate(@password)
   end
 
-  def generate_token
-    return unless @user
-
-    photo_url = url_for(@user.photo) if @user.photo.attached?
-    payload = { user_id: @user.id, role: @user.role, exp: Time.now.to_i + 3600 }
-
-    token = JWT.encode(payload, SECRET_KEY, 'HS256')
-
+  def build_response(photo_url, token)
     {
       id: @user.id,
       name: @user.name,
       photo_url:,
       token: "Bearer #{token}"
     }
+  end
+
+  def generate_token
+    return unless @user
+
+    user = User.find(@user.id)
+    photo_url = url_for(user.photo) if user.photo.attached?
+    payload = { user_id: @user.id, role: @user.role, exp: Time.now.to_i + 3600 }
+
+    token = JWT.encode(payload, SECRET_KEY, 'HS256')
+
+    build_response(photo_url, token)
   end
 end

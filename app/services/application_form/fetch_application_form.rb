@@ -29,7 +29,7 @@ class ApplicationForm::FetchApplicationForm
     User.find(@user_id)&.candidate&.applications&.joins(:application_form)&.exists?(application_forms: { id: @application_form_id })
   end
 
-  def make_inicial_questions(candidate)
+  def make_inicial_questions(candidate) # rubocop:disable Metrics/MethodLength
     {
       question1: {
         text: candidate.question(1),
@@ -54,7 +54,7 @@ class ApplicationForm::FetchApplicationForm
     }
   end
 
-  def make_questions(form_responses)
+  def make_questions(form_responses) # rubocop:disable Metrics/MethodLength
     form_responses.map do |form_response|
       response = case form_response.form_field.response_type
                  when 'number' then form_response.number_value
@@ -72,6 +72,16 @@ class ApplicationForm::FetchApplicationForm
     end
   end
 
+  def build_response(application_form, initial_questions, questions)
+    {
+      form_title: application_form.dynamic_form.title,
+      description: application_form.dynamic_form.description,
+      department: application_form.dynamic_form.department,
+      initial_questions:,
+      questions:
+    }
+  end
+
   def fetch_by_id
     candidate = User.find(@user_id)&.candidate
     application_form = ApplicationForm.find(@application_form_id)
@@ -81,12 +91,6 @@ class ApplicationForm::FetchApplicationForm
     initial_questions = make_inicial_questions(candidate)
     questions = make_questions(application_form.form_responses)
 
-    {
-      form_title: application_form.dynamic_form.title,
-      description: application_form.dynamic_form.description,
-      department: application_form.dynamic_form.department,
-      initial_questions:,
-      questions:
-    }
+    build_response(application_form, initial_questions, questions)
   end
 end

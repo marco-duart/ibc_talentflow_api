@@ -1,4 +1,3 @@
-# rubocop:disable Metrics
 class ApplicationForm::CreateApplicationForm
   def self.run(params, payload)
     new(params, payload).run
@@ -53,9 +52,10 @@ class ApplicationForm::CreateApplicationForm
 
       create_form_response(application_form, form_field, response_attributes)
     end
+    application_form
   end
 
-  def create_form_response(application_form, form_field, response_attributes)
+  def create_form_response(application_form, form_field, response_attributes) # rubocop:disable Metrics/MethodLength
     case form_field.response_type
     when 'number'
       application_form.form_responses.create(form_field:, number_value: response_attributes['response'])

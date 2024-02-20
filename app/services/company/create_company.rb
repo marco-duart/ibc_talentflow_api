@@ -41,10 +41,8 @@ class Company::CreateCompany
   def create_company
     company_params = build_params
     company = Company.new(company_params)
-    if company.save
-      attach_logo(company)
-      return company
-    end
+    attach_logo(company) if @logo
+    return company if company.save
 
     puts "Erro! : #{company.errors.full_messages}"
   end

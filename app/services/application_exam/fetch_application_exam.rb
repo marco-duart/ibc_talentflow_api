@@ -46,12 +46,7 @@ class ApplicationExam::FetchApplicationExam
     (correct_responses.to_f / total_questions) * 100
   end
 
-  def fetch_by_id # rubocop:disable Metrics/MethodLength
-    application_exam = ApplicationExam.find(@application_exam_id)
-    return unless application_exam
-
-    exam_grade = calculate_exam_grade(application_exam.exam_responses)
-    questions = make_questions(application_exam.exam_responses)
+  def build_response(application_exam, exam_grade, questions)
     {
       title: application_exam.dynamic_exam.title,
       description: application_exam.dynamic_exam.description,
@@ -59,5 +54,14 @@ class ApplicationExam::FetchApplicationExam
       exam_grade:,
       questions:
     }
+  end
+
+  def fetch_by_id
+    application_exam = ApplicationExam.find(@application_exam_id)
+    return unless application_exam
+
+    exam_grade = calculate_exam_grade(application_exam.exam_responses)
+    questions = make_questions(application_exam.exam_responses)
+    build_response(application_exam, exam_grade, questions)
   end
 end

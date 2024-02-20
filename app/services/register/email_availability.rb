@@ -13,7 +13,7 @@ class Register::EmailAvailability
 
   private
 
-  def check_email
+  def check_email # rubocop:disable Metrics/MethodLength
     user = User.find_by(email: @email)
     if user
       {

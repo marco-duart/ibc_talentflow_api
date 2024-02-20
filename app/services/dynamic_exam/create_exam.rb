@@ -37,10 +37,8 @@ class DynamicExam::CreateExam
   def create_exam
     exam_params = build_params
     dynamic_exam = DynamicExam.new(exam_params)
-    if dynamic_exam.save
-      attach_theme(dynamic_exam)
-      return dynamic_exam
-    end
+    attach_theme(dynamic_exam) if @theme
+    return dynamic_exam if dynamic_exam.save
 
     puts "Erro! : #{dynamic_exam.errors.full_messages}"
   end

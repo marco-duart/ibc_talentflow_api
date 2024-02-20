@@ -1,4 +1,3 @@
-# rubocop:disable Metrics
 class Company::FetchCompany
   # Requisite for url_for and rails_blob_path/rails_blob_url
   include Rails.application.routes.url_helpers
@@ -21,11 +20,7 @@ class Company::FetchCompany
     Company.all
   end
 
-  def fetch_by_id
-    company = Company.find(@company_id)
-    return 'Error!' unless company
-
-    logo_url = url_for(company.logo) if company.logo.attached?
+  def build_response(company, logo_url) # rubocop:disable Metrics/MethodLength
     {
       id: company.id,
       company_name: company.company_name,
@@ -37,5 +32,13 @@ class Company::FetchCompany
       created_at: company.created_at,
       updated_at: company.updated_at
     }
+  end
+
+  def fetch_by_id
+    company = Company.find(@company_id)
+    return 'Error!' unless company
+
+    logo_url = url_for(company.logo) if company.logo.attached?
+    build_response(company, logo_url)
   end
 end

@@ -45,9 +45,14 @@ class ApplicationExam::CreateApplicationExam
     application_status = ApplicationStatus.find(@application_status_id)
     dynamic_exam = DynamicExam.find(@dynamic_exam_id)
 
-    application_exam = ApplicationExam.create!(dynamic_exam:, application_status:)
+    application_exam = ApplicationExam.new(dynamic_exam:, application_status:)
 
-    create_exam_responses(application_exam)
+    if application_exam.save
+      create_exam_responses(application_exam)
+      application_exam
+    end
+
+    puts "Error! : #{application_exam.errors.full_messages}"
   end
 
   def create_exam_responses(application_exam)

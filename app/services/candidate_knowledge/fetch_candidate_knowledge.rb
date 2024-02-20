@@ -25,10 +25,7 @@ class CandidateKnowledge::FetchCandidateKnowledge
     user&.candidate.present?
   end
 
-  def fetch_all
-    candidate_knowledges = User.find(@user_id).candidate_knowledges
-    return 'erro' unless candidate_knowledges
-
+  def build_response(candidate_knowledges)
     candidate_knowledges.map do |candidate_knowledge|
       {
         id: candidate_knowledge.id,
@@ -36,5 +33,12 @@ class CandidateKnowledge::FetchCandidateKnowledge
         title: candidate_knowledge.knowledge.title
       }
     end
+  end
+
+  def fetch_all
+    candidate_knowledges = User.find(@user_id).candidate_knowledges
+    return 'erro' unless candidate_knowledges
+
+    build_response(candidate_knowledges)
   end
 end
