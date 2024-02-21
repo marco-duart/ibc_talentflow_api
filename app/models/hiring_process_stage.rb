@@ -1,8 +1,8 @@
 class HiringProcessStage < ApplicationRecord
   # title: string
   belongs_to :hiring_process
-  belongs_to :dynamic_exam
-  belongs_to :dynamic_form
+  belongs_to :dynamic_exam, optional: true
+  belongs_to :dynamic_form, optional: true
 
   has_many :candidate_statuses, class_name: 'ApplicationStatus', dependent: :destroy
   has_many :interviews, dependent: :destroy
