@@ -1,4 +1,10 @@
 class HiringProcess::CreateHiringProcess
+  STAGE_TITLES = [
+    'TRIAGEM', 'SEM INTERESSE', 'ENTREVISTA INDIVIDUAL/EM GRUPO',
+    'TESTE TÉCNICO', 'CHECAGEM DE REFERENCIAS', 'ENTREVISTA COM O GESTOR',
+    'REPROVADO', 'APROVADO', 'DESISTIU', 'CONTRATADO'
+  ].freeze
+
   def self.run(params, payload)
     new(params, payload).run
   end
@@ -9,6 +15,8 @@ class HiringProcess::CreateHiringProcess
     @start_date = params['start_date']
     @end_date = params['end_date']
     @status = params['status']
+    @dynamic_exam_id = params['dynamic_exam_id']
+    @dynamic_form_id = params['dynamic_form_id']
   end
 
   def run
@@ -50,8 +58,24 @@ class HiringProcess::CreateHiringProcess
     recruiter = User.find(@user_id).recruiter
     hiring_params = build_params(recruiter)
     hiring_process = job.hiring_processes.build(hiring_params)
-    return hiring_process if hiring_process.save
 
-    puts "Erro! : #{hiring_process.errors.full_messages}"
+    if hiring_process.save
+      create_hiring_stages(hiring_process)
+      hiring_process
+    else
+      puts "Erro! : #{hiring_process.errors.full_messages}"
+    end
+  end
+
+  def create_hiring_stages(hiring_process)
+    STAGE_TITLES.each do |title|
+      stage = hiring_process.stages.build(title:)
+      if title == 'TESTE TÉCNICO' && @dynamic_exam_id.present?
+        stage.dynamic_exam_id = @dynamic_exam_id
+      elsif title == 'TRIAGEM' && @dynamic_form_id.present?
+        stage.dynamic_form_id = @dynamic_form_id
+      end
+      stage.save
+    end
   end
 end

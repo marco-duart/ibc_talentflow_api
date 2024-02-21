@@ -1,9 +1,10 @@
 class Interview < ApplicationRecord
   # date_time:datetime
-  # interview_type:string
+  # interview_type:string //online - presencial
+  # interviewer: string //RH - Gestor
+  # interview_method:string //solo - group
   # resume:text
-  # interview_feedback:string
-  belongs_to :hiring_process
+  belongs_to :hiring_process_stage
   belongs_to :application_status
   belongs_to :recruiter
 end

@@ -6,5 +6,7 @@ class EmploymentHistory < ApplicationRecord
   # end_date: datetime
   # leaving_reason: string
   # achievements: text
+  # reference_name: string
+  # reference_phone: string
   belongs_to :candidate
 end

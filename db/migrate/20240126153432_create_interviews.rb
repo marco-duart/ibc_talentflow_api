@@ -3,8 +3,9 @@ class CreateInterviews < ActiveRecord::Migration[6.1]
     create_table :interviews do |t|
       t.datetime :date_time
       t.string :interview_type
+      t.string :interviewer
+      t.string :interview_method
       t.text :resume
-      t.string :interview_feedback
 
       t.timestamps
     end

@@ -8,6 +8,8 @@ class CreateEmploymentHistories < ActiveRecord::Migration[6.1]
       t.datetime :end_date
       t.string :leaving_reason
       t.text :achievements
+      t.string :reference_name
+      t.string :reference_phone
 
       t.timestamps
     end
