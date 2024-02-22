@@ -7,11 +7,7 @@ class ApplicationStatus::UpdateApplicationStatus
     @user_id = payload['user_id']
     @application_id = params['id']
     @application_attributes = {
-      title: params['title'],
-      institution: params['institution'],
-      degree: params['degree'],
-      start_date: params['start_date'],
-      end_date: params['end_date']
+      hiring_process_stage_id: params['hiring_process_stage_id']
     }
   end
 

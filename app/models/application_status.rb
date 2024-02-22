@@ -1,5 +1,4 @@
 class ApplicationStatus < ApplicationRecord
-  #status:string screening/form/test/interview/approved/disapproved
   belongs_to :candidate
   belongs_to :hiring_process
   has_one :feedback, dependent: :nullify

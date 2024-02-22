@@ -4,5 +4,5 @@ class Feedback < ApplicationRecord
   # specific_comment:string
   # improvements:string
   belongs_to :application_status
-  belongs_to :hiring_process
+  belongs_to :hiring_process_stage
 end
