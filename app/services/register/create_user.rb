@@ -45,7 +45,10 @@ class Register::CreateUser
     user_params = build_params
     user = User.new(user_params)
     attach_photo(user) if @photo
-    return user if user.save
+    if user.save
+      UserMailer.welcome_email(@name, @email, @cpf).deliver_now
+      return user
+    end
 
     puts "Erro!: #{user.errors.full_messages}"
   end
