@@ -21,8 +21,7 @@ class ApplicationStatus::CreateApplicationStatus
 
   def valid_params?
     @user_id.present? &&
-      @hiring_process_stage_id.present? &&
-      @status.present?
+      @hiring_process_stage_id.present?
   end
 
   def candidate_exists?

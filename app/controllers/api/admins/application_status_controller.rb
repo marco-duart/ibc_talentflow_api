@@ -1,5 +1,5 @@
 module Api
-  module Candidates
+  module Admins
     class ApplicationStatusController < ApplicationController
       include AccessControl
 
@@ -15,13 +15,8 @@ module Api
         render status: :ok, body: body.to_json
       end
 
-      def create
-        body = ApplicationStatus::CreateApplicationStatus.run(params, @payload)
-        render status: :ok, body: body.to_json
-      end
-
-      def delete
-        body = ApplicationStatus::DeleteApplicationStatus.run(params, @payload)
+      def update
+        body = ApplicationStatus::UpdateApplicationStatus.run(params)
         render status: :ok, body: body.to_json
       end
 
@@ -29,7 +24,7 @@ module Api
 
       def authorize!
         token = extract_token_from_request
-        @payload = user?(token)
+        @payload = admin?(token)
         render status: :unauthorized, json: { error: 'Unauthorized!' } unless @payload
       end
     end

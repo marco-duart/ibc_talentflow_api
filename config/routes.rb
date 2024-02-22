@@ -41,11 +41,10 @@ Rails.application.routes.draw do
       post '/knowledge', to: 'knowledges#create'
       delete '/knowledge/:id', to: 'knowledges#delete'
 
-      # get '/application', to: 'application_status#fetch_all'
-      # get '/application/:id', to: 'application_status#fetch_by_id'
-      post '/application', to: 'application_status#create' # criar application form
-      # patch '/application/:id', to: 'application_status#update'
-      # delete '/application/:id', to: 'application_status#delete'
+      get '/applications', to: 'application_status#fetch_all'
+      get '/application/:id', to: 'application_status#fetch_by_id'
+      post '/application', to: 'application_status#create'
+      delete '/application/:id', to: 'application_status#delete'
 
       get '/application-form/:id', to: 'application_forms#fetch_by_id'
       post '/application-form/response', to: 'application_forms#create_response'
@@ -102,6 +101,10 @@ Rails.application.routes.draw do
       delete '/candidate-profile', to: 'profiles#delete_candidate_profile'
 
       get '/candidate', to: 'candidates#fetch_by_id'
+
+      get '/applications', to: 'application_status#fetch_all'
+      get '/application/:id', to: 'application_status#fetch_by_id'
+      patch '/application', to: 'application_status#update'
     end
 
     namespace :ti do
