@@ -67,8 +67,10 @@ class HiringProcess::CreateHiringProcess
     end
   end
 
-  def create_hiring_stages(hiring_process)
+  def create_hiring_stages(hiring_process) # rubocop:disable Metrics
     STAGE_TITLES.each do |title|
+      next if title == 'TESTE TÉCNICO' && @dynamic_exam_id.blank?
+
       stage = hiring_process.stages.build(title:)
       if title == 'TESTE TÉCNICO' && @dynamic_exam_id.present?
         stage.dynamic_exam_id = @dynamic_exam_id

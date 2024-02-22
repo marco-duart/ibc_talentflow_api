@@ -8,7 +8,6 @@ class HiringProcess::UpdateHiringProcess
     @hiring_process_attributes = {
       start_date: params['start_date'],
       end_date: params['end_date'],
-      stage: params['stage'],
       status: params['status']
     }
   end
