@@ -5,7 +5,7 @@ class Register::ConfirmAccount
   end
 
   def initialize(params)
-    @user_id = params['user_id']
+    @user_id = params['id'].to_i
     @action_key = params['action_key']
   end
 
@@ -30,7 +30,7 @@ class Register::ConfirmAccount
 
   def valid_action_key?
     payload = TokenDecoder.decode_token(@action_key)
-    return false if payload['user_id'] != @user_id
+    return false unless payload && payload['user_id'] == @user_id
 
     payload && payload['action'] == ACTION
   end
@@ -46,7 +46,7 @@ class Register::ConfirmAccount
   def confirm_account
     user = User.find(@user_id)
     user_params = build_params(user)
-    user.update(user_params)
+    user.update_columns(user_params)
     user
   end
 end

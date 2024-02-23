@@ -1,22 +1,12 @@
 module Api
   module Admins
-    class SkillsController < ApplicationController
+    class UsersController < ApplicationController
       include AccessControl
 
       before_action :authorize!
 
-      def fetch_all
-        body = Skill::FetchSkill.run
-        render status: :ok, body: body.to_json
-      end
-
-      def create
-        body = Skill::CreateSkill.run(params)
-        render status: :ok, body: body.to_json
-      end
-
-      def delete
-        body = Skill::DeleteSkill.run(params)
+      def ban_user
+        body = Register::BanAccount.run(params)
         render status: :ok, body: body.to_json
       end
 

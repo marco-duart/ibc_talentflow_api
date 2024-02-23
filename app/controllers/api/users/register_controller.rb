@@ -18,7 +18,7 @@ module Api
       end
 
       def confirm_account
-        body = 
+        body = Register::ConfirmAccount.run(params)
         render status: :ok, body: body.to_json
       end
 

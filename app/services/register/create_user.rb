@@ -17,6 +17,7 @@ class Register::CreateUser
 
   def run
     return 'Error!' unless valid_params?
+    return 'Error! Email in use' if email_in_use?
 
     create_user
   end
@@ -26,6 +27,10 @@ class Register::CreateUser
   def valid_params?
     @name.present? && @cpf.present? && @email.present? &&
       @password.present? && @photo.present?
+  end
+
+  def email_in_use?
+    User.exists?(email: @email) || User.exists?(unconfirmed_email: @email)
   end
 
   def build_params

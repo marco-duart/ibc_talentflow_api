@@ -3,6 +3,8 @@ module Api
     class ProfilesController < ApplicationController
       include AccessControl
 
+      before_action :authorize!
+
       def fetch_all
         body = Profile::FetchProfile.run
         render status: :ok, body: body.to_json

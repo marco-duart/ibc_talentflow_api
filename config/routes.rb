@@ -5,7 +5,11 @@ Rails.application.routes.draw do
       post '/', to: 'register#create'
       post '/email', to: 'register#email_availability'
       post '/cpf', to: 'register#cpf_availability'
+      post '/confirm/:id', to: 'register#confirm_account'
+
       post '/login', to: 'login#auth'
+      post '/forget-password', to: 'login#forget_password'
+      post '/reset-password', to: 'login#reset_password'
     end
 
     namespace :candidates do
@@ -54,6 +58,8 @@ Rails.application.routes.draw do
     end
 
     namespace :admins do
+      post '/ban', to: 'users#ban_user'
+
       post '/recruiter', to: 'recruiters#create'
 
       get '/companies', to: 'companies#fetch_all'

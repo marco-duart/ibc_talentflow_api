@@ -39,7 +39,8 @@ class Login::ResetPassword
   end
 
   def reset_password
-    @user.update(password: @password, login_attempts: 0, locked: false)
+    @user.update_attribute(:password, @password)
+    @user.update_columns(login_attempts: 0, locked: false)
     { message: 'Password has successful changed!' }
   end
 end

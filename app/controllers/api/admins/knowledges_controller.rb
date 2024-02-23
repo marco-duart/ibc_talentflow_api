@@ -3,6 +3,8 @@ module Api
     class KnowledgesController < ApplicationController
       include AccessControl
 
+      before_action :authorize!
+
       def fetch_all
         body = Knowledge::FetchKnowledge.run
         render status: :ok, body: body.to_json

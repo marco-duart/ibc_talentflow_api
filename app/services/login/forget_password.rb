@@ -13,7 +13,6 @@ class Login::ForgetPassword
   def run
     return 'Error! Invalid params' unless valid_params?
     return 'Error! Incorrect credentials' unless valid_credentials?
-    return 'Error! Invalid Token' unless valid_action_key?
 
     send_reset_password_key
   end

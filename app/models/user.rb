@@ -18,7 +18,7 @@ class User < ApplicationRecord
   has_one :recruiter
 
   validates :cpf, presence: true, cpf: true, uniqueness: true
-  validates :email, email: true, uniqueness: true # Não é obrigatório porque é preenchido ao confirmar a conta
+  validates :email, uniqueness: { allow_nil: true }
   validates :unconfirmed_email, presence: true, email: true, uniqueness: true
   validates :password_digest, presence: true
 

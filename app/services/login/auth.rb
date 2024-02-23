@@ -19,7 +19,7 @@ class Login::Auth
     return 'Error! Locked account' if locked?
     return 'Error! Banned' if banned?
 
-    failed_attempt unless auth_user
+    return failed_attempt unless auth_user
 
     generate_token
   end
@@ -47,12 +47,12 @@ class Login::Auth
 
   def failed_attempt
     if @user.login_attempts >= 2
-      @user.update(login_attempts: 3, locked: true)
-      return { user: @user, message: 'Password has blocked!' }
+      @user.update_columns(login_attempts: 3, locked: true)
+      return { message: 'Failed to login! Password has blocked!' }
     end
     login_attempts = @user.login_attempts + 1
-    @user.update(login_attempts:, locked: true)
-    { user: @user, message: 'Failed!' }
+    @user.update_columns(login_attempts:)
+    { message: 'Failed to login! Inválid credentials' }
   end
 
   def auth_user
