@@ -1,4 +1,5 @@
 class Register::ConfirmAccount
+  ACTION = 'CONFIRM_ACCOUNT'.freeze
   def self.run(params)
     new(params).run
   end
@@ -11,7 +12,7 @@ class Register::ConfirmAccount
   def run
     return 'Error!' unless valid_params?
     return 'Error!' unless user_exists?
-    return 'Error! Invalid Token' unless validate_token
+    return 'Error! Invalid Token' unless valid_action_key?
 
     confirm_account
   end
@@ -27,14 +28,25 @@ class Register::ConfirmAccount
     User.exists?(@user_id)
   end
 
-  def validate_token
+  def valid_action_key?
     payload = TokenDecoder.decode_token(@action_key)
     return false if payload['user_id'] != @user_id
 
-    true if payload && payload['action'] == 'CONFIRM_ACCOUNT'
+    payload && payload['action'] == ACTION
+  end
+
+  def build_params(user)
+    {
+      email: user.unconfirmed_email,
+      unconfirmed_email: nil,
+      confirmed_at: Date.today
+    }
   end
 
   def confirm_account
-    User.update(@user_id, )
+    user = User.find(@user_id)
+    user_params = build_params(user)
+    user.update(user_params)
+    user
   end
 end

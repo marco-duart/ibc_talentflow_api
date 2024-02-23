@@ -14,8 +14,12 @@ class Login::Auth
   end
 
   def run
-    return nil unless valid_params?
-    return nil unless auth_user
+    return 'Error! Invalid params' unless valid_params?
+    return 'Error! Unconfirmed email' unless confirmed_email
+    return 'Error! Locked account' if locked?
+    return 'Error! Banned' if banned?
+
+    failed_attempt unless auth_user
 
     generate_token
   end
@@ -28,8 +32,30 @@ class Login::Auth
     @cpf.present? && @password.present?
   end
 
-  def auth_user
+  def confirmed_email
     @user = User.find_by(cpf: @cpf)
+    @user&.confirmed?
+  end
+
+  def locked?
+    @user&.locked
+  end
+
+  def banned?
+    @user&.banned
+  end
+
+  def failed_attempt
+    if @user.login_attempts >= 2
+      @user.update(login_attempts: 3, locked: true)
+      return { user: @user, message: 'Password has blocked!' }
+    end
+    login_attempts = @user.login_attempts + 1
+    @user.update(login_attempts:, locked: true)
+    { user: @user, message: 'Failed!' }
+  end
+
+  def auth_user
     @user&.authenticate(@password)
   end
 
