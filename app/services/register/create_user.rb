@@ -1,6 +1,4 @@
 class Register::CreateUser
-  include BCrypt
-
   def self.run(params)
     new(params).run
   end
@@ -15,7 +13,7 @@ class Register::CreateUser
   end
 
   def run
-    return unless valid_params?
+    return 'Error!' unless valid_params?
 
     create_user
   end

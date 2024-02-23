@@ -8,4 +8,16 @@ class UserMailer < ApplicationMailer
     @url = 'http://ibctalentflow.com.br/login'
     mail(to: @email, subject: 'Welcome to IBC TalentFlow')
   end
+
+  def account_confirmation_email
+  end
+
+  def password_recovery_email
+  end
+
+  def update_process_email
+  end
+
+  def priority_vacancy
+  end
 end

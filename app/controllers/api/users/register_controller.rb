@@ -17,6 +17,11 @@ module Api
         render status: :ok, body: body.to_json
       end
 
+      def confirm_account
+        body = 
+        render status: :ok, body: body.to_json
+      end
+
       private
 
       def create_user_permitted_params
