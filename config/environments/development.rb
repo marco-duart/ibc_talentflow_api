@@ -41,12 +41,12 @@ Rails.application.configure do # rubocop:disable Metrics/BlockLength
   config.action_mailer.delivery_method = :smtp
   # config.action_mailer.smtp_settings = { address: '127.0.0.1', port: 1025 }
   config.action_mailer.smtp_settings = {
-    address: 'smtp.gmail.com',
+    user_name: 'apikey',
+    password: ENV['SENDGRID_API_KEY'],
+    domain: 'ibccoaching.com.br',
+    address: 'smtp.sendgrid.net',
     port: 587,
-    domain: 'localhost:3000',
-    user_name: ENV['EMAIL'],
-    password: ENV['PASSWORD'],
-    authentication: 'plain',
+    authentication: :plain,
     enable_starttls_auto: true
   }
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }

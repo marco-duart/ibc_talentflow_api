@@ -71,8 +71,8 @@ class Login::Auth
   def generate_token
     return unless @user
 
-    user = User.find(@user.id)
-    photo_url = url_for(user.photo) if user.photo.attached?
+    @user.update_column(:login_attempts, 0)
+    photo_url = url_for(@user.photo) if @user.photo.attached?
     payload = { user_id: @user.id, role: @user.role, exp: Time.now.to_i + 3600 }
 
     token = JWT.encode(payload, SECRET_KEY, 'HS256')

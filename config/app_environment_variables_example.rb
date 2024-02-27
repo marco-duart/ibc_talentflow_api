@@ -9,3 +9,4 @@ ENV['GOOGLE_APPLICATION_CREDENTIALS'] = 'Your google credentials path'
 
 ENV['EMAIL'] = 'Your application e-mail'
 ENV['PASSWORD'] = 'Your application email password'
+ENV['SENDGRID_API_KEY'] = 'Your SendGrid API Key'
