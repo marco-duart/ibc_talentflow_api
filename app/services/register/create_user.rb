@@ -59,8 +59,8 @@ class Register::CreateUser
     attach_photo(user) if @photo
     if user.save
       action_key = generate_temporary_token(user) # Gerado um token de 30 minutos
-      # UserMailer.welcome_email(@name, @email, @cpf, action_key).deliver_now
-      return { user:, action_key: }
+      UserMailer.welcome_email(user.id, @name, @email, @cpf, action_key).deliver_now
+      return { message: 'Sucessfull created!', error: false }
     end
 
     puts "Erro!: #{user.errors.full_messages}"
