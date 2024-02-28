@@ -27,11 +27,29 @@ class ApplicationStatus::UpdateApplicationStatus
     ApplicationStatus.exists?(@application_id)
   end
 
+  def hiring_process_stage_exists?
+    HiringProcessStage.exists?(@application_attributes['hiring_process_stage_id'])
+  end
+
+  def build_mailer_params
+    stage = HiringProcessStage.find(@application_attributes['hiring_process_stage_id']).title
+    candidate = ApplicationStatus.find(@application_id).candidate
+
+    {
+      stage:,
+      name: candidate.name,
+      email: candidate.email,
+      gender: candidate.gender
+    }
+  end
+
   def update_application
     application = ApplicationStatus.find(@application_id)
     return 'Error' unless application
 
     application.update(@application_attributes.compact)
+    mailer_params = hiring_process_stage_info
+    UserMailer.update_process_email(mailer_params).deliver_now
     application
   end
 end
