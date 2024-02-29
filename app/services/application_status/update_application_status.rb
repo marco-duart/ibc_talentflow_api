@@ -1,4 +1,5 @@
 class ApplicationStatus::UpdateApplicationStatus
+  NEGATIVE_STATUS = ['DESISTIU', 'REPROVADO', 'SEM INTERESSE']
   def self.run(params)
     new(params).run
   end
@@ -48,8 +49,12 @@ class ApplicationStatus::UpdateApplicationStatus
     return 'Error' unless application
 
     application.update(@application_attributes.compact)
-    mailer_params = hiring_process_stage_info
-    UserMailer.update_process_email(mailer_params).deliver_now
-    application
+    mailer_params = build_mailer_params
+    if application.hiring_process_stage.in?(NEGATIVE_STATUS)
+      UserMailer.positive_update_process_email(mailer_params).deliver_now
+    else
+      UserMailer.negative_update_process_email(mailer_params).deliver_now
+    end
+    { message: 'Sucessfull to change candidate stage!', error: false }
   end
 end

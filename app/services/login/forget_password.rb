@@ -30,13 +30,23 @@ class Login::ForgetPassword
   end
 
   def generate_temporary_token
-    payload = { user_id: @user.id, action: ACTION, exp: Time.now.to_i + 1800 }
+    payload = { user_id: @user.id, action: ACTION, exp: Time.now.to_i + 86_400 }
 
     JWT.encode(payload, SECRET_KEY, 'HS256')
   end
 
+  def build_mailer_params(action_key)
+    {
+      email: @email,
+      cpf: @cpf,
+      action_key:
+    }
+  end
+
   def send_reset_password_key
     action_key = generate_temporary_token
-    { action_key: }
+    mailer_params = build_mailer_params(action_key)
+    UserMailer.password_recovery_token_email(mailer_params).deliver_now
+    { message: 'Sucessfull send reset password e-mail!', error: false }
   end
 end

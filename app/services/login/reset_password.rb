@@ -38,9 +38,18 @@ class Login::ResetPassword
     payload && payload['action'] == ACTION
   end
 
+  def build_mailer_params
+    {
+      name: @user.name,
+      email: @email
+    }
+  end
+
   def reset_password
     @user.update_attribute(:password, @password)
     @user.update_columns(login_attempts: 0, locked: false)
+    mailer_params = build_mailer_params
+    UserMailer.changed_password_email(mailer_params).deliver_now
     { message: 'Password has successful changed!' }
   end
 end

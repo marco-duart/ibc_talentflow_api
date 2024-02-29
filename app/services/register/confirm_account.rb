@@ -43,10 +43,20 @@ class Register::ConfirmAccount
     }
   end
 
+  def build_mailer_params(name, email, cpf)
+    {
+      name:,
+      email:,
+      cpf:
+    }
+  end
+
   def confirm_account
     user = User.find(@user_id)
     user_params = build_params(user)
     user.update_columns(user_params)
-    user
+    mailer_params = build_mailer_params(user.name, user.email, user.cpf)
+    UserMailer.confirmed_account_email(mailer_params).deliver_now
+    { message: 'Sucessfull to activate your account!', error: false }
   end
 end

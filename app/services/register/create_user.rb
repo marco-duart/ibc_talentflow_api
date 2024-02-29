@@ -48,9 +48,19 @@ class Register::CreateUser
   end
 
   def generate_temporary_token(user)
-    payload = { user_id: user.id, action: ACTION, exp: Time.now.to_i + 1800 }
+    payload = { user_id: user.id, action: ACTION, exp: Time.now.to_i + 86_400 }
 
     JWT.encode(payload, SECRET_KEY, 'HS256')
+  end
+
+  def build_mailer_params(id, action_key)
+    {
+      id:,
+      name: @name,
+      email: @email,
+      cpf: @cpf,
+      action_key:
+    }
   end
 
   def create_user
@@ -58,8 +68,9 @@ class Register::CreateUser
     user = User.new(user_params)
     attach_photo(user) if @photo
     if user.save
-      action_key = generate_temporary_token(user) # Gerado um token de 30 minutos
-      UserMailer.welcome_email(user.id, @name, @email, @cpf, action_key).deliver_now
+      action_key = generate_temporary_token(user) # Gerado um token de 24 horas
+      mailer_params = build_mailer_params(user.id, action_key)
+      UserMailer.welcome_email(mailer_params).deliver_now
       return { message: 'Sucessfull created!', error: false }
     end
 
