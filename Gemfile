@@ -29,6 +29,8 @@ gem 'image_processing', '~> 1.12'
 
 gem 'ruby-vips', '~> 2.2'
 
+gem 'whenever', require: false
+
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 # gem "jbuilder"
 

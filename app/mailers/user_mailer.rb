@@ -48,6 +48,12 @@ class UserMailer < ApplicationMailer
     mail(to: @email, subject: 'Atualização do Processo Seletivo - IBC TalentFlow')
   end
 
+  def birthday_email(name, email)
+    @name = name
+    @email = email
+    mail(to: @email, subject: 'Feliz Aniversário!')
+  end
+
   # def priority_vacancy
   # end
 
