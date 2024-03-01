@@ -24,21 +24,15 @@ class HiringProcess::PriorityHiringProcess
     HiringProcess.exists?(@hiring_process_id)
   end
 
-  def build_mailer_params(emails, hiring_process)
-    {
-      emails:,
-      job_title: hiring_process.job_posting.title
-    }
-  end
-
   def priority_hiring_process
-    hiring_process = HiringProcess.find(@hiring_process_id)
+    job_title = HiringProcess.find(@hiring_process_id).job_posting.title
 
     emails = Candidate.joins(:user).where.not(user: { confirmed_at: nil })
-                      .where(user: { banned: false, locked: false }).pluck(:email).join(', ')
+                      .where(user: { banned: false, locked: false }).pluck(:email)
     if emails
-      mailer_params = build_mailer_params(emails, hiring_process)
-      UserMailer.priority_hiring_email(mailer_params).deliver_now
+      emails.each do |email|
+        UserMailer.priority_hiring_email({ email:, job_title: }).deliver_now
+      end
       return { message: 'Successfull to send e-mail', error: false }
     end
 

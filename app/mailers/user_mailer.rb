@@ -60,9 +60,8 @@ class UserMailer < ApplicationMailer
     mail(to: @email, subject: 'Feliz aniversário! - IBC TalentFlow')
   end
 
-  # Está enviando pra todos ao mesmo tempo, com isso fica discriminado os demais e-mails. Verificar alternativa
   def priority_hiring_email(params)
-    @email = params[:emails]
+    @email = params[:email]
     @job_title = params[:job_title]
     mail(to: @email, subject: 'Nova oportunidade! - IBC TalentFlow')
   end
