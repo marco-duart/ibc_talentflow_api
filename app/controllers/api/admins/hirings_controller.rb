@@ -30,6 +30,11 @@ module Api
         render status: :ok, body: body.to_json
       end
 
+      def priority_vacancy
+        body = HiringProcess::PriorityHiringProcess.run(params)
+        render status: :ok, body: body.to_json
+      end
+
       private
 
       def authorize!

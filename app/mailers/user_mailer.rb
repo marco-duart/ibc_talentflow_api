@@ -1,65 +1,76 @@
 class UserMailer < ApplicationMailer
   default from: 'talentflow@ibccoaching.com.br'
-  before_action :set_default_values
+  before_action :default_values
+  # tratar cpf para indicar apenas os ultimos ou primeiros números no e-mail
 
   def welcome_email(params)
-    set_message_specific_variables(params)
+    specific_variables_values(params)
+
     mail(to: @email, subject: 'Bem vindo ao IBC TalentFlow!')
   end
 
   def account_confirmation_token_email(params)
-    set_message_specific_variables(params)
-    mail(to: @email, subject: 'Bem vindo ao IBC TalentFlow!')
+    specific_variables_values(params)
+
+    mail(to: @email, subject: 'Confirme sua conta - IBC TalentFlow!')
   end
 
-  #verificar
+  # verificar
   def confirmed_account_email(params)
     @name = params[:name]
     @email = params[:email]
-    @cpf = params[:cpf]
+    @cpf = cpf_last_digits(params[:cpf])
+
     mail(to: @email, subject: 'Confirmação de conta - IBC TalentFlow')
   end
 
   def password_recovery_token_email(params)
     @email = params[:email]
-    @cpf = params[:cpf]
+    @cpf = cpf_last_digits(params[:cpf])
     @action_key = params[:action_key]
+    @url = "#{@default_url}/api/users/reset-password/#{@action_key}"
+
+    mail(to: @email, subject: 'Recuperação de senha - IBC TalentFlow')
   end
 
   def changed_password_email(params)
     @email = params[:email]
+
+    mail(to: @email, subject: 'Senha alterada - IBC TalentFlow')
   end
 
   def positive_update_process_email(params)
     @stage = params[:stage]
     @name = params[:name]
     @email = params[:email]
-    @gender = params[:gender]
 
     mail(to: @email, subject: 'Parabéns! Você avançou de etapa!')
   end
 
   def negative_update_process_email(params)
-    @stage = params[:stage]
     @name = params[:name]
     @email = params[:email]
-    @gender = params[:gender]
 
-    mail(to: @email, subject: 'Atualização do Processo Seletivo - IBC TalentFlow')
+    mail(to: @email, subject: 'Atualização do processo seletivo - IBC TalentFlow')
   end
 
   def birthday_email(name, email)
     @name = name
     @email = email
-    mail(to: @email, subject: 'Feliz Aniversário!')
+    mail(to: @email, subject: 'Feliz aniversário! - IBC TalentFlow')
   end
 
-  # def priority_vacancy
-  # end
+  # Está enviando pra todos ao mesmo tempo, com isso fica discriminado os demais e-mails. Verificar alternativa
+  def priority_hiring_email(params)
+    @email = params[:emails]
+    @job_title = params[:job_title]
+    mail(to: @email, subject: 'Nova oportunidade! - IBC TalentFlow')
+  end
 
   private
 
-  def set_default_values
+  def default_values
+    @year = Date.today.year
     @default_url = 'http://ibctalentflow.com.br'
     @rules_link = 'http://ibctalentflow.com.br/political-rules'
     @signup_link = 'http://ibctalentflow.com.br/signup'
@@ -67,12 +78,16 @@ class UserMailer < ApplicationMailer
     @support_email = 'suporte@ibccoaching.com.br'
   end
 
-  def set_message_specific_variables(params)
+  def specific_variables_values(params)
     @id = params[:id]
     @action_key = params[:action_key]
     @name = params[:name]
     @email = params[:email]
-    @cpf = params[:cpf]
+    @cpf = cpf_last_digits(params[:cpf])
     @url = "#{@default_url}/api/users/confirm/#{@id}/#{@action_key}"
+  end
+
+  def cpf_last_digits(cpf)
+    "********#{cpf.last(3)}"
   end
 end

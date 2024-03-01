@@ -24,7 +24,7 @@
           </tr>
           <tr>
             <td align="center" bgcolor="#2975C3" style="background-color: #2975C3; color: #ffffff; font-size: 24px; padding: 20px;">
-              Bem vindo ao IBC TalentFlow, <%= @name %>
+              Nova vaga postada!
             </td>
           </tr>
           <tr>
@@ -35,9 +35,7 @@
                     <img src="http://localhost:3000/images/email/successfull-signup.jpg" alt="" style="width: 90%; max-width: 180px;">
                   </td>
                   <td width="70%" style="font-family: Arial, sans-serif; font-size: 18px;">
-                    Seu cadastro em IBC TalentFlow foi realizado com sucesso com o CPF: <%= @cpf %> 👏.<br><br>
-                    Para ativar sua conta, clique no 👉 <a href="<%= @url %>" style="color: #2975C3;">link</a>.<br><br>
-                    Espero que logo você faça parte da família IBC! 🙏
+                    🤩 Nova oportunidade postada em nosso site! Vaga: <%= @job_title %>.<br><br>
                   </td>
                 </tr>
               </table>
@@ -45,7 +43,7 @@
           </tr>
           <tr>
             <td bgcolor="#1C2640" style="background-color: #1C2640; color: #9c9c9c; font-size: 12px; padding: 15px; text-align: center;">
-              <p>Esse e-mail foi enviado para <%= @email %> referente ao cadastro em IBC TalentFlow.</p>
+              <p>Esse e-mail foi enviado para <%= @email %> referente a vagas disponíveis.</p>
               <p>
                 Se você acredita que esse e-mail foi enviado por engano ou possui alguma dúvida, por favor contate-nos
                 <a href="mailto:<%= @support_email %>" style="color: #9c9c9c;"><%= @support_email %></a>.

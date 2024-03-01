@@ -20,7 +20,20 @@
 # Learn more: http://github.com/javan/whenever
 
 # bundle exec whenever --update-crontab
-every 1.day, at: '8:00 am' do
-  runner "BirthdayMailerJob.perform_later"
+# bundle exec whenever --set 'environment=development' --update-crontab
+# cron && bundle exec whenever --set 'environment=production' --update-crontab
+set :output, 'log/cron_log.log'
+set :environment, ENV['RAILS_ENV'] || 'development'
+
+# every 2.minutes do
+#   runner 'BirthdayMailerJob.perform_now'
+# end
+
+# every 2.minutes do
+#   runner "puts 'algo'"
+#   command 'cd /home/ibc/Documentos/ibc_talentflow_api && bundle exec rails runner "BirthdayMailerJob.perform_now"'
+# end
+
+every 2.minutes do
+  command '/bin/bash -l -c "cd /home/ibc/Documentos/ibc_talentflow_api && bundle exec rails runner "BirthdayMailerJob.perform_now""'
 end
-  

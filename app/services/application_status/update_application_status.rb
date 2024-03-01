@@ -39,8 +39,7 @@ class ApplicationStatus::UpdateApplicationStatus
     {
       stage:,
       name: candidate.name,
-      email: candidate.email,
-      gender: candidate.gender
+      email: candidate.email
     }
   end
 

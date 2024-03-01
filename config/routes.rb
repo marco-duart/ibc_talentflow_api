@@ -77,6 +77,7 @@ Rails.application.routes.draw do
       get '/hirings', to: 'hirings#fetch_all'
       get '/hiring/:id', to: 'hirings#fetch_by_id'
       post '/hiring', to: 'hirings#create'
+      post '/hiring/priority/:id', to: 'hirings#priority_vacancy'
       patch '/hiring/:id', to: 'hirings#update'
       delete '/hiring/:id', to: 'hirings#delete'
 
