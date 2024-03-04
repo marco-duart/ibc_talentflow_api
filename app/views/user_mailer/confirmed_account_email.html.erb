@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+  </style>
+</head>
+<body>
+  <table width="100%" cellspacing="0" cellpadding="0" bgcolor="#f4f4f4" style="width: 100%; background-color: #f4f4f4; margin: 0; padding: 20px;">
+    <tr>
+      <td align="center">
+        <table class="container" style="max-width: 900px; width: 100%; margin: 0 auto; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+          <tr>
+            <td align="left" bgcolor="#ffffff" style="padding: 10px;">
+              <img src="<%= @logo_image %>" alt="" style="height: 80px; width: auto;">
+            </td>
+          </tr>
+          <tr>
+            <td align="center" bgcolor="#2975C3" style="background-color: #2975C3; color: #ffffff; font-size: 24px; padding: 20px;">
+              Olá, <%= @name %>
+            </td>
+          </tr>
+          <tr>
+            <td bgcolor="#ffffff" style="background-color: #ffffff; padding: 20px;">
+              <table width="100%">
+                <tr>
+                  <td width="30%" align="center">
+                    <img src="<%= @email_image %>" alt="" style="width: 90%; max-width: 180px;">
+                  </td>
+                  <td width="70%" style="font-family: Arial, sans-serif; font-size: 18px;">
+                    Seu cadastro em IBC TalentFlow foi ativado com sucesso com o CPF: <%= @cpf %> 👏.<br><br>
+                    Agora você pode aproveitar ao máximo as funcionalidades. Aproveite e veja nossas vagas!<br><br>
+                    Espero que logo você faça parte da família IBC! 🙏
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td bgcolor="#1C2640" style="background-color: #1C2640; color: #9c9c9c; font-size: 12px; padding: 15px; text-align: center;">
+              <p>Esse e-mail foi enviado para <%= @email %> referente a confirmação de conta em IBC TalentFlow.</p>
+              <p>
+                Se você acredita que esse e-mail foi enviado por engano ou possui alguma dúvida, por favor contate-nos
+                <a href="mailto:<%= @support_email %>" style="color: #9c9c9c;"><%= @support_email %></a>.
+              </p>
+              <div>
+                <a href="<%= @rules_link %>" style="color: #9c9c9c;">Termos de Uso e Privacidade</a> | 
+                <a href="<%= @signup_link %>" style="color: #9c9c9c;">Inscrições</a> | 
+                <a href="<%= @unsubscribe_link %>" style="color: #9c9c9c;">Cancelar inscrição</a> | 
+                <a href="mailto:<%= @support_email %>" style="color: #9c9c9c;">Entre em Contato Conosco</a>
+              </div>
+              <div>
+                Copyright © <%= @year %> Instituro Brasileiro de Coaching. Todos os direitos reservados.
+              </div>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

@@ -32,7 +32,8 @@ class Register::CreateAdmin
       cpf: @cpf,
       email: @email,
       password_digest: @password,
-      role: @role
+      role: @role,
+      confirmed_at: Date.today
     }
   end
 

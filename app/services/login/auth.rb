@@ -14,8 +14,12 @@ class Login::Auth
   end
 
   def run
-    return nil unless valid_params?
-    return nil unless auth_user
+    return 'Error! Invalid params' unless valid_params?
+    return 'Error! Unconfirmed email' unless confirmed_email
+    return 'Error! Locked account' if locked?
+    return 'Error! Banned' if banned?
+
+    return failed_attempt unless auth_user
 
     generate_token
   end
@@ -28,8 +32,30 @@ class Login::Auth
     @cpf.present? && @password.present?
   end
 
-  def auth_user
+  def confirmed_email
     @user = User.find_by(cpf: @cpf)
+    @user&.confirmed?
+  end
+
+  def locked?
+    @user&.locked
+  end
+
+  def banned?
+    @user&.banned
+  end
+
+  def failed_attempt
+    if @user.login_attempts >= 2
+      @user.update_columns(login_attempts: 3, locked: true)
+      return { message: 'Failed to login! Password has blocked!' }
+    end
+    login_attempts = @user.login_attempts + 1
+    @user.update_columns(login_attempts:)
+    { message: 'Failed to login! Inválid credentials' }
+  end
+
+  def auth_user
     @user&.authenticate(@password)
   end
 
@@ -45,8 +71,8 @@ class Login::Auth
   def generate_token
     return unless @user
 
-    user = User.find(@user.id)
-    photo_url = url_for(user.photo) if user.photo.attached?
+    @user.update_column(:login_attempts, 0)
+    photo_url = url_for(@user.photo) if @user.photo.attached?
     payload = { user_id: @user.id, role: @user.role, exp: Time.now.to_i + 3600 }
 
     token = JWT.encode(payload, SECRET_KEY, 'HS256')
