@@ -3,6 +3,12 @@
 # It's helpful, but not entirely necessary to understand cron before proceeding.
 # http://en.wikipedia.org/wiki/Cron
 
+# Whenever offers a few different job types to express tasks. We will be using Rake, but check out all the options below:
+
+#     runner “MyModel.some_process”
+#     rake “rake:task”
+#     command “/usr/bin/my_great_command”
+
 # Example:
 #
 # set :output, "/path/to/my/cron_log.log"
@@ -22,18 +28,20 @@
 # bundle exec whenever --update-crontab
 # bundle exec whenever --set 'environment=development' --update-crontab
 # cron && bundle exec whenever --set 'environment=production' --update-crontab
-set :output, 'log/cron_log.log'
-set :environment, ENV['RAILS_ENV'] || 'development'
+# set :rbenv, '"$HOME/.rbenv/shims":"$HOME/.rbenv/bin"'
 
-# every 2.minutes do
+# every 1.minute do # 1.minute 1.day 1.week 1.month 1.year is also supported
 #   runner 'BirthdayMailerJob.perform_now'
 # end
 
-# every 2.minutes do
-#   runner "puts 'algo'"
-#   command 'cd /home/ibc/Documentos/ibc_talentflow_api && bundle exec rails runner "BirthdayMailerJob.perform_now"'
+# every 1.minute do
+#   command "/home/ibc/.rbenv/shims/bundle exec bin/rails runner -e development 'BirthdayMailerJob.perform_now'"
 # end
 
-every 2.minutes do
-  command '/bin/bash -l -c "cd /home/ibc/Documentos/ibc_talentflow_api && bundle exec rails runner "BirthdayMailerJob.perform_now""'
+set :output, 'log/cron_log.log'
+set :environment, ENV['RAILS_ENV'] || 'development'
+job_type :custom_runner, 'cd :path && PATH=/home/ibc/.rbenv/shims:$PATH bundle exec :task :output' # env['command_path']
+
+every 1.day, at: '08:00am' do
+  custom_runner "rails runner 'BirthdayMailerJob.perform_now'", environment: 'development'
 end

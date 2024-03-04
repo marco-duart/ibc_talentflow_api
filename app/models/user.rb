@@ -14,8 +14,8 @@ class User < ApplicationRecord
 
   # Active Storage Method for attach files
   has_one_attached :photo
-  has_one :candidate
-  has_one :recruiter
+  has_one :candidate, dependent: :destroy
+  has_one :recruiter, dependent: :destroy
 
   validates :cpf, presence: true, cpf: true, uniqueness: true
   validates :email, uniqueness: { allow_nil: true }

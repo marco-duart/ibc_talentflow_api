@@ -34,7 +34,7 @@ class Candidate < ApplicationRecord
   has_many :academic_histories, dependent: :destroy
   has_many :employment_histories, dependent: :destroy
   has_many :professional_links, dependent: :destroy
-  has_many :social_medias, dependent: :destroy
+  has_many :social_links, dependent: :destroy
 
   has_many :candidate_skills, dependent: :destroy
   has_many :skills, through: :candidate_skills
