@@ -12,6 +12,7 @@ class CreateUsers < ActiveRecord::Migration[6.1]
       t.boolean :locked, default: false
       t.boolean :banned, default: false
       t.text :ban_reason
+      t.boolean :newsletter, default: true
 
       t.timestamps
     end

@@ -22,6 +22,11 @@ module Api
         render status: :ok, body: body.to_json
       end
 
+      def unsubscribe
+        body = Register::CancelNewsletter.run(params)
+        render status: :ok, body: body.to_json(params)
+      end
+
       private
 
       def create_user_permitted_params

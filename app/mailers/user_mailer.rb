@@ -17,7 +17,6 @@ class UserMailer < ApplicationMailer
     mail(to: @email, subject: 'Confirme sua conta - IBC TalentFlow!')
   end
 
-  # verificar
   def confirmed_account_email(params)
     @email_image = 'http://www.ibcsystem.com.br/assets/talent_flow/account-confirmation.png'
     @name = params[:name]
@@ -75,6 +74,13 @@ class UserMailer < ApplicationMailer
     @job_title = params[:job_title]
 
     mail(to: @email, subject: 'Nova oportunidade! - IBC TalentFlow')
+  end
+
+  def unsubscribe_email(params)
+    @name = params[:name]
+    @email = params[:email]
+
+    mail(to: @email, subject: 'Sua inscrição para receber e-mails foi cancelada!')
   end
 
   private
