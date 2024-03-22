@@ -18,8 +18,8 @@ class EmploymentHistory::UpdateEmploymentHistory
   end
 
   def run
-    return unless valid_params?
-    return unless candidate_exists?
+    raise StandardError, 'Error! Invalid parameters.' unless valid_params?
+    raise StandardError, 'Error! Candidate not found.' unless candidate_exists?
 
     update_employment_history
   end
@@ -37,7 +37,7 @@ class EmploymentHistory::UpdateEmploymentHistory
 
   def update_employment_history
     employment_history = EmploymentHistory.find(@employment_history_id)
-    return unless employment_history
+    raise StandardError, 'Error! Employment history not found.' unless employment_history
 
     employment_history.update(@employment_history_attributes.compact)
   end

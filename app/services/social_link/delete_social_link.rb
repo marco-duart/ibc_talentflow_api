@@ -9,7 +9,7 @@ class SocialLink::DeleteSocialLink
   end
 
   def run
-    return unless valid_params?
+    raise StandardError, 'Error! Invalid parameters.' unless valid_params?
     return unless social_link_exists?
 
     delete_social_link

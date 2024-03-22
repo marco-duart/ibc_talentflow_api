@@ -36,7 +36,7 @@ class Company::FetchCompany
 
   def fetch_by_id
     company = Company.find(@company_id)
-    return 'Error!' unless company
+    raise StandardError, 'Error! Company not found.' unless company
 
     logo_url = url_for(company.logo) if company.logo.attached?
     build_response(company, logo_url)

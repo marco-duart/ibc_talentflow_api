@@ -16,8 +16,8 @@ class Register::CreateUser
   end
 
   def run
-    return 'Error!' unless valid_params?
-    return 'Error! Email in use' if email_in_use?
+    raise StandardError, 'Error! Invalid parameters.' unless valid_params?
+    raise StandardError, 'Error! Email already in use.' if email_in_use?
 
     create_user
   end
@@ -63,7 +63,7 @@ class Register::CreateUser
     }
   end
 
-  def create_user
+  def create_user # rubocop:disable Metrics/MethodLength
     user_params = build_params
     user = User.new(user_params)
     attach_photo(user) if @photo
@@ -71,9 +71,10 @@ class Register::CreateUser
       action_key = generate_temporary_token(user) # Gerado um token de 24 horas
       mailer_params = build_mailer_params(user.id, action_key)
       UserMailer.welcome_email(mailer_params).deliver_now
-      return { message: 'Sucessfull created!', error: false }
+      return { message: 'Sucessfull created!' }
     end
 
-    puts "Erro!: #{user.errors.full_messages}"
+    puts "Error!: #{user.errors.full_messages}"
+    raise StandardError, "Error!: #{user.errors.full_messages}"
   end
 end

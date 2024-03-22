@@ -8,7 +8,7 @@ class Skill::DeleteSkill
   end
 
   def run
-    return unless valid_params?
+    raise StandardError, 'Error! Invalid parameters.' unless valid_params?
 
     delete_skill
   end

@@ -9,8 +9,8 @@ class ApplicationStatus::DeleteApplicationStatus
   end
 
   def run
-    return unless valid_params?
-    return unless application_exists?
+    raise StandardError, 'Error! Invalid parameters.' unless valid_params?
+    raise StandardError, 'Error! Application not found.' unless application_exists?
 
     delete_application
   end
@@ -28,7 +28,7 @@ class ApplicationStatus::DeleteApplicationStatus
 
   def delete_application
     application = ApplicationStatus.find(@application_id)
-    return unless application
+    raise StandardError, 'Error! Application not found.' unless application
 
     application.destroy
   end

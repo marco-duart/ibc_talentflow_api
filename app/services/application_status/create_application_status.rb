@@ -9,10 +9,10 @@ class ApplicationStatus::CreateApplicationStatus
   end
 
   def run
-    return unless valid_params?
-    return unless candidate_exists?
-    return unless hiring_process_stage_exists?
-    return if application_exists?
+    raise StandardError, 'Error! Invalid parameters.' unless valid_params?
+    raise StandardError, 'Error! Candidate not found.' unless candidate_exists?
+    raise StandardError, 'Error! Hiring process not found.' unless hiring_process_stage_exists?
+    raise StandardError, 'Error! Application not found.' if application_exists?
 
     create_application
   end
@@ -51,6 +51,7 @@ class ApplicationStatus::CreateApplicationStatus
     application = candidate.applications.build(application_params)
     return application if application.save
 
-    puts "Erro! : #{applications.errors.full_messages}"
+    puts "Error! : #{applications.errors.full_messages}"
+    raise StandardError, "Error! : #{applications.errors.full_messages}"
   end
 end

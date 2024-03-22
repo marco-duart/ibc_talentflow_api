@@ -20,8 +20,8 @@ class JobPosting::CreateJob
   end
 
   def run
-    return unless valid_params?
-    return unless company_exists?
+    raise StandardError, 'Error! Invalid parameters.' unless valid_params?
+    raise StandardError, 'Error! Company not found.' unless company_exists?
 
     create_job
   end
@@ -71,6 +71,7 @@ class JobPosting::CreateJob
     attach_image(job_posting) if @image
     return job_posting if job_posting.save
 
-    puts "Erro! : #{job_posting.errors.full_messages}"
+    puts "Error! : #{job_posting.errors.full_messages}"
+    raise StandardError, "Error! : #{job_posting.errors.full_messages}"
   end
 end

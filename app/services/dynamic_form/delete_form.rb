@@ -8,7 +8,7 @@ class DynamicForm::DeleteForm
   end
 
   def run
-    return unless valid_params?
+    raise StandardError, 'Error! Invalid parameters.' unless valid_params?
 
     delete_form
   end
@@ -21,7 +21,7 @@ class DynamicForm::DeleteForm
 
   def delete_form
     form = DynamicForm.find(@form_id)
-    return unless form
+    raise StandardError, 'Error! Form not found.' unless form
 
     form.destroy
   end

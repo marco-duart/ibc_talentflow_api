@@ -8,16 +8,22 @@ module Api
       def fetch_all
         body = CandidateKnowledge::FetchCandidateKnowledge.run(params, @payload)
         render status: :ok, body: body.to_json
+      rescue StandardError => e
+        render status: :unprocessable_entity, json: { error: e.message }
       end
 
       def create
         body = CandidateKnowledge::CreateCandidateKnowledge.run(params, @payload)
         render status: :ok, body: body.to_json
+      rescue StandardError => e
+        render status: :unprocessable_entity, json: { error: e.message }
       end
 
       def delete
         body = CandidateKnowledge::DeleteCandidateKnowledge.run(params, @payload)
         render status: :ok, body: body.to_json
+      rescue StandardError => e
+        render status: :unprocessable_entity, json: { error: e.message }
       end
 
       private

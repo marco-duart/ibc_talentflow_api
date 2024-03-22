@@ -8,32 +8,44 @@ module Api
       def fetch_all
         body = DynamicForm::FetchForm.run(params)
         render status: :ok, body: body.to_json
+      rescue StandardError => e
+        render status: :unprocessable_entity, json: { error: e.message }
       end
 
       def fetch_by_id
         body = DynamicForm::FetchForm.run(params)
         render status: :ok, body: body.to_json
+      rescue StandardError => e
+        render status: :unprocessable_entity, json: { error: e.message }
       end
 
       def create
         form_params = create_form_permitted_params
         body = DynamicForm::CreateForm.run(form_params)
         render status: :ok, body: body.to_json
+      rescue StandardError => e
+        render status: :unprocessable_entity, json: { error: e.message }
       end
 
       def update
         body = DynamicForm::UpdateForm.run(params)
         render status: :ok, body: body.to_json
+      rescue StandardError => e
+        render status: :unprocessable_entity, json: { error: e.message }
       end
 
       def delete
         body = DynamicForm::DeleteForm.run(params)
         render status: :ok, body: body.to_json
+      rescue StandardError => e
+        render status: :unprocessable_entity, json: { error: e.message }
       end
 
       def create_field
         body = FormField::CreateField.run(params)
         render status: :ok, body: body.to_json
+      rescue StandardError => e
+        render status: :unprocessable_entity, json: { error: e.message }
       end
 
       private

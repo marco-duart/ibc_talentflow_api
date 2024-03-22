@@ -8,8 +8,8 @@ class HiringProcess::PriorityHiringProcess
   end
 
   def run
-    return 'Error: Invalid Params' unless valid_params?
-    return 'Error: Not found' unless hiring_process_exists?
+    raise StandardError, 'Error! Invalid parameters.' unless valid_params?
+    raise StandardError, 'Error! Hiring process not found.' unless hiring_process_exists?
 
     priority_hiring_process
   end
@@ -33,9 +33,9 @@ class HiringProcess::PriorityHiringProcess
       emails.each do |email|
         UserMailer.priority_hiring_email({ email:, job_title: }).deliver_now
       end
-      return { message: 'Successfull to send e-mail', error: false }
+      return { message: 'Successfull to send e-mail' }
     end
 
-    { error: true, message: 'Failed to find candidates or delivery email' }
+    raise StandardError, 'Error! Failed to find candidates or delivery email'
   end
 end

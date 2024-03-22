@@ -9,8 +9,8 @@ class CandidateKnowledge::DeleteCandidateKnowledge
   end
 
   def run
-    return unless valid_params?
-    return unless candidate_knowledge_exists?
+    raise StandardError, 'Error! Invalid parameters.' unless valid_params?
+    raise StandardError, 'Error! Knowledge not found.' unless candidate_knowledge_exists?
 
     delete_candidate_knowledge
   end
@@ -27,7 +27,7 @@ class CandidateKnowledge::DeleteCandidateKnowledge
 
   def delete_candidate_knowledge
     candidate_knowledge = CandidateKnowledge.find(@candidate_knowledge_id)
-    return unless candidate_knowledge
+    raise StandardError, 'Error! Knowledge not found.' unless candidate_knowledge
 
     candidate_knowledge.destroy
   end

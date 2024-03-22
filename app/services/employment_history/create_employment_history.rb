@@ -15,8 +15,8 @@ class EmploymentHistory::CreateEmploymentHistory
   end
 
   def run
-    return unless valid_params?
-    return unless candidate_exists?
+    raise StandardError, 'Error! Invalid parameters.' unless valid_params?
+    raise StandardError, 'Error! Candidate not found.' unless candidate_exists?
 
     create_employment_history
   end
@@ -54,6 +54,7 @@ class EmploymentHistory::CreateEmploymentHistory
 
     return employment_history if employment_history.save
 
-    puts "Erro! : #{employment_history.errors.full_messages}"
+    puts "Error! : #{employment_history.errors.full_messages}"
+    raise StandardError, "Error! : #{employment_history.errors.full_messages}"
   end
 end

@@ -13,7 +13,7 @@ class DynamicForm::UpdateForm
   end
 
   def run
-    return unless valid_params?
+    raise StandardError, 'Error! Invalid parameters.' unless valid_params?
 
     update_form
   end
@@ -26,7 +26,7 @@ class DynamicForm::UpdateForm
 
   def update_form
     form = DynamicForm.find(@form_id)
-    return unless form
+    raise StandardError, 'Error! Form not found.' unless form
 
     form.update(@form_attributes.compact)
   end

@@ -10,7 +10,7 @@ class ApplicationStatus::FetchApplicationStatus
   end
 
   def run
-    return unless valid_params?
+    raise StandardError, 'Error! Invalid parameters.' unless valid_params?
 
     @application_id ? fetch_by_id : fetch_all
   end
@@ -44,5 +44,6 @@ class ApplicationStatus::FetchApplicationStatus
     return build_response(application) if application
 
     puts "Error! : #{application.errors.full_messages}"
+    raise StandardError, "Error! : #{application.errors.full_messages}"
   end
 end

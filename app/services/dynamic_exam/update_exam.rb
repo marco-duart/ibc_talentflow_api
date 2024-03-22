@@ -13,7 +13,7 @@ class DynamicExam::UpdateExam
   end
 
   def run
-    return unless valid_params?
+    raise StandardError, 'Error! Invalid parameters.' unless valid_params?
 
     update_exam
   end
@@ -26,7 +26,7 @@ class DynamicExam::UpdateExam
 
   def update_exam
     exam = DynamicExam.find(@exam_id)
-    return unless exam
+    raise StandardError, 'Error! Exam not found.' unless exam
 
     exam.update(@exam_attributes.compact)
   end

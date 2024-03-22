@@ -12,8 +12,8 @@ class Document::FetchDocument
   end
 
   def run
-    return unless valid_params?
-    return unless candidate_exists?
+    raise StandardError, 'Error! Invalid parameters.' unless valid_params?
+    raise StandardError, 'Error! Candidate not found.' unless candidate_exists?
 
     @document_id ? fetch_by_id : fetch_all
   end
@@ -48,7 +48,7 @@ class Document::FetchDocument
 
   def fetch_by_id
     document = User.find(@user_id).candidate.documents.find(@document_id)
-    return 'Error!' unless document
+    raise StandardError, 'Error! Document not found.' unless document
 
     image_url = url_for(document.image) if document.image.attached?
     build_response(document, image_url)

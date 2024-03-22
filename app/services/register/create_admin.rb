@@ -15,7 +15,7 @@ class Register::CreateAdmin
   end
 
   def run
-    return unless valid_params?
+    raise StandardError, 'Error! Invalid parameters.' unless valid_params?
 
     create_admin
   end
@@ -47,6 +47,7 @@ class Register::CreateAdmin
     attach_photo(admin) if @photo
     return admin if admin.save
 
-    puts "Erro!: #{admin.errors.full_messages}"
+    puts "Error!: #{admin.errors.full_messages}"
+    raise StandardError, "Error!: #{admin.errors.full_messages}"
   end
 end

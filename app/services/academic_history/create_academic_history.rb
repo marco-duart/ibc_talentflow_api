@@ -13,8 +13,8 @@ class AcademicHistory::CreateAcademicHistory
   end
 
   def run
-    return unless valid_params?
-    return unless candidate_exists?
+    raise StandardError, 'Error! Invalid parameters.' unless valid_params?
+    raise StandardError, 'Error! Candidate not found.' unless candidate_exists?
 
     create_academic_history
   end
@@ -51,6 +51,7 @@ class AcademicHistory::CreateAcademicHistory
 
     return academic_history if academic_history.save
 
-    puts "Erro! : #{academic_history.errors.full_messages}"
+    puts "Error! : #{academic_history.errors.full_messages}"
+    raise StandardError, "Error! : #{academic_history.errors.full_messages}"
   end
 end

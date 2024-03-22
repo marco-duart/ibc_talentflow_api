@@ -9,8 +9,8 @@ class CandidateSkill::DeleteCandidateSkill
   end
 
   def run
-    return unless valid_params?
-    return unless candidate_skill_exists?
+    raise StandardError, 'Error! Invalid parameters.' unless valid_params?
+    raise StandardError, 'Error! Skill not found.' unless candidate_skill_exists?
 
     delete_candidate_skill
   end
@@ -27,7 +27,7 @@ class CandidateSkill::DeleteCandidateSkill
 
   def delete_candidate_skill
     candidate_skill = CandidateSkill.find(@candidate_skill_id)
-    return unless candidate_skill
+    raise StandardError, 'Error! Skill not found.' unless candidate_skill
 
     candidate_skill.destroy
   end

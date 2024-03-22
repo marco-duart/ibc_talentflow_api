@@ -11,7 +11,7 @@ class Login::ForgetPassword
   end
 
   def run
-    return 'Error! Invalid params' unless valid_params?
+    return 'Error! Invalid parameters' unless valid_params?
     return 'Error! Incorrect credentials' unless valid_credentials?
 
     send_reset_password_key
@@ -47,6 +47,6 @@ class Login::ForgetPassword
     action_key = generate_temporary_token
     mailer_params = build_mailer_params(action_key)
     UserMailer.password_recovery_token_email(mailer_params).deliver_now
-    { message: 'Sucessfull send reset password e-mail!', error: false }
+    { message: 'Sucessfull send reset password e-mail!' }
   end
 end

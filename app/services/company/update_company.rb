@@ -15,7 +15,7 @@ class Company::UpdateCompany
   end
 
   def run
-    return unless valid_params?
+    raise StandardError, 'Error! Invalid parameters.' unless valid_params?
 
     update_company
   end
@@ -28,7 +28,7 @@ class Company::UpdateCompany
 
   def update_company
     company = Company.find(@company_id)
-    return unless company
+    raise StandardError, 'Error! Company not found.' unless company
 
     company.update(@company_attributes.compact)
   end

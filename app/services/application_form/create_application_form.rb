@@ -11,10 +11,10 @@ class ApplicationForm::CreateApplicationForm
   end
 
   def run
-    return unless valid_params?
-    return unless candidate_exists?
-    return unless application_status_exists?
-    return unless dynamic_form_exists?
+    raise StandardError, 'Error! Invalid parameters.' unless valid_params?
+    raise StandardError, 'Error! Candidate not found.' unless candidate_exists?
+    raise StandardError, 'Error! Application not found.' unless application_status_exists?
+    raise StandardError, 'Error! Form not found.' unless dynamic_form_exists?
 
     create_application_form
   end

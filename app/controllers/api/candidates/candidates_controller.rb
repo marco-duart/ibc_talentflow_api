@@ -9,6 +9,8 @@ module Api
         candidate_params = create_candidate_permitted_params
         body = UserCandidate::CreateCandidate.run(candidate_params, @payload)
         render status: :ok, body: body.to_json
+      rescue StandardError => e
+        render status: :unprocessable_entity, json: { error: e.message }
       end
 
       private

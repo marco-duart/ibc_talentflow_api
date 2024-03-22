@@ -36,7 +36,7 @@ class UserCandidate::CreateCandidate
   end
 
   def run
-    return unless valid_params?
+    raise StandardError, 'Error! Invalid parameters.' unless valid_params?
     return unless user_exists?
 
     create_candidate
@@ -125,13 +125,11 @@ class UserCandidate::CreateCandidate
     if candidate.save
       register_cpf(user)
       return {
-        error: false,
-        message: "Successfull to create a new candidate!",
-        code: 201,
+        message: 'Successfull to create a new candidate!',
         candidate:
       }
     end
 
-    puts "Erro! : #{candidate.errors.full_messages}"
+    puts "Error! : #{candidate.errors.full_messages}"
   end
 end

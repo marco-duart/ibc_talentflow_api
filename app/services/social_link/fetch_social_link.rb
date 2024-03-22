@@ -9,8 +9,8 @@ class SocialLink::FetchSocialLink
   end
 
   def run
-    return unless valid_params?
-    return unless candidate_exists?
+    raise StandardError, 'Error! Invalid parameters.' unless valid_params?
+    raise StandardError, 'Error! Candidate not found.' unless candidate_exists?
 
     @social_link_id ? fetch_by_id : fetch_all
   end

@@ -9,8 +9,8 @@ class ApplicationForm::FetchApplicationForm
   end
 
   def run
-    return unless valid_params?
-    return unless candidate_exists?
+    raise StandardError, 'Error! Invalid parameters.' unless valid_params?
+    raise StandardError, 'Error! Candidate not found.' unless candidate_exists?
 
     fetch_by_id
   end
@@ -86,7 +86,7 @@ class ApplicationForm::FetchApplicationForm
     candidate = User.find(@user_id)&.candidate
     application_form = ApplicationForm.find(@application_form_id)
 
-    return unless application_form
+    raise StandardError, 'Error! Application not found.' unless application_form
 
     initial_questions = make_inicial_questions(candidate)
     questions = make_questions(application_form.form_responses)

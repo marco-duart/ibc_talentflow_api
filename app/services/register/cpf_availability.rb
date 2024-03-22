@@ -13,20 +13,12 @@ class Register::CpfAvailability
 
   private
 
-  def check_cpf # rubocop:disable Metrics/MethodLength
+  def check_cpf
     user = User.find_by(cpf: @cpf)
-    if user
-      {
-        error: true,
-        message: 'Unavaliable CPF!',
-        code: 400
-      }
-    else
-      {
-        error: false,
-        message: 'Avaliable CPF!',
-        code: 200
-      }
-    end
+    raise StandardError, 'Error! Unavaliable CPF!' if user
+
+    {
+      message: 'Avaliable CPF!'
+    }
   end
 end

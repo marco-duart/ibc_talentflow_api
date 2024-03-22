@@ -8,7 +8,7 @@ class Skill::CreateSkill
   end
 
   def run
-    return unless valid_params?
+    raise StandardError, 'Error! Invalid parameters.' unless valid_params?
     return if skill_exists?
 
     create_skill
@@ -29,6 +29,6 @@ class Skill::CreateSkill
 
     return skill if skill.save
 
-    puts "Erro! : #{skill.errors.full_messages}"
+    puts "Error! : #{skill.errors.full_messages}"
   end
 end

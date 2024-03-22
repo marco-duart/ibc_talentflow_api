@@ -10,8 +10,8 @@ class ProfessionalLink::CreateProfessionalLink
   end
 
   def run
-    return unless valid_params?
-    return unless candidate_exists?
+    raise StandardError, 'Error! Invalid parameters.' unless valid_params?
+    raise StandardError, 'Error! Candidate not found.' unless candidate_exists?
 
     create_professional_link
   end
@@ -43,6 +43,7 @@ class ProfessionalLink::CreateProfessionalLink
 
     return professional_link if professional_link.save
 
-    puts "Erro! : #{professional_link.errors.full_messages}"
+    puts "Error! : #{professional_link.errors.full_messages}"
+    raise StandardError, "Error! : #{professional_link.errors.full_messages}"
   end
 end

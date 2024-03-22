@@ -8,11 +8,15 @@ module Api
       def fetch_by_id
         body = ApplicationExam::FetchApplicationExam.run(params, @payload)
         render status: :ok, body: body.to_json
+      rescue StandardError => e
+        render status: :unprocessable_entity, json: { error: e.message }
       end
 
       def create_response
         body = ApplicationExam::CreateApplicationExam.run(params, @payload)
         render status: :ok, body: body.to_json
+      rescue StandardError => e
+        render status: :unprocessable_entity, json: { error: e.message }
       end
 
       private

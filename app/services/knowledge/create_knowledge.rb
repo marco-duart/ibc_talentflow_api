@@ -8,8 +8,8 @@ class Knowledge::CreateKnowledge
   end
 
   def run
-    return unless valid_params?
-    return if knowledge_exists?
+    raise StandardError, 'Error! Invalid parameters.' unless valid_params?
+    raise StandardError, 'Error! Knowledge already exists.' if knowledge_exists?
 
     create_knowledge
   end
@@ -29,6 +29,7 @@ class Knowledge::CreateKnowledge
 
     return knowledge if knowledge.save
 
-    puts "Erro! : #{knowledge.errors.full_messages}"
+    puts "Error! : #{knowledge.errors.full_messages}"
+    raise StandardError, "Error! : #{knowledge.errors.full_messages}"
   end
 end

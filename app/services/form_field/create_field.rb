@@ -10,8 +10,8 @@ class FormField::CreateField
   end
 
   def run
-    return unless valid_params?
-    return unless form_exists?
+    raise StandardError, 'Error! Invalid parameters.' unless valid_params?
+    raise StandardError, 'Error! Form not found.' unless form_exists?
 
     create_field
   end

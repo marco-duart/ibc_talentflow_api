@@ -13,20 +13,12 @@ class Register::EmailAvailability
 
   private
 
-  def check_email # rubocop:disable Metrics/MethodLength
+  def check_email
     user = User.find_by(email: @email)
-    if user
-      {
-        error: true,
-        message: 'Unavaliable email!',
-        code: 400
-      }
-    else
-      {
-        error: false,
-        message: 'Avaliable e-mail!',
-        code: 200
-      }
-    end
+    raise StandardError, 'Error! Unavaliable email!' if user
+
+    {
+      message: 'Avaliable e-mail!'
+    }
   end
 end

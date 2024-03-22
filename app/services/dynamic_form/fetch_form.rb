@@ -38,7 +38,8 @@ class DynamicForm::FetchForm
 
   def fetch_by_id
     form = DynamicForm.find(@form_id)
-    'Não encontrado!' unless form
+    raise StandardError, 'Error! Form not found.' unless form
+
     build_response(form)
   end
 end

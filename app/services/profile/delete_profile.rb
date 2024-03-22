@@ -8,7 +8,7 @@ class Profile::DeleteProfile
   end
 
   def run
-    return unless valid_params?
+    raise StandardError, 'Error! Invalid parameters.' unless valid_params?
 
     delete_profile
   end
@@ -21,7 +21,7 @@ class Profile::DeleteProfile
 
   def delete_profile
     profile = Profile.find(@profile_id)
-    return unless profile
+    raise StandardError, 'Error! Profile not found.' unless profile
 
     profile.destroy
   end

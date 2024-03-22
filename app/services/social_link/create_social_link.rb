@@ -10,8 +10,8 @@ class SocialLink::CreateSocialLink
   end
 
   def run
-    return unless valid_params?
-    return unless candidate_exists?
+    raise StandardError, 'Error! Invalid parameters.' unless valid_params?
+    raise StandardError, 'Error! Candidate not found.' unless candidate_exists?
 
     create_social_link
   end
@@ -43,6 +43,6 @@ class SocialLink::CreateSocialLink
 
     return social_link if social_link.save
 
-    puts "Erro! : #{social_link.errors.full_messages}"
+    puts "Error! : #{social_link.errors.full_messages}"
   end
 end

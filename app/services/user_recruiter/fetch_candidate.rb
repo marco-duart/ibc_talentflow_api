@@ -12,7 +12,7 @@ class UserRecruiter::FetchRecruiter
   end
 
   def run
-    return unless valid_params?
+    raise StandardError, 'Error! Invalid parameters.' unless valid_params?
 
     fetch_by_id
   end

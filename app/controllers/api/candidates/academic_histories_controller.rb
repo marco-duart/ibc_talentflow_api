@@ -8,26 +8,36 @@ module Api
       def fetch_all
         body = AcademicHistory::FetchAcademicHistory.run(params, @payload)
         render status: :ok, body: body.to_json
+      rescue StandardError => e
+        render status: :unprocessable_entity, json: { error: e.message }
       end
 
       def fetch_by_id
         body = AcademicHistory::FetchAcademicHistory.run(params, @payload)
         render status: :ok, body: body.to_json
+      rescue StandardError => e
+        render status: :unprocessable_entity, json: { error: e.message }
       end
 
       def create
         body = AcademicHistory::CreateAcademicHistory.run(params, @payload)
         render status: :ok, body: body.to_json
+      rescue StandardError => e
+        render status: :unprocessable_entity, json: { error: e.message }
       end
 
       def update
         body = AcademicHistory::UpdateAcademicHistory.run(params, @payload)
         render status: :ok, body: body.to_json
+      rescue StandardError => e
+        render status: :unprocessable_entity, json: { error: e.message }
       end
 
       def delete
         body = AcademicHistory::DeleteAcademicHistory.run(params, @payload)
         render status: :ok, body: body.to_json
+      rescue StandardError => e
+        render status: :unprocessable_entity, json: { error: e.message }
       end
 
       private

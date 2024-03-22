@@ -13,7 +13,7 @@ class Company::CreateCompany
   end
 
   def run
-    return unless valid_params?
+    raise StandardError, 'Error! Invalid parameters.' unless valid_params?
 
     create_company
   end
@@ -44,6 +44,7 @@ class Company::CreateCompany
     attach_logo(company) if @logo
     return company if company.save
 
-    puts "Erro! : #{company.errors.full_messages}"
+    puts "Error! : #{company.errors.full_messages}"
+    raise StandardError, "Error! : #{company.errors.full_messages}"
   end
 end

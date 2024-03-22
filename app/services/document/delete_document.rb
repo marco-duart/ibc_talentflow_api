@@ -9,8 +9,8 @@ class Document::DeleteDocument
   end
 
   def run
-    return unless valid_params?
-    return unless document_exists?
+    raise StandardError, 'Error! Invalid parameters.' unless valid_params?
+    raise StandardError, 'Error! Document not found.' unless document_exists?
 
     delete_document
   end
@@ -28,7 +28,7 @@ class Document::DeleteDocument
 
   def delete_document
     document = Document.find(@document_id)
-    return unless document
+    raise StandardError, 'Error! Document not found.' unless document
 
     document.destroy
   end

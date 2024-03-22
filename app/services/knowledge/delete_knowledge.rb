@@ -8,7 +8,7 @@ class Knowledge::DeleteKnowledge
   end
 
   def run
-    return unless valid_params?
+    raise StandardError, 'Error! Invalid parameters.' unless valid_params?
 
     delete_knowledge
   end
@@ -21,7 +21,7 @@ class Knowledge::DeleteKnowledge
 
   def delete_knowledge
     knowledge = Knowledge.find(@knowledge_id)
-    return unless knowledge
+    raise StandardError, 'Error! Knowledge not found.' unless knowledge
 
     knowledge.destroy
   end

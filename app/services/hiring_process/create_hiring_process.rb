@@ -20,9 +20,9 @@ class HiringProcess::CreateHiringProcess
   end
 
   def run
-    return unless valid_params?
-    return unless job_exists?
-    return unless user_exists?
+    raise StandardError, 'Error! Invalid parameters.' unless valid_params?
+    raise StandardError, 'Error! Job not found.' unless job_exists?
+    raise StandardError, 'Error! User not found.' unless user_exists?
 
     create_hiring
   end
@@ -63,7 +63,8 @@ class HiringProcess::CreateHiringProcess
       create_hiring_stages(hiring_process)
       hiring_process
     else
-      puts "Erro! : #{hiring_process.errors.full_messages}"
+      puts "Error! : #{hiring_process.errors.full_messages}"
+      raise StandardError, "Error! : #{hiring_process.errors.full_messages}"
     end
   end
 

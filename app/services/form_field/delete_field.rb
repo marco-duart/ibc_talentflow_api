@@ -8,7 +8,7 @@ class FormField::DeleteField
   end
 
   def run
-    return unless valid_params?
+    raise StandardError, 'Error! Invalid parameters.' unless valid_params?
 
     delete_field
   end
@@ -21,7 +21,7 @@ class FormField::DeleteField
 
   def delete_field
     field = FormField.find(@field_id)
-    return unless field
+    raise StandardError, 'Error! Field not found.' unless field
 
     field.destroy
   end

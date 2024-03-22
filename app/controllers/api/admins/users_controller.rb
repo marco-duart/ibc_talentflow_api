@@ -8,6 +8,8 @@ module Api
       def ban_user
         body = Register::BanAccount.run(params)
         render status: :ok, body: body.to_json
+      rescue StandardError => e
+        render status: :unprocessable_entity, json: { error: e.message }
       end
 
       private

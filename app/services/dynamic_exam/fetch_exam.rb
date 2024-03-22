@@ -51,7 +51,8 @@ class DynamicExam::FetchExam
 
   def fetch_by_id
     exam = DynamicExam.find(@exam_id)
-    'Não encontrado!' unless exam
+    raise StandardError, 'Error! Exam not found.' unless exam
+
     questions = make_questions_with_alternatives(exam)
     build_response(exam, questions)
   end

@@ -11,7 +11,7 @@ class DynamicExam::CreateExam
   end
 
   def run
-    return unless valid_params?
+    raise StandardError, 'Error! Invalid parameters.' unless valid_params?
 
     create_exam
   end
@@ -40,6 +40,7 @@ class DynamicExam::CreateExam
     attach_theme(dynamic_exam) if @theme
     return dynamic_exam if dynamic_exam.save
 
-    puts "Erro! : #{dynamic_exam.errors.full_messages}"
+    puts "Error! : #{dynamic_exam.errors.full_messages}"
+    raise StandardError, "Error! : #{dynamic_exam.errors.full_messages}"
   end
 end

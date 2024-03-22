@@ -8,27 +8,37 @@ module Api
       def fetch_all
         body = Company::FetchCompany.run(params)
         render status: :ok, body: body.to_json
+      rescue StandardError => e
+        render status: :unprocessable_entity, json: { error: e.message }
       end
 
       def fetch_by_id
         body = Company::FetchCompany.run(params)
         render status: :ok, body: body.to_json
+      rescue StandardError => e
+        render status: :unprocessable_entity, json: { error: e.message }
       end
 
       def create
         company_params = create_company_permitted_params
         body = Company::CreateCompany.run(company_params)
         render status: :ok, body: body.to_json
+      rescue StandardError => e
+        render status: :unprocessable_entity, json: { error: e.message }
       end
 
       def update
         body = Company::UpdateCompany.run(params)
         render status: :ok, body: body.to_json
+      rescue StandardError => e
+        render status: :unprocessable_entity, json: { error: e.message }
       end
 
       def delete
         body = Company::DeleteCompany.run(params)
         render status: :ok, body: body.to_json
+      rescue StandardError => e
+        render status: :unprocessable_entity, json: { error: e.message }
       end
 
       private

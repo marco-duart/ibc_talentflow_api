@@ -9,8 +9,8 @@ class EmploymentHistory::DeleteEmploymentHistory
   end
 
   def run
-    return unless valid_params?
-    return unless employment_history_exists?
+    raise StandardError, 'Error! Invalid parameters.' unless valid_params?
+    raise StandardError, 'Error! Employment history not found' unless employment_history_exists?
 
     delete_employment_history
   end
@@ -28,7 +28,7 @@ class EmploymentHistory::DeleteEmploymentHistory
 
   def delete_employment_history
     employment_history = EmploymentHistory.find(@employment_history_id)
-    return unless employment_history
+    raise StandardError, 'Error! Employment history not found.' unless employment_history
 
     employment_history.destroy
   end

@@ -8,26 +8,36 @@ module Api
       def fetch_all
         body = ProfessionalLink::FetchProfessionalLink.run(params, @payload)
         render status: :ok, body: body.to_json
+      rescue StandardError => e
+        render status: :unprocessable_entity, json: { error: e.message }
       end
 
       def fetch_by_id
         body = ProfessionalLink::FetchProfessionalLink.run(params, @payload)
         render status: :ok, body: body.to_json
+      rescue StandardError => e
+        render status: :unprocessable_entity, json: { error: e.message }
       end
 
       def create
         body = ProfessionalLink::CreateProfessionalLink.run(params, @payload)
         render status: :ok, body: body.to_json
+      rescue StandardError => e
+        render status: :unprocessable_entity, json: { error: e.message }
       end
 
       def update
         body = ProfessionalLink::UpdateProfessionalLink.run(params, @payload)
         render status: :ok, body: body.to_json
+      rescue StandardError => e
+        render status: :unprocessable_entity, json: { error: e.message }
       end
 
       def delete
         body = ProfessionalLink::DeleteProfessionalLink.run(params, @payload)
         render status: :ok, body: body.to_json
+      rescue StandardError => e
+        render status: :unprocessable_entity, json: { error: e.message }
       end
 
       private

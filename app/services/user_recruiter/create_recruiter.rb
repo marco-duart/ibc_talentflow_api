@@ -9,7 +9,7 @@ class UserRecruiter::CreateRecruiter
   end
 
   def run
-    return unless valid_params?
+    raise StandardError, 'Error! Invalid parameters.' unless valid_params?
     return unless user_exists?
 
     create_recruiter

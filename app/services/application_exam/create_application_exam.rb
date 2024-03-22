@@ -11,10 +11,10 @@ class ApplicationExam::CreateApplicationExam
   end
 
   def run
-    return unless valid_params?
-    return unless candidate_exists?
-    return unless application_status_exists?
-    return unless dynamic_exam_exists?
+    raise StandardError, 'Error! Invalid parameters.' unless valid_params?
+    raise StandardError, 'Error! Candidate not found.' unless candidate_exists?
+    raise StandardError, 'Error! Application not found.' unless application_status_exists?
+    raise StandardError, 'Error! Exam not found.' unless dynamic_exam_exists?
 
     create_application_exam
   end
@@ -53,6 +53,7 @@ class ApplicationExam::CreateApplicationExam
     end
 
     puts "Error! : #{application_exam.errors.full_messages}"
+    raise StandardError, "Error! : #{application_exam.errors.full_messages}"
   end
 
   def create_exam_responses(application_exam)

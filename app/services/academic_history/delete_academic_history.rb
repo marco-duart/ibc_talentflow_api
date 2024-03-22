@@ -9,8 +9,8 @@ class AcademicHistory::DeleteAcademicHistory
   end
 
   def run
-    return unless valid_params?
-    return unless academic_history_exists?
+    raise StandardError, 'Error! Invalid parameters.' unless valid_params?
+    raise StandardError, 'Error! Academic history not found.' unless academic_history_exists?
 
     delete_academic_history
   end
@@ -28,7 +28,7 @@ class AcademicHistory::DeleteAcademicHistory
 
   def delete_academic_history
     academic_history = AcademicHistory.find(@academic_history_id)
-    return unless academic_history
+    raise StandardError, 'Error! Academic history not found.' unless academic_history
 
     academic_history.destroy
   end

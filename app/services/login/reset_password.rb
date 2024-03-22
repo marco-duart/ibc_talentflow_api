@@ -12,7 +12,7 @@ class Login::ResetPassword
   end
 
   def run
-    return 'Error! Invalid params' unless valid_params?
+    return 'Error! Invalid parameters' unless valid_params?
     return 'Error! Incorrect credentials' unless valid_credentials?
     return 'Error! Invalid Token' unless valid_action_key?
 
@@ -33,7 +33,7 @@ class Login::ResetPassword
 
   def valid_action_key?
     payload = TokenDecoder.decode_token(@action_key)
-    return false if payload['user_id'] != @user.id
+    raise StandardError, 'Error! Invalid token for this user.' if payload['user_id'] != @user.id
 
     payload && payload['action'] == ACTION
   end
@@ -50,6 +50,6 @@ class Login::ResetPassword
     @user.update_columns(login_attempts: 0, locked: false)
     mailer_params = build_mailer_params
     UserMailer.changed_password_email(mailer_params).deliver_now
-    { message: 'Password has successful changed!', error: false }
+    { message: 'Password has successful changed!' }
   end
 end

@@ -1,5 +1,5 @@
 class ApplicationStatus::UpdateApplicationStatus
-  NEGATIVE_STATUS = ['DESISTIU', 'REPROVADO', 'SEM INTERESSE']
+  NEGATIVE_STATUS = ['DESISTIU', 'REPROVADO', 'SEM INTERESSE'].freeze
   def self.run(params)
     new(params).run
   end
@@ -12,8 +12,8 @@ class ApplicationStatus::UpdateApplicationStatus
   end
 
   def run
-    return unless valid_params?
-    return unless application_exists?
+    raise StandardError, 'Error! Invalid parameters.' unless valid_params?
+    raise StandardError, 'Error! Application not found.' unless application_exists?
 
     update_application
   end
@@ -45,7 +45,7 @@ class ApplicationStatus::UpdateApplicationStatus
 
   def update_application
     application = ApplicationStatus.find(@application_id)
-    return 'Error' unless application
+    raise StandardError, 'Error! Application not found.' unless application
 
     application.update(@application_attributes.compact)
     mailer_params = build_mailer_params
@@ -54,6 +54,6 @@ class ApplicationStatus::UpdateApplicationStatus
     else
       UserMailer.negative_update_process_email(mailer_params).deliver_now
     end
-    { message: 'Sucessfull to change candidate stage!', error: false }
+    { message: 'Sucessfull to change candidate stage!' }
   end
 end

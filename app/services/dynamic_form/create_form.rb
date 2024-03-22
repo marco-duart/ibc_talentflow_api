@@ -11,7 +11,7 @@ class DynamicForm::CreateForm
   end
 
   def run
-    return unless valid_params?
+    raise StandardError, 'Error! Invalid parameters.' unless valid_params?
 
     create_form
   end
@@ -40,6 +40,7 @@ class DynamicForm::CreateForm
     attach_theme(dynamic_form) if @theme
     return dynamic_form if dynamic_form.save
 
-    puts "Erro! : #{dynamic_form.errors.full_messages}"
+    puts "Error! : #{dynamic_form.errors.full_messages}"
+    raise StandardError, "Error! : #{dynamic_form.errors.full_messages}"
   end
 end

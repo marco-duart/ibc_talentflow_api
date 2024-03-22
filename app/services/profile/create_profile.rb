@@ -8,8 +8,8 @@ class Profile::CreateProfile
   end
 
   def run
-    return unless valid_params?
-    return if profile_exists?
+    raise StandardError, 'Error! Invalid parameters.' unless valid_params?
+    raise StandardError, 'Error! Profile already exists.' if profile_exists?
 
     create_profile
   end
@@ -29,6 +29,7 @@ class Profile::CreateProfile
 
     return profile if profile.save
 
-    puts "Erro! : #{profile.errors.full_messages}"
+    puts "Error! : #{profile.errors.full_messages}"
+    raise StandardError, "Error! : #{profile.errors.full_messages}"
   end
 end

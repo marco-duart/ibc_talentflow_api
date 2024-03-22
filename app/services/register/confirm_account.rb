@@ -10,9 +10,9 @@ class Register::ConfirmAccount
   end
 
   def run
-    return 'Error!' unless valid_params?
-    return 'Error!' unless user_exists?
-    return 'Error! Invalid Token' unless valid_action_key?
+    raise StandardError, 'Error! Invalid parameters.' unless valid_params?
+    raise StandardError, 'Error! User not found.' unless user_exists?
+    raise StandardError, 'Error! Invalid Token.' unless valid_action_key?
 
     confirm_account
   end
@@ -30,7 +30,7 @@ class Register::ConfirmAccount
 
   def valid_action_key?
     payload = TokenDecoder.decode_token(@action_key)
-    return false unless payload && payload['user_id'] == @user_id
+    raise StandardError, 'Error! Invalid token for this user.' unless payload && payload['user_id'] == @user_id
 
     payload && payload['action'] == ACTION
   end
@@ -57,6 +57,6 @@ class Register::ConfirmAccount
     user.update_columns(user_params)
     mailer_params = build_mailer_params(user.name, user.email, user.cpf)
     UserMailer.confirmed_account_email(mailer_params).deliver_now
-    { message: 'Sucessfull to activate your account!', error: false }
+    { message: 'Sucessfull to activate your account!' }
   end
 end

@@ -8,7 +8,7 @@ class JobPosting::DeleteJob
   end
 
   def run
-    return unless valid_params?
+    raise StandardError, 'Error! Invalid parameters.' unless valid_params?
 
     delete_job
   end
@@ -21,7 +21,7 @@ class JobPosting::DeleteJob
 
   def delete_job
     job = JobPosting.find(@job_id)
-    return unless job
+    raise StandardError, 'Error! Job not found.' unless job
 
     job.destroy
   end

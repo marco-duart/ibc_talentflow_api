@@ -8,21 +8,29 @@ module Api
       def fetch_all
         body = ApplicationStatus::FetchApplicationStatus.run(params, @payload)
         render status: :ok, body: body.to_json
+      rescue StandardError => e
+        render status: :unprocessable_entity, json: { error: e.message }
       end
 
       def fetch_by_id
         body = ApplicationStatus::FetchApplicationStatus.run(params, @payload)
         render status: :ok, body: body.to_json
+      rescue StandardError => e
+        render status: :unprocessable_entity, json: { error: e.message }
       end
 
       def create
         body = ApplicationStatus::CreateApplicationStatus.run(params, @payload)
         render status: :ok, body: body.to_json
+      rescue StandardError => e
+        render status: :unprocessable_entity, json: { error: e.message }
       end
 
       def delete
         body = ApplicationStatus::DeleteApplicationStatus.run(params, @payload)
         render status: :ok, body: body.to_json
+      rescue StandardError => e
+        render status: :unprocessable_entity, json: { error: e.message }
       end
 
       private

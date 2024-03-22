@@ -9,9 +9,9 @@ class Register::BanAccount
   end
 
   def run
-    return 'Error: Invalid params' unless valid_params?
-    return 'Error: User not exists' unless user_exists?
-    return 'Error: User already banned' if already_banned?
+    raise StandardError, 'Error! Invalid parameters.' unless valid_params?
+    raise StandardError, 'Error! User not exists.' unless user_exists?
+    raise StandardError, 'Error! User already banned.' if already_banned?
 
     ban!
   end
@@ -35,6 +35,6 @@ class Register::BanAccount
   def ban!
     @user.candidate.destroy
     @user.update(banned: true, ban_reason: @ban_reason)
-    { message: 'User successful banned!', error: false, code: 200 }
+    { message: 'User successful banned!' }
   end
 end

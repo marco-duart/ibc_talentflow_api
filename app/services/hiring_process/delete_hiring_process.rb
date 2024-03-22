@@ -8,7 +8,7 @@ class HiringProcess::DeleteHiringProcess
   end
 
   def run
-    return unless valid_params?
+    raise StandardError, 'Error! Invalid parameters.' unless valid_params?
 
     delete_hiring_process
   end
@@ -21,7 +21,7 @@ class HiringProcess::DeleteHiringProcess
 
   def delete_hiring_process
     hiring_process = HiringProcess.find(@hiring_process_id)
-    return unless hiring_process
+    raise StandardError, 'Error! Hiring process not found.' unless hiring_process
 
     hiring_process.destroy
   end

@@ -9,9 +9,9 @@ class ApplicationExam::FetchApplicationExam
   end
 
   def run
-    return unless valid_params?
-    return unless candidate_exists?
-    return unless application_exam_exists?
+    raise StandardError, 'Error! Invalid parameters.' unless valid_params?
+    raise StandardError, 'Error! Candidate not found.' unless candidate_exists?
+    raise StandardError, 'Error! Application not found.' unless application_exam_exists?
 
     fetch_by_id
   end
@@ -58,7 +58,7 @@ class ApplicationExam::FetchApplicationExam
 
   def fetch_by_id
     application_exam = ApplicationExam.find(@application_exam_id)
-    return unless application_exam
+    raise StandardError, 'Error! Aplication not found.' unless application_exam
 
     exam_grade = calculate_exam_grade(application_exam.exam_responses)
     questions = make_questions(application_exam.exam_responses)

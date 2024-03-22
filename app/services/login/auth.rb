@@ -14,11 +14,11 @@ class Login::Auth
   end
 
   def run
-    return 'Error! Invalid params' unless valid_params?
-    return 'Error! User not found' unless user_exists?
-    return 'Error! Unconfirmed email' unless confirmed_email
-    return 'Error! Locked account' if locked?
-    return 'Error! Banned' if banned?
+    raise StandardError, 'Failed to create company' unless valid_params?
+    raise StandardError, 'Error! User not found' unless user_exists?
+    raise StandardError, 'Error! Unconfirmed email' unless confirmed_email
+    raise StandardError, 'Error! Locked account' if locked?
+    raise StandardError, 'Error! Banned' if banned?
 
     return failed_attempt unless auth_user
 
@@ -53,11 +53,11 @@ class Login::Auth
   def failed_attempt
     if @user.login_attempts >= 2
       @user.update_columns(login_attempts: 3, locked: true)
-      return { message: 'Failed to login! Password has blocked!' }
+      raise StandardError, 'Failed to login! Password has blocked!'
     end
     login_attempts = @user.login_attempts + 1
     @user.update_columns(login_attempts:)
-    { message: 'Failed to login! Inválid credentials' }
+    raise StandardError, 'Failed to login! Invalid credentials'
   end
 
   def auth_user
@@ -74,7 +74,7 @@ class Login::Auth
   end
 
   def generate_token
-    return unless @user
+    raise StandardError, 'Error! User not confirmed.' unless @user
 
     @user.update_column(:login_attempts, 0)
     photo_url = url_for(@user.photo) if @user.photo.attached?

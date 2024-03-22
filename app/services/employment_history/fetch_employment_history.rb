@@ -9,8 +9,8 @@ class EmploymentHistory::FetchEmploymentHistory
   end
 
   def run
-    return unless valid_params?
-    return unless candidate_exists?
+    raise StandardError, 'Error! Invalid parameters.' unless valid_params?
+    raise StandardError, 'Error! Candidate not found.' unless candidate_exists?
 
     @employment_history_id ? fetch_by_id : fetch_all
   end
@@ -32,6 +32,8 @@ class EmploymentHistory::FetchEmploymentHistory
 
   def fetch_by_id
     employment_history = User.find(@user_id).candidate.employment_histories.find(@employment_history_id)
+    raise StandardError, 'Error! Employment history not found.' unless employment_history
+
     employment_history || 'Não encontrado!'
   end
 end

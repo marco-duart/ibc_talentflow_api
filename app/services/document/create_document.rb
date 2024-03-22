@@ -13,8 +13,8 @@ class Document::CreateDocument
   end
 
   def run
-    return unless valid_params?
-    return unless candidate_exists?
+    raise StandardError, 'Error! Invalid parameters.' unless valid_params?
+    raise StandardError, 'Error! Candidate not found.' unless candidate_exists?
 
     create_document
   end
@@ -52,6 +52,7 @@ class Document::CreateDocument
     attach_image(document) if @image
     return document if document.save
 
-    puts "Erro! : #{document.errors.full_messages}"
+    puts "Error! : #{document.errors.full_messages}"
+    raise StandardError, "Error! : #{document.errors.full_messages}"
   end
 end

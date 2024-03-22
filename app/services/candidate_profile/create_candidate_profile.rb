@@ -9,8 +9,8 @@ class CandidateProfile::CreateCandidateProfile
   end
 
   def run
-    return unless valid_params?
-    return unless candidate_exists?
+    raise StandardError, 'Error! Invalid parameters.' unless valid_params?
+    raise StandardError, 'Error! Candidate not found.' unless candidate_exists?
 
     create_candidate_profile
   end
@@ -29,10 +29,12 @@ class CandidateProfile::CreateCandidateProfile
 
   def create_candidate_profile
     candidate = User.find(@user_id).candidate
-    return 'error' if candidate.candidate_profiles.exists?(profile_id: @profile_id)
+    if candidate.candidate_profiles.exists?(profile_id: @profile_id)
+      raise StandardError, 'Error! Profile already exists.'
+    end
 
     profile = Profile.find(@profile_id)
-    return 'error' unless profile
+    raise StandardError, 'Error! Profile not found.' unless profile
 
     CandidateProfile.create!(candidate:, profile:)
   end

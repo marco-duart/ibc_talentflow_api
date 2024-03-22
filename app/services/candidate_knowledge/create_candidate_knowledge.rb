@@ -9,8 +9,8 @@ class CandidateKnowledge::CreateCandidateKnowledge
   end
 
   def run
-    return unless valid_params?
-    return unless candidate_exists?
+    raise StandardError, 'Error! Invalid parameters.' unless valid_params?
+    raise StandardError, 'Error! Candidate not found.' unless candidate_exists?
 
     create_candidate_knowledges
   end

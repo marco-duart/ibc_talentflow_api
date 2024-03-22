@@ -9,8 +9,8 @@ class ProfessionalLink::DeleteProfessionalLink
   end
 
   def run
-    return unless valid_params?
-    return unless professional_link_exists?
+    raise StandardError, 'Error! Invalid parameters.' unless valid_params?
+    raise StandardError, 'Error! Professional link not found.' unless professional_link_exists?
 
     delete_professional_link
   end
@@ -28,7 +28,7 @@ class ProfessionalLink::DeleteProfessionalLink
 
   def delete_professional_link
     professional_link = ProfessionalLink.find(@professional_link_id)
-    return unless professional_link
+    raise StandardError, 'Error! Professional link not found.' unless professional_link
 
     professional_link.destroy
   end

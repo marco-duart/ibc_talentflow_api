@@ -16,8 +16,8 @@ class AcademicHistory::UpdateAcademicHistory
   end
 
   def run
-    return unless valid_params?
-    return unless candidate_exists?
+    raise StandardError, 'Error! Invalid parameters.' unless valid_params?
+    raise StandardError, 'Error! Candidate not found.' unless candidate_exists?
 
     update_academic_history
   end
@@ -35,7 +35,7 @@ class AcademicHistory::UpdateAcademicHistory
 
   def update_academic_history
     academic_history = AcademicHistory.find(@academic_history_id)
-    return unless academic_history
+    raise StandardError, 'Error! Academic history not found.' unless academic_history
 
     academic_history.update(@academic_history_attributes.compact)
   end

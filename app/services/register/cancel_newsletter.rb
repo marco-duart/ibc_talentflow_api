@@ -8,8 +8,8 @@ class Register::CancelNewsletter
   end
 
   def run
-    return 'Error! Inválid params' unless valid_params?
-    return 'Error! User not found' unless user_exists?
+    raise StandardError, 'Error! Invalid parameters.' unless valid_params?
+    raise StandardError, 'Error! User not found.' unless user_exists?
 
     cancel_newsletter
   end
@@ -37,6 +37,6 @@ class Register::CancelNewsletter
     user.update_columns(:newsletter, false)
     mailer_params = build_mailer_params(user.name, user.email)
     UserMailer.unsubscribe_email(mailer_params).deliver_now
-    { message: 'Sucessfull to unsubscribe!', error: false }
+    { message: 'Sucessfull to unsubscribe!' }
   end
 end

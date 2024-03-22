@@ -11,8 +11,8 @@ class ExamQuestion::CreateQuestion
   end
 
   def run
-    return unless valid_params?
-    return unless exam_exists?
+    raise StandardError, 'Error! Invalid parameters.' unless valid_params?
+    raise StandardError, 'Error! Exam not found.' unless exam_exists?
 
     create_question_with_alternatives
   end

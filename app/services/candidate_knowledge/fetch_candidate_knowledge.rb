@@ -8,8 +8,8 @@ class CandidateKnowledge::FetchCandidateKnowledge
   end
 
   def run
-    return unless valid_params?
-    return unless candidate_exists?
+    raise StandardError, 'Error! Invalid parameters.' unless valid_params?
+    raise StandardError, 'Error! Candidate not found.' unless candidate_exists?
 
     fetch_all
   end
@@ -37,7 +37,7 @@ class CandidateKnowledge::FetchCandidateKnowledge
 
   def fetch_all
     candidate_knowledges = User.find(@user_id).candidate_knowledges
-    return 'erro' unless candidate_knowledges
+    raise StandardError, 'Error! Knowledge not found.' unless candidate_knowledges
 
     build_response(candidate_knowledges)
   end

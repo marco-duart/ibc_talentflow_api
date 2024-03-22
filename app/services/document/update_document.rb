@@ -16,8 +16,8 @@ class Document::UpdateDocument
   end
 
   def run
-    return unless valid_params?
-    return unless candidate_exists?
+    raise StandardError, 'Error! Invalid parameters.' unless valid_params?
+    raise StandardError, 'Error! Candidate not found.' unless candidate_exists?
 
     update_document
   end
@@ -35,7 +35,7 @@ class Document::UpdateDocument
 
   def update_document
     document = Document.find(@document_id)
-    return unless document
+    raise StandardError, 'Error! Document not found.' unless document
 
     document.update(@document_attributes.compact)
   end

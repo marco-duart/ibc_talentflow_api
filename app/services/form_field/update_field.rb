@@ -12,7 +12,7 @@ class FormField::UpdateField
   end
 
   def run
-    return unless valid_params?
+    raise StandardError, 'Error! Invalid parameters.' unless valid_params?
 
     update_field
   end
@@ -25,7 +25,7 @@ class FormField::UpdateField
 
   def update_field
     field = FormField.find(@field_id)
-    return unless field
+    raise StandardError, 'Error! Field not found.' unless field
 
     field.update(@field_attributes.compact)
   end

@@ -9,8 +9,8 @@ class AcademicHistory::FetchAcademicHistory
   end
 
   def run
-    return unless valid_params?
-    return unless candidate_exists?
+    raise StandardError, 'Error! Invalid parameters.' unless valid_params?
+    raise StandardError, 'Error! Candidate not found.' unless candidate_exists?
 
     @academic_history_id ? fetch_by_id : fetch_all
   end
@@ -32,6 +32,8 @@ class AcademicHistory::FetchAcademicHistory
 
   def fetch_by_id
     academic_history = User.find(@user_id).candidate.academic_histories.find(@academic_history_id)
-    academic_history || 'Não encontrado!'
+    raise StandardError, 'Error! Academic history not found.' unless academic_history
+
+    academic_history
   end
 end

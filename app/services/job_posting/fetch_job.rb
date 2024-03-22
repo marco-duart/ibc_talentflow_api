@@ -41,7 +41,7 @@ class JobPosting::FetchJob
 
   def fetch_by_id
     job = JobPosting.find(@job_id)
-    return 'Error!' unless job
+    raise StandardError, 'Error! Job not found.' unless job
 
     image_url = url_for(job.image) if job.image.attached?
     build_response(job, image_url)

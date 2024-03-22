@@ -8,7 +8,7 @@ class DynamicExam::DeleteExam
   end
 
   def run
-    return unless valid_params?
+    raise StandardError, 'Error! Invalid parameters.' unless valid_params?
 
     delete_exam
   end
@@ -21,7 +21,7 @@ class DynamicExam::DeleteExam
 
   def delete_exam
     exam = DynamicExam.find(@exam_id)
-    return unless exam
+    raise StandardError, 'Error! Exam not found.' unless exam
 
     exam.destroy
   end
