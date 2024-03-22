@@ -50,6 +50,6 @@ class Login::ResetPassword
     @user.update_columns(login_attempts: 0, locked: false)
     mailer_params = build_mailer_params
     UserMailer.changed_password_email(mailer_params).deliver_now
-    { message: 'Password has successful changed!' }
+    { message: 'Password has successful changed!', error: false }
   end
 end

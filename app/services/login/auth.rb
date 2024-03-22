@@ -9,12 +9,13 @@ class Login::Auth
   end
 
   def initialize(params)
-    @cpf = params['cpf']
+    @email = params['email']
     @password = params['password']
   end
 
   def run
     return 'Error! Invalid params' unless valid_params?
+    return 'Error! User not found' unless user_exists?
     return 'Error! Unconfirmed email' unless confirmed_email
     return 'Error! Locked account' if locked?
     return 'Error! Banned' if banned?
@@ -29,11 +30,15 @@ class Login::Auth
   SECRET_KEY = ENV['SECRET_KEY']
 
   def valid_params?
-    @cpf.present? && @password.present?
+    @email.present? && @password.present?
+  end
+
+  def user_exists?
+    User.exists?(email: @email)
   end
 
   def confirmed_email
-    @user = User.find_by(cpf: @cpf)
+    @user = User.find_by(email: @email)
     @user&.confirmed?
   end
 

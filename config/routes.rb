@@ -6,13 +6,16 @@ Rails.application.routes.draw do
       post '/email', to: 'register#email_availability'
       post '/cpf', to: 'register#cpf_availability'
       post '/confirm/:id', to: 'register#confirm_account'
+      post '/resend-token', to: 'login#resend_token'
 
       post '/login', to: 'login#auth'
+      post '/me', to: 'login#logged_user'
       post '/forget-password', to: 'login#forget_password'
       post '/reset-password', to: 'login#reset_password'
     end
 
     namespace :candidates do
+      get '/', to: 'candidates#fetch_by_id'
       post '/', to: 'candidates#create'
 
       get '/documents', to: 'documents#fetch_all'
@@ -33,15 +36,23 @@ Rails.application.routes.draw do
       patch '/employment/:id', to: 'employment_histories#update'
       delete '/employment/:id', to: 'employment_histories#delete'
 
-      get '/links', to: 'professional_links#fetch_all'
-      get '/link/:id', to: 'professional_links#fetch_by_id'
-      post '/link', to: 'professional_links#create'
-      patch '/link/:id', to: 'professional_links#update'
-      delete '/link/:id', to: 'professional_links#delete'
+      get '/professionals', to: 'professional_links#fetch_all'
+      get '/professional/:id', to: 'professional_links#fetch_by_id'
+      post '/professional', to: 'professional_links#create'
+      patch '/professional/:id', to: 'professional_links#update'
+      delete '/professional/:id', to: 'professional_links#delete'
 
+      get '/socials', to: 'social_links#fetch_all'
+      get '/social/:id', to: 'social_links#fetch_by_id'
+      post '/social', to: 'social_links#create'
+      patch '/social/:id', to: 'social_links#update'
+      delete '/social/:id', to: 'social_links#delete'
+
+      get '/skills', to: 'skills#fetch_all'
       post '/skill', to: 'skills#create'
       delete '/skill/:id', to: 'skills#delete'
 
+      get '/knowledges', to: 'knowledges#fetch_all'
       post '/knowledge', to: 'knowledges#create'
       delete '/knowledge/:id', to: 'knowledges#delete'
 
@@ -60,6 +71,7 @@ Rails.application.routes.draw do
     namespace :admins do
       post '/ban', to: 'users#ban_user'
 
+      get '/recruiter/:id', to: 'recruiters#fetch_by_id'
       post '/recruiter', to: 'recruiters#create'
 
       get '/companies', to: 'companies#fetch_all'
@@ -91,23 +103,26 @@ Rails.application.routes.draw do
       get '/exams', to: 'exams#fetch_all'
       get '/exam/:id', to: 'exams#fetch_by_id'
       post '/exam', to: 'exams#create'
+      patch '/exam/:id', to: 'exams#update'
+      delete '/exam/:id', to: 'exams#delete'
       post '/exam/:id/question', to: 'exams#create_question'
 
-      get '/skill', to: 'skills#fetch_all'
+      get '/skills', to: 'skills#fetch_all'
       post '/skill', to: 'skills#create'
       delete '/skill/:id', to: 'skills#delete'
 
-      get '/knowledge', to: 'knowledges#fetch_all'
+      get '/knowledges', to: 'knowledges#fetch_all'
       post '/knowledge', to: 'knowledges#create'
       delete '/knowledge/:id', to: 'knowledges#delete'
 
-      get '/profile', to: 'profiles#fetch_all'
+      get '/profiles', to: 'profiles#fetch_all'
       post '/profile', to: 'profiles#create'
       delete '/profile/:id', to: 'profiles#delete'
       post '/candidate-profile', to: 'profiles#create_candidate_profile'
       delete '/candidate-profile', to: 'profiles#delete_candidate_profile'
 
-      get '/candidate', to: 'candidates#fetch_by_id'
+      get '/candidate/:id', to: 'candidates#fetch_by_id'
+      get '/candidates', to: 'candidates#fetch_all'
 
       get '/applications', to: 'application_status#fetch_all'
       get '/application/:id', to: 'application_status#fetch_by_id'

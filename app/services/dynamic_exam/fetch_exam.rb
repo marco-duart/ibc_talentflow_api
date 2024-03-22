@@ -25,6 +25,7 @@ class DynamicExam::FetchExam
     questions = exam.questions
     questions.map do |question|
       {
+        id: question.id,
         text: question.text,
         question_type: question.question_type,
         created_at: question.created_at,

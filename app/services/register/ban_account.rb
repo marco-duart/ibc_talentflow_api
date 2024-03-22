@@ -35,6 +35,6 @@ class Register::BanAccount
   def ban!
     @user.candidate.destroy
     @user.update(banned: true, ban_reason: @ban_reason)
-    { message: 'User successful banned!' }
+    { message: 'User successful banned!', error: false, code: 200 }
   end
 end

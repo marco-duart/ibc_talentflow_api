@@ -124,7 +124,12 @@ class UserCandidate::CreateCandidate
     attach_curriculum(candidate) if @curriculum
     if candidate.save
       register_cpf(user)
-      return candidate
+      return {
+        error: false,
+        message: "Successfull to create a new candidate!",
+        code: 201,
+        candidate:
+      }
     end
 
     puts "Erro! : #{candidate.errors.full_messages}"
