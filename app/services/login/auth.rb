@@ -68,6 +68,7 @@ class Login::Auth
     {
       id: @user.id,
       name: @user.name,
+      role: @user.role,
       photo_url:,
       token: "Bearer #{token}"
     }
@@ -78,7 +79,7 @@ class Login::Auth
 
     @user.update_column(:login_attempts, 0)
     photo_url = url_for(@user.photo) if @user.photo.attached?
-    payload = { user_id: @user.id, role: @user.role, exp: Time.now.to_i + 3600 }
+    payload = { user_id: @user.id, name: @user.name, role: @user.role, exp: Time.now.to_i + 3600 }
 
     token = JWT.encode(payload, SECRET_KEY, 'HS256')
 
