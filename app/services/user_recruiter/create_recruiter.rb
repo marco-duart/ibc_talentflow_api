@@ -10,7 +10,7 @@ class UserRecruiter::CreateRecruiter
 
   def run
     raise StandardError, 'Error! Invalid parameters.' unless valid_params?
-    return unless user_exists?
+    raise StandardError, 'Error! User not found.' unless user_exists?
 
     create_recruiter
   end
@@ -40,5 +40,6 @@ class UserRecruiter::CreateRecruiter
     return recruiter if recruiter.save
 
     puts "Error! : #{recruiter.errors.full_messages}"
+    raise StandardError, "Error! : #{recruiter.errors.full_messages}"
   end
 end

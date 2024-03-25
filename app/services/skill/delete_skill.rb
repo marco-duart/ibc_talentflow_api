@@ -21,7 +21,7 @@ class Skill::DeleteSkill
 
   def delete_skill
     skill = Skill.find(@skill_id)
-    return unless skill
+    raise StandardError, 'Error! Skill not found.' unless skill
 
     skill.destroy
   end

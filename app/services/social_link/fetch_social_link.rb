@@ -32,6 +32,8 @@ class SocialLink::FetchSocialLink
 
   def fetch_by_id
     social_link = User.find(@user_id).candidate.social_links.find(@social_link_id)
-    social_link || 'Não encontrado!'
+    raise StandardError, 'Error! ' unless social_link
+
+    social_link
   end
 end

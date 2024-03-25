@@ -32,7 +32,7 @@ class SocialLink::UpdateSocialLink
 
   def update_social_link
     social_link = SocialLink.find(@social_link_id)
-    return unless social_link
+    raise StandardError, 'Error! Social link not found.' unless social_link
 
     social_link.update(@social_link_attributes.compact)
   end

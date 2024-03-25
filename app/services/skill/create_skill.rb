@@ -9,7 +9,7 @@ class Skill::CreateSkill
 
   def run
     raise StandardError, 'Error! Invalid parameters.' unless valid_params?
-    return if skill_exists?
+    raise StandardError, 'Error! Skill already exists.' if skill_exists?
 
     create_skill
   end
@@ -30,5 +30,6 @@ class Skill::CreateSkill
     return skill if skill.save
 
     puts "Error! : #{skill.errors.full_messages}"
+    raise StandardError, "Error! : #{skill.errors.full_messages}"
   end
 end

@@ -44,5 +44,6 @@ class SocialLink::CreateSocialLink
     return social_link if social_link.save
 
     puts "Error! : #{social_link.errors.full_messages}"
+    raise StandardError, "Error! : #{social_link.errors.full_messages}"
   end
 end

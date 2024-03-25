@@ -10,7 +10,7 @@ class SocialLink::DeleteSocialLink
 
   def run
     raise StandardError, 'Error! Invalid parameters.' unless valid_params?
-    return unless social_link_exists?
+    raise StandardError, 'Error! Social link not found.' unless social_link_exists?
 
     delete_social_link
   end
@@ -28,7 +28,7 @@ class SocialLink::DeleteSocialLink
 
   def delete_social_link
     social_link = SocialLink.find(@social_link_id)
-    return unless social_link
+    raise StandardError, 'Error! Social link not found.' unless social_link
 
     social_link.destroy
   end

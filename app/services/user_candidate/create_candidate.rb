@@ -131,5 +131,6 @@ class UserCandidate::CreateCandidate
     end
 
     puts "Error! : #{candidate.errors.full_messages}"
+    raise StandardError, "Error! : #{candidate.errors.full_messages}"
   end
 end
