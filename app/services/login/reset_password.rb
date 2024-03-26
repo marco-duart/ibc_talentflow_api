@@ -12,9 +12,9 @@ class Login::ResetPassword
   end
 
   def run
-    return 'Error! Invalid parameters' unless valid_params?
-    return 'Error! Incorrect credentials' unless valid_credentials?
-    return 'Error! Invalid Token' unless valid_action_key?
+    raise StandardError, 'Error! Invalid parameters' unless valid_params?
+    raise StandardError, 'Error! Incorrect credentials' unless valid_credentials?
+    raise StandardError, 'Error! Invalid Token' unless valid_action_key?
 
     reset_password
   end

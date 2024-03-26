@@ -21,6 +21,13 @@ module Api
       rescue StandardError => e
         render status: :unprocessable_entity, json: { error: e.message }
       end
+
+      def logged_user
+        body = Login::LoggedUser.run(params)
+        render status: :ok, body: body.to_json
+      rescue StandardError => e
+        render status: :unprocessable_entity, json: { error: e.message }
+      end
     end
   end
 end

@@ -11,8 +11,8 @@ class Login::ForgetPassword
   end
 
   def run
-    return 'Error! Invalid parameters' unless valid_params?
-    return 'Error! Incorrect credentials' unless valid_credentials?
+    raise StandardError, 'Error! Invalid parameters' unless valid_params?
+    raise StandardError, 'Error! Incorrect credentials' unless valid_credentials?
 
     send_reset_password_key
   end
