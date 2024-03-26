@@ -88,6 +88,7 @@ class UserMailer < ApplicationMailer
   def default_values
     @year = Date.today.year
     @default_url = 'http://ibctalentflow.com.br'
+    @development_url = 'http://localhost:5173'
     @rules_link = 'http://ibctalentflow.com.br/political-rules'
     @signup_link = 'http://ibctalentflow.com.br/signup'
     @unsubscribe_link = 'http://ibctalentflow.com.br/unsubscribe'
@@ -101,7 +102,7 @@ class UserMailer < ApplicationMailer
     @name = params[:name]
     @email = params[:email]
     @cpf = cpf_last_digits(params[:cpf])
-    @url = "#{@default_url}/api/users/confirm/#{@id}/#{@action_key}"
+    @url = "#{@development_url}/confirm/#{@id}/#{@action_key}"
   end
 
   def cpf_last_digits(cpf)
